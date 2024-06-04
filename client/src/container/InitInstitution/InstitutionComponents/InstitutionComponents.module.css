@@ -1,0 +1,15 @@
+.componentLinks {
+  padding: 1rem;
+  margin: 0.5rem;
+  justify-content: space-around;
+  display: flex;
+  justify-items: center;
+  font-size: small;
+  font-weight: bold;
+  background-color: white;
+  color: #25447d;
+}
+.componentLink {
+  margin: 0.5rem;
+  cursor: pointer;
+}

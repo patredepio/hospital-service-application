@@ -1,0 +1,86 @@
+.Navigation_Link {
+  color: #25447d;
+  margin: 2px;
+}
+.Active {
+  border-bottom: 5px solid #936c60;
+}
+.NotActive {
+  border-bottom: 5px solid #e8f1fb;
+}
+
+.Navigation_Link a {
+  color: inherit;
+  font-size: x-small;
+}
+.Navigation_Features {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.Features_List {
+  display: none;
+}
+.Toggle_Features {
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+  height: 120px;
+  position: absolute;
+  top: 23%;
+  left: 100%;
+  background-color: #e8f1fb;
+  border: 1px solid #936c60;
+  width: 100px;
+  overflow: auto;
+  z-index: 2;
+}
+/* .Toggle_Features */
+/* width */
+.Toggle_Features::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.Toggle_Features::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.Toggle_Features::-webkit-scrollbar-thumb {
+  background: #f1bc97;
+}
+
+/* Handle on hover */
+.Toggle_Features::-webkit-scrollbar-thumb:hover {
+  background: #f1bc97;
+}
+.Features_Link {
+  overflow: hidden;
+  font-size: 10px;
+  margin: 0.2rem 0;
+}
+.Features_Link a {
+  color: #25447d;
+  text-decoration: none;
+  font-size: 7.5px;
+}
+/* .Features_Link a.active {
+  color: #25447d;
+} */
+.Features_Link a:hover,
+.Features_Link a:active {
+  color: #f9a260;
+}
+@media (min-width: 40rem) {
+  .Toggle_Features {
+    top: 90%;
+    left: 0;
+  }
+  .Features_Link a,
+  .Navigation_Link a {
+    font-size: smaller;
+  }
+}

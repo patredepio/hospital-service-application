@@ -1,0 +1,39 @@
+.form {
+  max-width: 600px;
+  margin: 1rem auto;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 2px 2px 2px 2px #aaaaaaaa;
+  border-radius: 10px;
+}
+.form input:focus {
+  border: 1px solid #25447d;
+}
+.unitForm > div {
+  display: grid;
+  grid-template-columns: auto;
+  justify-items: center;
+}
+.unitForm label {
+  font-size: small;
+}
+.confirm {
+  background-color: #25447d;
+  color: white;
+  margin: 0.5rem 0;
+}
+.confirm:hover,
+.confirm:active {
+  color: #25447d;
+  background-color: white;
+}
+.hold {
+  background-color: #02a523;
+  color: white;
+  margin: 1rem;
+}
+.hold:hover,
+.hold:active {
+  color: #02a523;
+  background-color: white;
+}

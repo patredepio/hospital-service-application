@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+.App {
+  text-align: center;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto;
+  row-gap: 1.5rem;
+}
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+main {
+  margin-top: 4rem;
+  width: 100%;
+  background-image: linear-gradient(#e8f1fbbf, #eaf3fa84),
+    url("./assets/images/pharmacy.avif");
+  background-size: cover;
+  /* this one */
+  background-position: center;
+}
