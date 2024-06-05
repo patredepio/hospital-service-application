@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./UserComponent.module.css";
 import Input from "../../UI/Input/Input";
 import Spinner from "../../UI/Spinner/Spinner";
+import { deleteModel } from "mongoose";
 
 const userComponent = React.memo((props) => {
   return (
@@ -36,7 +37,19 @@ const userComponent = React.memo((props) => {
           props.users.map((user) => (
             <div
               className={[classes.userStructure, classes.userItem].join(" ")}
-              onClick={() => props.clicked(props.setState, user)}
+              onClick={
+                props.delete
+                  ? () =>
+                      props.setState((prevState) => {
+                        return {
+                          ...prevState,
+                          deleteModal: true,
+                          id: user._id,
+                          userName: `${user.firstName} ${user.lastName}`,
+                        };
+                      })
+                  : null
+              }
               key={user._id}
             >
               <div>

@@ -6,6 +6,9 @@
   box-shadow: 2px 2px 2px 2px #aaaaaaaa;
   border-radius: 10px;
 }
+.form h4 {
+  font-size: x-small;
+}
 .form input:focus {
   border: 1px solid #25447d;
 }
@@ -36,4 +39,9 @@
 .hold:active {
   color: #02a523;
   background-color: white;
+}
+@media (min-width: 40rem) {
+  .form h4 {
+    font-size: small;
+  }
 }

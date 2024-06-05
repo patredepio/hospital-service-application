@@ -9,19 +9,35 @@ import React, {
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../../../../components/UI/Message/Message";
 import UserComponent from "../../../../components/InstitutionComponent/UserComponent/UserComponent";
+import { getUserRoleMethod, getDepartmentsMethod } from "../../../../store";
 import { getUsersInstitutionRequest } from "../../../../store";
 import { Navigate } from "react-router-dom";
-import { editUserMethodHandler } from "../../../../Utility/institution/initInstitution";
+import { editUser } from "../../../../Utility/institution/initInstitution";
 import Button from "../../../../components/UI/Button/Button";
 import classes from "./EditUser.module.css";
+import RegisterUserComponent from "../../../../components/RegisterUserComponent/RegisterUserComponent";
+import registerClasses from "../../Register.module.css";
 const EditUser = memo((props) => {
   const dispatch = useDispatch();
+  const departmentRef = useRef(null);
+  const userRoleRef = useRef(null);
   const [state, setState] = useState({
     users: [],
     loading: false,
     search: "",
     selectedUser: null,
     edit: false,
+    firstName: "",
+    lastName: "",
+    username: "",
+    password: "",
+    retypePassword: "",
+    departments: [],
+    department: "",
+    departmentId: "",
+    userRoles: [],
+    userRole: "",
+    userRoleId: "",
   });
   const userRef = useRef();
   const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
@@ -34,7 +50,15 @@ const EditUser = memo((props) => {
       dispatch(getUsersInstitutionRequest(token, state, setState)),
     [dispatch]
   );
-  const { search } = state;
+  const getDepartmentsHandler = useCallback(
+    (token, setState) => dispatch(getDepartmentsMethod(token, setState)),
+    [dispatch]
+  );
+  const getUserRoleMethodHandler = useCallback(
+    (token, dep, setState) => dispatch(getUserRoleMethod(token, dep, setState)),
+    [dispatch]
+  );
+  const { departments, userRoles, search } = state;
   useEffect(() => {
     const timer = setTimeout(() => {
       if (search === userRef?.current?.value) {
@@ -45,6 +69,38 @@ const EditUser = memo((props) => {
       }
     }, 500);
   }, [search, userRef]);
+  useEffect(() => {
+    if (!departments.length) {
+      getDepartmentsHandler(token, setState);
+    } else {
+      const department = state.departments.find(
+        (dep) => dep.name === departmentRef.current?.value
+      );
+      setState((prevState) => {
+        return {
+          ...prevState,
+          departmentId: department?._id,
+          department: department?.name,
+        };
+      });
+
+      getUserRoleMethodHandler(token, department?._id, setState);
+    }
+  }, [departments.length]);
+  useEffect(() => {
+    if (userRoles.length) {
+      setState((prevState) => {
+        const userRole = userRoles.find(
+          (role) => role.name === userRoleRef.current?.value
+        );
+        return {
+          ...prevState,
+          userRoleId: userRole._id,
+          userRole: userRole.name,
+        };
+      });
+    }
+  }, [departments.length, userRoles.length]);
   return (
     <div>
       <Message
@@ -64,7 +120,16 @@ const EditUser = memo((props) => {
               {state.selectedUser.signError > 2 ? "CLEAR" : "NOT CLEAR"}
             </Button>
           )}
-          <div>NEW CHANGE</div>
+          <RegisterUserComponent
+            state={state}
+            setState
+            classes={registerClasses}
+            departmentRef={departmentRef}
+            userRoleRef={userRoleRef}
+            registerUserHandler={editUser}
+            getUserRoleMethodHandler={getUserRoleMethodHandler}
+            token={token}
+          />
         </Fragment>
       ) : (
         <UserComponent
@@ -73,7 +138,6 @@ const EditUser = memo((props) => {
           search={state.search}
           setState={setState}
           loading={state.loading}
-          clicked={editUserMethodHandler}
         />
       )}
     </div>

@@ -53,11 +53,11 @@ const intialState = {
         },
         {
           linkName: "DELETE USER",
-          linkHref: "/pharma-app/delete-user",
+          linkHref: "/institution/delete-user",
         },
         {
           linkName: "USER LOGS",
-          linkHref: "/pharma-app/user-logs",
+          linkHref: "/institution/user-logs",
         },
       ],
     },

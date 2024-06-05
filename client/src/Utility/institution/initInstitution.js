@@ -118,7 +118,7 @@ export async function getClinicalsRequest(body) {
 }
 
 // METHODS
-export const editUserMethodHandler = (setState, user) => {
+export const editUser = (setState, user) => {
   setState((prevState) => {
     return {
       ...prevState,

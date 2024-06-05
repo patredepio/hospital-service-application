@@ -25,6 +25,10 @@
 .registerForm select:focus {
   border: 1px solid #25447d;
 }
+.direction {
+  font-size: x-small;
+  color: #25447d;
+}
 #role {
   display: flex;
 }
@@ -51,7 +55,8 @@
   #name div {
     margin: 0 0.5rem;
   }
-  .registerForm h3 {
+  .registerForm h3,
+  .direction {
     font-size: small;
   }
 }

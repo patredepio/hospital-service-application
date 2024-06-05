@@ -36,7 +36,7 @@
   font-size: x-small;
   font-weight: bold;
 }
-.loginForm input:nth-child(1) {
+.loginForm input[type="text"]:nth-child(1) {
   text-transform: uppercase;
 }
 .loginForm input,
@@ -44,11 +44,10 @@
   border: 1px solid transparent;
   font-weight: bold;
   background-color: inherit;
+  color: black;
 }
 
 .login {
-  text-transform: uppercase;
-  color: #25447d;
   font-size: small;
 }
 .confirm {

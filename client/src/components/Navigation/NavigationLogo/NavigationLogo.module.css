@@ -1,10 +1,10 @@
 .Logo {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 2px;
   border: 1px solid #25447d;
-  height: 2rem;
-  width: 2rem;
-  padding: 0.4rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 0.2rem;
   cursor: pointer;
   position: relative;
   margin: 1rem;
@@ -36,7 +36,7 @@
 .notification {
   position: absolute;
   background-color: #f9a260;
-  font-size: small;
+  font-size: x-small;
   top: -90%;
   right: 0;
   padding: 2px;
@@ -58,5 +58,12 @@
 @media (hover: none) {
   .Logo:hover .Logo_Description {
     display: none;
+  }
+}
+@media (min-width: 40rem) {
+  .Logo {
+    height: 2rem;
+    width: 2rem;
+    padding: 0.4rem;
   }
 }

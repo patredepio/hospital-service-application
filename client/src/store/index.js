@@ -189,6 +189,7 @@ import {
   componentMethod,
   getDepartmentsMethod,
   addUnitMethod,
+  deleteUser,
 } from "./actions/action/institutionComponents/institutionComponentsAction";
 import {
   addUserRoleMethod,
@@ -301,6 +302,7 @@ export {
   institutionLogout,
   getDepartmentsMethod,
   addUnitMethod,
+  deleteUser,
   // Register
   registerUser,
   // user roles

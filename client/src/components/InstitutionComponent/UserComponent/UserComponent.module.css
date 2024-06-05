@@ -2,6 +2,7 @@
   min-height: 450px;
   display: grid;
   row-gap: 10px;
+  margin-top: 2rem;
 }
 .userStructure {
   display: grid;
@@ -29,6 +30,7 @@
   border: 1px solid transparent;
   cursor: pointer;
   margin: 0.5rem 0;
+  text-transform: uppercase;
 }
 .userItem:hover,
 .userItem:active {
@@ -51,6 +53,7 @@
   .userComponent {
     width: 95%;
     margin: 1rem auto;
+    margin-top: 2rem;
   }
   .desktopOnly {
     display: block;

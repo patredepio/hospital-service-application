@@ -9,6 +9,7 @@ import {
   sendProductMessenger,
   resetProductMessenger,
 } from "../inventory/addProductAction";
+import { deleteUserMethod } from "../../../../Utility/usersChat";
 export const getDepartmentsMethod = (token, setState) => {
   setState((prevState) => {
     return {
@@ -203,5 +204,56 @@ export const addUnitMethod = (e, setState, state, token) => {
         }, 3000);
       }
     }
+  };
+};
+
+export const deleteUser = (setState, token, state) => {
+  return async (dispatch) => {
+    try {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          loading: true,
+          deleteModal: false,
+        };
+      });
+
+      const deleteResponse = await deleteUserMethod(token, state.id);
+      if (deleteResponse?.ok) {
+        dispatch(
+          sendProductMessenger(
+            `User ${state.userName} has been deleted Successfully ✓`
+          )
+        );
+        setState((prevState) => {
+          return {
+            ...prevState,
+            userName: "",
+            id: "",
+            users: [],
+          };
+        });
+      } else {
+        throw {
+          message: deleteResponse.statusText,
+          status: deleteResponse.status,
+        };
+      }
+    } catch (error) {
+      if (error.status === 401) {
+        dispatch(clearAuthentication(error.status));
+      } else {
+        dispatch(sendProductMessenger("Unable to delete User", true));
+      }
+    }
+    setTimeout(() => {
+      dispatch(resetProductMessenger());
+    }, 3000);
+    setState((prevState) => {
+      return {
+        ...prevState,
+        loading: false,
+      };
+    });
   };
 };

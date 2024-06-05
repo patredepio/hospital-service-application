@@ -47,7 +47,9 @@ router.get("/api/users", authentication, async (req, res) => {
       .find({
         _id: { $ne: req.user._id },
       })
-      .limit(7);
+      .limit(7)
+      .populate("department")
+      .populate("role");
     if (!users.length) {
       return res.status(404).send();
     }
@@ -175,5 +177,24 @@ router.post("/api/user/logout", authentication, async (req, res) => {
     res.status(500).send();
   }
 });
+
+router.delete(
+  "/api/delete-user/:id",
+  institutionAuthentication,
+  async (req, res) => {
+    const _id = req.params.id;
+
+    try {
+      const user = await User.findOne({ _id });
+      if (!user) {
+        return res.status(404).send();
+      }
+      user.remove();
+      res.status(200).send();
+    } catch (e) {
+      res.status(500).send();
+    }
+  }
+);
 
 module.exports = router;

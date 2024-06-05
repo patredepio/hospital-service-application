@@ -1,5 +1,3 @@
-
-
 ---
 
 # Pharma App
@@ -24,5 +22,3 @@ All rights reserved. © Padres Studio
 This project is licensed under the [Padres Studio License].
 
 ---
-
-Feel free to update this template with usage instructions and any additional details specific to your project!

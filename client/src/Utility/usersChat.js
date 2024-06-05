@@ -52,6 +52,17 @@ export const getUser = async (token) => {
   });
   return response;
 };
+// DELETE USER
+export const deleteUserMethod = async (token, id) => {
+  const response = await fetch(`/api/delete-user/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+  });
+  return response;
+};
 //Chats
 export const accessChats = async (token, body) => {
   const response = await fetch("/api/access-chats", {

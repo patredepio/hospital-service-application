@@ -1,5 +1,4 @@
 .login {
-  text-transform: capitalize;
   font-style: italic;
 }
 .confirm {
@@ -44,6 +43,7 @@
   background-color: inherit;
   font-size: x-small;
   border: 1px solid transparent;
+  color: black;
 }
 .loginForm input:focus {
   border: 1px solid #25447d;

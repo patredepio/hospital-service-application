@@ -59,13 +59,11 @@
 }
 .Features_Link {
   overflow: hidden;
-  font-size: 10px;
   margin: 0.2rem 0;
 }
 .Features_Link a {
   color: #25447d;
   text-decoration: none;
-  font-size: 7.5px;
 }
 /* .Features_Link a.active {
   color: #25447d;
@@ -81,6 +79,6 @@
   }
   .Features_Link a,
   .Navigation_Link a {
-    font-size: smaller;
+    font-size: x-small;
   }
 }

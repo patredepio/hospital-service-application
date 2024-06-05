@@ -86,6 +86,7 @@ const LoginComponent = (props) => {
           defaultValue: props.state.user?.name,
           name: "username",
           readOnly: true,
+          type: "text",
         }}
       />
       <Input
