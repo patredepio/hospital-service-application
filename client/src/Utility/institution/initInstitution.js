@@ -118,12 +118,12 @@ export async function getClinicalsRequest(body) {
 }
 
 // METHODS
-export const editUser = (setState, user) => {
-  setState((prevState) => {
-    return {
-      ...prevState,
-      edit: true,
-      selectedUser: user,
-    };
-  });
-};
+// export const editUser = (setState, user) => {
+//   setState((prevState) => {
+//     return {
+//       ...prevState,
+//       edit: true,
+//       selectedUser: user,
+//     };
+//   });
+// };
