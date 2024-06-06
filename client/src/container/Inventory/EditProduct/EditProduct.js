@@ -115,7 +115,6 @@ const EditProduct = (props) => {
     expiryDate: "",
     category: "",
     markUp: "",
-    issueQuantity: "",
     _id: "",
   });
   const [modal, setModal] = useState(false);
@@ -215,7 +214,6 @@ const EditProduct = (props) => {
             minimumQuantity={editForm.minimumQuantity}
             costPrice={editForm.costPrice}
             fgPrice={editForm.fgPrice}
-            issueQuantity={editForm.issueQuantity}
             productCategory={editForm.productCategory}
             options={options}
             expiryDate={editForm.expiryDate}

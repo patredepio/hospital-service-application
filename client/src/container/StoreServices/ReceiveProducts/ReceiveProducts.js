@@ -310,9 +310,7 @@ const ReceiveProducts = (props) => {
                       <div>{product.name}</div>
                       <div>{product.quantity}</div>
                       <div className={classes.desktopOnly}>
-                        {Intl.NumberFormat("en-GB").format(
-                          product.costPrice * product.unitOfIssue
-                        )}
+                        {Intl.NumberFormat("en-GB").format(product.costPrice)}
                       </div>
                       <div>
                         {Intl.DateTimeFormat("en-GB", {

@@ -151,7 +151,7 @@ const productForm = (props) => {
         >
           <span>Product Quantity Information </span>
           <div className={classes.minCtn}>
-            <Input
+            {/* <Input
               label='Unit Issue'
               config={{
                 type: "number",
@@ -163,8 +163,8 @@ const productForm = (props) => {
                 readOnly: !props.readOnly && props.formType === "Add",
               }}
               changed={(e) => props.changed(e, props.setFormState)}
-            />
-            <Input
+            /> */}
+            {/* <Input
               label='Issue Quantity'
               config={{
                 type: "number",
@@ -176,7 +176,7 @@ const productForm = (props) => {
                 name: "issueQuantity",
               }}
               changed={(e) => props.changed(e, props.setFormState)}
-            />
+            /> */}
             <Input
               label='Pack Size'
               config={{

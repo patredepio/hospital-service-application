@@ -117,7 +117,7 @@ const EditUser = memo((props) => {
         <Fragment>
           <RegisterUserComponent
             state={state}
-            setState
+            setState={setState}
             classes={registerClasses}
             departmentRef={departmentRef}
             userRoleRef={userRoleRef}

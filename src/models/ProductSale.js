@@ -62,6 +62,11 @@ const productSalesSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+// productSalesSchema.pre("save", async function () {
+//   const sale = this;
+//   if (sale.pricing === "NHIA") {
+//   }
+// });
 productSalesSchema.pre("remove", async function (next) {
   const sale = this;
   if (sale.receipt) {

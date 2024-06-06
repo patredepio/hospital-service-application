@@ -23,7 +23,6 @@ export const addToProductListHandler = (id, products, state, setState) => {
   newProduct.set("unitCostPrice", product.unitCostPrice);
   newProduct.set("expiryDate", product.expiryDate);
   newProduct.set("packSize", product.packSize);
-  newProduct.set("unitOfIssue", product.unitOfIssue);
   const unitName = JSON.parse(sessionStorage.getItem("unit"))?.name;
   if (unitName !== "STORE") {
     newProduct.set(

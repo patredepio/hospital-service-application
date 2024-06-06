@@ -41,21 +41,11 @@ const productSchema = new mongoose.Schema(
     displayQuantity: {
       type: String,
     },
-    unitOfIssue: {
-      type: Number,
-      required: true,
-      min: 1,
-    },
-    issueQuantity: {
-      type: Number,
-      required: true,
-    },
     packSize: {
       type: Number,
       required: true,
       min: 1,
     },
-
     minimumQuantity: {
       type: Number,
       required: true,

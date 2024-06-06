@@ -98,7 +98,7 @@ const Register = () => {
       ) : (
         <RegisterUserComponent
           state={state}
-          setState
+          setState={setState}
           classes={classes}
           departmentRef={departmentRef}
           userRoleRef={userRoleRef}

@@ -102,7 +102,6 @@ export const submitEditForm = (
           "costPrice",
           "fgPrice",
           "packSize",
-          "unitOfIssue",
           "markUp",
         ];
         numberVariables.forEach(

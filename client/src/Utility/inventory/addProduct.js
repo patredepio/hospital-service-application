@@ -36,37 +36,11 @@ export const addFormHandler = (e, id, database, form, setForm, setAddState) => {
     setForm((prevState) => {
       const newState = { ...prevState };
       newState[key] = newProduct[key];
-      if (unitName !== "STORE") {
-        newState.issueQuantity = 1;
-      }
+
       newState.quantity = "";
       newState.minimumQuantity = "";
       return newState;
     });
-  });
-  keys.forEach((key) => {
-    if (unitName !== "STORE" && key === "issueQuantity") {
-      setForm((prevState) => {
-        return {
-          ...prevState,
-          [key]: 1,
-        };
-      });
-    } else if (key === "quantity" || key === "minimumQuantity") {
-      setForm((prevState) => {
-        return {
-          ...prevState,
-          [key]: "",
-        };
-      });
-    } else {
-      setForm((prevState) => {
-        return {
-          ...prevState,
-          [key]: newProduct[key],
-        };
-      });
-    }
   });
 };
 

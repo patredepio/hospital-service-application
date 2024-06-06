@@ -89,7 +89,6 @@ const InstitutionLogin = () => {
           </Button>
         </form>
       )}
-      ;
     </Fragment>
   );
 };
