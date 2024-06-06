@@ -87,7 +87,11 @@ export const issueRequistionMethod = (
   return async (dispatch) => {
     try {
       const requistionProducts = [...state.selectedRequistion.products];
-      const selectedRequistion = structuredClone(state.selectedRequistion);
+
+      // const selectedRequistion = structuredClone(state.selectedRequistion);
+      const selectedRequistion = JSON.parse(
+        JSON.stringify(state.selectedRequistion)
+      );
       const requistion = {
         id: selectedRequistion._id,
         siv: selectedRequistion.siv,

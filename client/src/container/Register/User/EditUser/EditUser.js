@@ -115,11 +115,6 @@ const EditUser = memo((props) => {
       )}
       {state.edit ? (
         <Fragment>
-          {state.selectedUser.signError > 2 && (
-            <Button config={{ className: classes.confirm }}>
-              {state.selectedUser.signError > 2 ? "CLEAR" : "NOT CLEAR"}
-            </Button>
-          )}
           <RegisterUserComponent
             state={state}
             setState
@@ -130,6 +125,11 @@ const EditUser = memo((props) => {
             getUserRoleMethodHandler={getUserRoleMethodHandler}
             token={token}
           />
+          {state.selectedUser.signError > 2 && (
+            <Button config={{ className: classes.confirm }}>
+              {state.selectedUser.signError > 2 ? "CLEAR" : "NOT CLEAR"}
+            </Button>
+          )}
         </Fragment>
       ) : (
         <UserComponent
@@ -138,6 +138,7 @@ const EditUser = memo((props) => {
           search={state.search}
           setState={setState}
           loading={state.loading}
+          editUser={editUser}
         />
       )}
     </div>

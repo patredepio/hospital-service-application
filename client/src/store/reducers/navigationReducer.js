@@ -235,9 +235,11 @@ const navigation = (state = intialState, action) => {
         return state;
       } else {
         sessionStorage.setItem("activeLink", JSON.stringify(action.index));
-        let newState = structuredClone(state.notAuthenticatedLinks);
+        // let newState = structuredClone(state.notAuthenticatedLinks);
+        let newState = JSON.parse(JSON.stringify(state.notAuthenticatedLinks));
         if (action.authStatus) {
-          newState = structuredClone(state.authenticatedLinks);
+          // newState = structuredClone(state.authenticatedLinks);
+          newState = JSON.parse(JSON.stringify(state.authenticatedLinks));
         }
 
         if (!newState[action.index]?.active) {
@@ -285,7 +287,8 @@ const navigation = (state = intialState, action) => {
       }
     case SET_ACTIVE_LINK:
       if (action.authStatus) {
-        const links = structuredClone(state.authenticatedLinks);
+        // const links = structuredClone(state.authenticatedLinks);
+        const links = JSON.parse(JSON.stringify(state.authenticatedLinks));
         if (links.length - 1 < action.index) {
           return state;
         } else {
@@ -299,7 +302,8 @@ const navigation = (state = intialState, action) => {
           }
         }
       } else {
-        const links = structuredClone(state.notAuthenticatedLinks);
+        // const links = structuredClone(state.notAuthenticatedLinks);
+        const links = JSON.parse(JSON.stringify(state.notAuthenticatedLinks));
         if (links.length - 1 < action.index) {
           return state;
         } else {
@@ -319,8 +323,12 @@ const navigation = (state = intialState, action) => {
         }
       }
     case RESET_ACTIVE_LINK:
-      const links = structuredClone(state.authenticatedLinks);
-      const notAuthLinks = structuredClone(state.notAuthenticatedLinks);
+      // const links = structuredClone(state.authenticatedLinks);
+      const links = JSON.parse(JSON.stringify(state.authenticatedLinks));
+      // const notAuthLinks = structuredClone(state.notAuthenticatedLinks);
+      const notAuthLinks = JSON.parse(
+        JSON.stringify(state.notAuthenticatedLinks)
+      );
       links.forEach((link) => (link.active = false));
       notAuthLinks.forEach((link) => (link.active = false));
       notAuthLinks[0].active = true;
@@ -331,7 +339,8 @@ const navigation = (state = intialState, action) => {
         notAuthenticatedLinks: notAuthLinks,
       };
     case ADD_NOTIFICATION:
-      const authLinks = structuredClone(state.authenticatedLinks);
+      // const authLinks = structuredClone(state.authenticatedLinks);
+      const authLinks = JSON.parse(JSON.stringify(state.authenticatedLinks));
       const messageLink = authLinks.find(
         (link) => link.description === "Message"
       );
@@ -348,7 +357,8 @@ const navigation = (state = intialState, action) => {
         authenticatedLinks: authLinks,
       };
     case SET_NOTIFICATION:
-      const mainLinks = structuredClone(state.authenticatedLinks);
+      // const mainLinks = structuredClone(state.authenticatedLinks);
+      const mainLinks = JSON.parse(JSON.stringify(state.authenticatedLinks));
       const message = authLinks.find((link) => link.description === "Message");
       const index = authLinks.findIndex(
         (link) => link.description === "Message"
@@ -362,7 +372,8 @@ const navigation = (state = intialState, action) => {
         authenticatedLinks: mainLinks,
       };
     case RESET_FEATURES:
-      const authNavLinks = structuredClone(state.authenticatedLinks);
+      // const authNavLinks = structuredClone(state.authenticatedLinks);
+      const authNavLinks = JSON.parse(JSON.stringify(state.authenticatedLinks));
       authNavLinks.forEach((link) => {
         if (link.links?.length) {
           link.openFeature = false;

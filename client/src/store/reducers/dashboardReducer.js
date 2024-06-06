@@ -35,7 +35,8 @@ const dashboard = (state = intialState, action) => {
         loading: true,
       };
     case SET_DASBOARD_PRODUCTS_DATA:
-      const productSlides = structuredClone(state.slides);
+      // const productSlides = structuredClone(state.slides);
+      const productSlides = JSON.parse(JSON.stringify(state.slides));
       productSlides.splice(2, 1, action.data);
       return {
         ...state,
@@ -47,7 +48,8 @@ const dashboard = (state = intialState, action) => {
         slides: productSlides,
       };
     case SET_DASHBOARD_SALES_DATA:
-      const salesSlides = structuredClone(state.slides);
+      // const salesSlides = structuredClone(state.slides);
+      const salesSlides = JSON.parse(JSON.stringify(state.slides));
       salesSlides.splice(0, 2, action.data.firstSlide, action.data.secondSlide);
       return {
         ...state,

@@ -75,7 +75,8 @@ const report = React.memo((props) => {
       const duplicate = acc.find((pr) => pr.name === cur.name);
       const index = acc.findIndex((pr) => pr.name === cur.name);
       if (duplicate) {
-        const element = structuredClone(duplicate);
+        // const element = structuredClone(duplicate);
+        const element = JSON.parse(JSON.stringify(duplicate));
         element.quantity += cur.quantity;
         element.totalPrice += cur.totalPrice;
         acc.splice(index, 1, element);
@@ -86,45 +87,6 @@ const report = React.memo((props) => {
     }, [])
     .reduce((acc, cur) => (acc += cur.totalPrice), 0);
 
-  // const expiriesNumber = props.products
-  //   .filter((pr) => pr.expiries.length)
-  //   .flatMap((pr) => pr.expiries)
-  //   .filter((product) => {
-  //     if (props.state.startDate && props.state.endDate) {
-  //       const startDate = new Date(props.state.startDate);
-  //       const endDate = new Date(props.state.endDate);
-  //       if (
-  //         startDate.getTime() >= new Date(product.date).getTime() &&
-  //         endDate.getTime() < new Date(product.date).getTime()
-  //       ) {
-  //         return product;
-  //       }
-  //     } else if (!props.state.startDate || !props.state.endDate) {
-  //       const now = new Date();
-  //       const sDate = getDate(now.setDate(1));
-  //       const eDate = getDate(now.setMonth(now.getMonth() + 1, 1));
-  //       const startDate = new Date(sDate);
-  //       const endDate = new Date(eDate);
-  //       if (
-  //         new Date(product.date).getTime() >= startDate.getTime() &&
-  //         new Date(product.date).getTime() < endDate.getTime()
-  //       ) {
-  //         return product;
-  //       }
-  //     }
-  //   })
-  //   .reduce((acc, cur) => {
-  //     const duplicate = acc.find((pr) => pr.name === cur.name);
-  //     const index = acc.findIndex((pr) => pr.name === cur.name);
-  //     if (duplicate) {
-  //       const element = structuredClone(duplicate);
-  //       element.quantity += cur.quantity;
-  //       acc.splice(index, 1, element);
-  //     } else {
-  //       acc.push(cur);
-  //     }
-  //     return acc;
-  //   }, []).length;
   const nhiaPatients = props.sales.reduce((acc, cur) => {
     if (cur.pricing === "NHIA") {
       acc += 1;

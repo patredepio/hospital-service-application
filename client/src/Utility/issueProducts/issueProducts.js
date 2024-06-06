@@ -4,7 +4,8 @@ export const storeProductHandler = (id, setState, state, products) => {
     (requistion) => requistion._id === id
   );
   // set to new requistion
-  const newRequistion = structuredClone(requistion);
+  // const newRequistion = structuredClone(requistion);
+  const newRequistion = JSON.parse(JSON.stringify(requistion));
   // Checking for product in store database
   newRequistion.products.forEach((product) => {
     const storeProduct = products.find((pr) => pr.name.includes(product.name));

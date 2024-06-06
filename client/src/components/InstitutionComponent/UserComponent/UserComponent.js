@@ -48,7 +48,16 @@ const userComponent = React.memo((props) => {
                           userName: `${user.firstName} ${user.lastName}`,
                         };
                       })
-                  : null
+                  : () => {
+                      props.setState((prevState) => {
+                        return {
+                          ...prevState,
+                          edit: true,
+                          selectedUser: user,
+                        };
+                      });
+                      // users
+                    }
               }
               key={user._id}
             >

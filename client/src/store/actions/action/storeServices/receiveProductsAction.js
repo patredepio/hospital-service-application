@@ -122,7 +122,8 @@ export const receiveProductsMethod = (
     );
 
     if (valid && receivedItems.length) {
-      const supplier = structuredClone(state.selectedSupplier);
+      // const supplier = structuredClone(state.selectedSupplier);
+      const supplier = JSON.parse(JSON.stringify(state.selectedSupplier));
 
       if (supplier && state.suppliers.length) {
         setState((prevState) => {
@@ -316,7 +317,8 @@ export const exchangeProductsMethod = (
     );
 
     if (valid && receivedItems.length) {
-      const supplier = structuredClone(state.selectedSupplier);
+      // const supplier = structuredClone(state.selectedSupplier);
+      const supplier = JSON.parse(JSON.stringify(state.selectedSupplier));
 
       if (supplier && state.suppliers.length) {
         setState((prevState) => {
