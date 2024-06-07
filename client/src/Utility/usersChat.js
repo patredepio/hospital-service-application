@@ -52,6 +52,40 @@ export const getUser = async (token) => {
   });
   return response;
 };
+// UPDATE USER
+export const updateUser = async (token, id, body) => {
+  const response = await fetch(`/api/users/${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+    body,
+  });
+  return response;
+};
+// ACTIVATE USER
+export const activateUser = async (token, id) => {
+  const response = await fetch(`/api/users/activate/${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+  });
+  return response;
+};
+// DEACTIVATE
+export const deactivateUser = async (token, id) => {
+  const response = await fetch(`/api/users/deactivate/${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+  });
+  return response;
+};
 // DELETE USER
 export const deleteUserMethod = async (token, id) => {
   const response = await fetch(`/api/delete-user/${id}`, {

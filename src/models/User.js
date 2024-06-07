@@ -94,8 +94,8 @@ userSchema.statics.findUser = async (body) => {
   if (!user) {
     throw new Error("Incorrect Username or Password");
   }
-  if (user.signError > 2 || !user.status) {
-    if (user.signError > 2) {
+  if (user.signError > 4 || !user.status) {
+    if (user.signError > 4) {
       throw new Error(
         "Your account is blocked, due to frequent incorrect passwords, please kindly  contact admin"
       );

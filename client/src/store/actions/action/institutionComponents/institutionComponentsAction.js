@@ -9,7 +9,12 @@ import {
   sendProductMessenger,
   resetProductMessenger,
 } from "../inventory/addProductAction";
-import { deleteUserMethod } from "../../../../Utility/usersChat";
+import {
+  activateUser,
+  deactivateUser,
+  deleteUserMethod,
+  updateUser,
+} from "../../../../Utility/usersChat";
 export const getDepartmentsMethod = (token, setState) => {
   setState((prevState) => {
     return {
@@ -244,6 +249,198 @@ export const deleteUser = (setState, token, state) => {
         dispatch(clearAuthentication(error.status));
       } else {
         dispatch(sendProductMessenger("Unable to delete User", true));
+      }
+    }
+    setTimeout(() => {
+      dispatch(resetProductMessenger());
+    }, 3000);
+    setState((prevState) => {
+      return {
+        ...prevState,
+        loading: false,
+      };
+    });
+  };
+};
+export const activateUserMethod = (setState, token, state) => {
+  return async (dispatch) => {
+    try {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          loading: true,
+          edit: false,
+          activationModal: false,
+        };
+      });
+
+      const activateResponse = await activateUser(
+        token,
+        state.selectedUser._id
+      );
+      if (activateResponse?.ok) {
+        dispatch(sendProductMessenger(`Activation Successfully ✓`));
+        setState((prevState) => {
+          return {
+            ...prevState,
+            users: [],
+          };
+        });
+      } else {
+        throw {
+          message: activateResponse.statusText,
+          status: activateResponse.status,
+        };
+      }
+    } catch (error) {
+      if (error.status === 401) {
+        dispatch(clearAuthentication(error.status));
+      } else {
+        dispatch(sendProductMessenger("Unable activate User", true));
+      }
+    }
+    setTimeout(() => {
+      dispatch(resetProductMessenger());
+    }, 3000);
+    setState((prevState) => {
+      return {
+        ...prevState,
+        loading: false,
+      };
+    });
+  };
+};
+export const deactivateUserMethod = (setState, token, state) => {
+  return async (dispatch) => {
+    try {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          loading: true,
+          edit: false,
+          activationModal: false,
+          deactivation: false,
+        };
+      });
+
+      const deactivationResponse = await deactivateUser(
+        token,
+        state.selectedUser._id
+      );
+      if (deactivationResponse?.ok) {
+        dispatch(sendProductMessenger(`Deactivation Successfully ✓`));
+        setState((prevState) => {
+          return {
+            ...prevState,
+            users: [],
+          };
+        });
+      } else {
+        throw {
+          message: deactivationResponse.statusText,
+          status: deactivationResponse.status,
+        };
+      }
+    } catch (error) {
+      if (error.status === 401) {
+        dispatch(clearAuthentication(error.status));
+      } else {
+        dispatch(sendProductMessenger("Unable deactivate User", true));
+      }
+    }
+    setTimeout(() => {
+      dispatch(resetProductMessenger());
+    }, 3000);
+    setState((prevState) => {
+      return {
+        ...prevState,
+        loading: false,
+      };
+    });
+  };
+};
+export const editUserMethod = (e, setState, token, state) => {
+  e.preventDefault();
+  return async (dispatch) => {
+    const body = {};
+    [("firstName", "lastName", "username")].forEach((key) => {
+      if (state[key] !== state.selectedUser[key]) {
+        body[key] = state[key];
+      }
+    });
+    if (state.userRole !== state.selectedUser.role.name) {
+      const newRole = state.userRoles.find(
+        (role) => role.name === state.userRole
+      );
+      body.role = newRole._id;
+    }
+    if (state.department !== state.selectedUser.department.name) {
+      const department = state.departments.find(
+        (dep) => dep.name === state.department
+      );
+      body.department = department._id;
+    }
+    // check for password
+    if (state.password) {
+      if (state.password === state.retypePassword) {
+        const pattern =
+          /(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$/;
+        if (pattern.test(state.password)) {
+          body.password = state.password;
+        } else {
+          dispatch(
+            sendProductMessenger(
+              `Password don't match the password requirements`,
+              true
+            )
+          );
+          setTimeout(() => {
+            dispatch(resetProductMessenger());
+          }, 3000);
+          return;
+        }
+      } else {
+        dispatch(sendProductMessenger(`Passwords don't match`, true));
+        setTimeout(() => {
+          dispatch(resetProductMessenger());
+        }, 3000);
+        return;
+      }
+    }
+    const newBody = JSON.stringify(body);
+    try {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          loading: true,
+          edit: false,
+        };
+      });
+
+      const activateResponse = await updateUser(
+        token,
+        state.selectedUser._id,
+        newBody
+      );
+      if (activateResponse?.ok) {
+        dispatch(sendProductMessenger(`changes saved Successfully ✓`));
+        setState((prevState) => {
+          return {
+            ...prevState,
+            users: [],
+          };
+        });
+      } else {
+        throw {
+          message: activateResponse.statusText,
+          status: activateResponse.status,
+        };
+      }
+    } catch (error) {
+      if (error.status === 401) {
+        dispatch(clearAuthentication(error.status));
+      } else {
+        dispatch(sendProductMessenger("Unable edit User", true));
       }
     }
     setTimeout(() => {

@@ -118,12 +118,13 @@ export async function getClinicalsRequest(body) {
 }
 
 // METHODS
-export const editUser = (setState, user) => {
-  setState((prevState) => {
-    return {
-      ...prevState,
-      edit: true,
-      selectedUser: user,
-    };
-  });
+export const editUserValid = (state, user) => {
+  return (
+    state.firstName === user.firstName &&
+    state.lastName === user.lastName &&
+    state.userRole === user.role.name &&
+    state.department === user.department.name &&
+    state.username === user.username &&
+    state.password === ""
+  );
 };

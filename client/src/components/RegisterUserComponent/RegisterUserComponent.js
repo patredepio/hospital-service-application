@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { Fragment, memo } from "react";
 import { setForm } from "../../Utility/inventory/addProduct";
 import PharmacyLogo from "../PharmacyLogo/PharmacyLogo";
 import Input from "../UI/Input/Input";
@@ -7,12 +7,26 @@ const registerUserComponent = memo((props) => {
   return (
     <form
       className={props.classes.registerForm}
-      onSubmit={(e) =>
-        props.registerUserHandler(e, props.state, props.setState, props.token)
+      onSubmit={
+        props.edit
+          ? (e) =>
+              props.registerUserHandler(
+                e,
+                props.setState,
+                props.token,
+                props.state
+              )
+          : (e) =>
+              props.registerUserHandler(
+                e,
+                props.state,
+                props.setState,
+                props.token
+              )
       }
     >
       <PharmacyLogo />
-      <h3>SIGN UP</h3>
+      <h3>{props.edit ? "EDIT USER" : "SIGN UP"}</h3>
 
       <div id={props.classes.name}>
         <Input
@@ -65,7 +79,7 @@ const registerUserComponent = memo((props) => {
               userRoleId: "",
             };
           });
-          props.getUserRoleMethodHandler(props.token, dep._id, props.setState);
+          // props.getUserRoleMethodHandler(props.token, dep._id, props.setState);
         }}
       />
       <Input
@@ -110,7 +124,7 @@ const registerUserComponent = memo((props) => {
         config={{
           type: "password",
           name: "password",
-          required: true,
+          required: props.edit ? props.requiredEdit : true,
           value: props.state.password,
           placeholder: "PASSWORD",
         }}
@@ -126,7 +140,7 @@ const registerUserComponent = memo((props) => {
         config={{
           type: "password",
           name: "retypePassword",
-          required: true,
+          required: props.edit ? props.requiredEdit : true,
           value: props.state.retypePassword,
           placeholder: "RETYPE PASSWORD",
         }}
@@ -136,9 +150,10 @@ const registerUserComponent = memo((props) => {
         config={{
           className: props.classes.registerBtn,
           type: "submit",
+          disabled: props.disabled,
         }}
       >
-        SIGN UP
+        {props.edit ? "EDIT USER" : "SIGN UP"}
       </Button>
     </form>
   );

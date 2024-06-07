@@ -47,9 +47,10 @@ router.get("/api/users", authentication, async (req, res) => {
       .find({
         _id: { $ne: req.user._id },
       })
-      .limit(7)
       .populate("department")
-      .populate("role");
+      .populate("role")
+      .limit(7);
+
     if (!users.length) {
       return res.status(404).send();
     }
@@ -72,7 +73,10 @@ router.get(
         }
       : {};
     try {
-      const users = await User.find(search).populate("department").limit(7);
+      const users = await User.find(search)
+        .populate("department")
+        .populate("role")
+        .limit(7);
       if (!users.length) {
         return res.status(404).send();
       }
@@ -165,6 +169,71 @@ router.post(
 //     res.status(404).send();
 //   }
 // });
+router.patch("/api/users/:id", institutionAuthentication, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) {
+      res.status(404).send();
+    }
+    const updates = Object.keys(req.body);
+    const allowedUpdates = [
+      "firstName",
+      "lastName",
+      "username",
+      "department",
+      "role",
+      "password",
+    ];
+    const isValidOperation = updates.every((update) =>
+      allowedUpdates.includes(update)
+    );
+    if (!isValidOperation) {
+      return res.status(400).send();
+    }
+    updates.forEach((update) => (user[update] = req.body[update]));
+    await user.save();
+    res.status(200).send();
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send();
+  }
+});
+router.patch(
+  "/api/users/activate/:id",
+  institutionAuthentication,
+  async (req, res) => {
+    try {
+      const user = await User.findOne({ _id: req.params.id });
+      if (!user) {
+        res.status(404).send();
+      }
+      user.signError = 0;
+      user.status = true;
+      await user.save();
+      res.status(200).send();
+    } catch (error) {
+      res.status(400).send();
+    }
+  }
+);
+router.patch(
+  "/api/users/deactivate/:id",
+  institutionAuthentication,
+  async (req, res) => {
+    try {
+      const user = await User.findOne({ _id: req.params.id });
+      if (!user) {
+        res.status(404).send();
+      }
+      user.signError = 10;
+      user.status = false;
+      await user.save();
+      res.status(200).send();
+    } catch (error) {
+      res.status(400).send();
+    }
+  }
+);
 router.get("/api/user/me", authentication, (req, res) => {
   res.send(req.user);
 });
