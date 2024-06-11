@@ -224,6 +224,7 @@ export const submitTransfer = (
         if (error.status === 401) {
           dispatch(clearAuthentication(error.status));
         } else {
+          console.log(error.message);
           dispatch(sendProductMessenger("problem transferring products", true));
           setState((prevState) => {
             return {

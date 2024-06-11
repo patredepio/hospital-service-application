@@ -104,8 +104,6 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
     "costPrice",
     "quantity",
     "fgPrice",
-    "unitOfIssue",
-    "issueQuantity",
     "packSize",
     "minimumQuantity",
     "expiryDate",
@@ -146,6 +144,7 @@ router.patch("/api/product/quantity/:id", authentication, async (req, res) => {
     await product.save();
     res.status(200).send(product);
   } catch (e) {
+    console.log(e.message);
     res.status(400).send();
   }
 });

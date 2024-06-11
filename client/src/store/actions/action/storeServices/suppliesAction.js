@@ -64,6 +64,7 @@ export const initSupplies = (token, setState, location, unit, clinic) => {
         return {
           ...prevState,
           loading: false,
+          supplies: [],
         };
       });
     }
@@ -178,6 +179,7 @@ export const deleteSupply = (
               );
               if (productLogResponse?.ok) {
                 Object.keys(movement).forEach((key) => delete movement[key]);
+                // Start from here
               } else {
                 throw {
                   message: productLogResponse.statusText,
@@ -198,6 +200,7 @@ export const deleteSupply = (
             }
           }
         });
+        // it is not correct
         dispatch(sendProductMessenger("deleted Successfully  ✓"));
         setState((prevState) => {
           return {

@@ -1,6 +1,7 @@
 const express = require("express");
 const connectDb = require("./db/mongodb");
 const socketio = require("socket.io");
+const path = require("path");
 connectDb();
 const app = express();
 const port = process.env.PORT || 3001;
@@ -57,6 +58,20 @@ app.use(userRoleRouter);
 app.use(transferServer);
 app.use(pharmacovigilanceServer);
 app.use(feedbackServer);
+// ---------------------DEPLOYMENT----------------
+const __dirname1 = path.resolve();
+if (process.env.NODE_ENV === "production") {
+  console.log(process.env.NODE_ENV);
+  app.use(express.static(path.join(__dirname1, "/client/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("Api is running Successfully");
+  });
+}
 
 const server = app.listen(port, () => {
   console.log("Server is live " + port);

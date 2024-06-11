@@ -37,16 +37,16 @@ const intialState = {
     //   active: false,
     //   authenticated: true,
     // },
-    {
-      src: message,
-      alt: "Message",
-      description: "Message",
-      link: true,
-      to: "/pharma-app/messages",
-      active: false,
-      authenticated: true,
-      notification: [],
-    },
+    // {
+    //   src: message,
+    //   alt: "Message",
+    //   description: "Message",
+    //   link: true,
+    //   to: "/pharma-app/messages",
+    //   active: false,
+    //   authenticated: true,
+    //   notification: [],
+    // },
 
     {
       src: inventory,

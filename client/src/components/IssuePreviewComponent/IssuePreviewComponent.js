@@ -89,10 +89,10 @@ const issuePreviewComponent = React.memo((props) => {
           >
             <div>{product.name}</div>
             <div className={classes.desktopOnly}>
-              {+product.stockRequired} * {product.packSize}
+              {+product.stockRequired} ✕ {product.packSize}
             </div>
             <div>
-              {+product.approvedQty} * {product.packSize}
+              {+product.approvedQty} ✕ {product.packSize}
             </div>
 
             <div className={classes.desktopOnly}>

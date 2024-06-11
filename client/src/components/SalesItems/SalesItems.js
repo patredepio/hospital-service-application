@@ -71,7 +71,7 @@ const salesItems = memo((props) => {
                           ? sale.totalPrice
                           : sale.products.reduce(
                               (acc, cur) =>
-                                (acc += cur.HmoPrice * cur.quantity),
+                                (acc += cur.hmoPrice * cur.quantity),
                               0
                             )
                       )}

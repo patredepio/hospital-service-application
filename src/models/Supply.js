@@ -35,7 +35,48 @@ const supplySchema = new mongoose.Schema(
       default: false,
     },
 
-    products: [],
+    products: [
+      {
+        name: {
+          type: String,
+        },
+        id: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+        quantity: {
+          type: Number,
+        },
+        onHandQty: {
+          type: Number,
+        },
+        costPrice: {
+          type: Number,
+        },
+        expiryDate: {
+          type: Date,
+        },
+        packSize: {
+          type: Number,
+        },
+        qtyPrice: {
+          type: Number,
+        },
+        category: {
+          _id: {
+            type: mongoose.Schema.Types.ObjectId,
+          },
+          category: {
+            type: String,
+          },
+          createdAt: {
+            type: Date,
+          },
+          updatedAt: {
+            type: Date,
+          },
+        },
+      },
+    ],
   },
   {
     timestamps: true,

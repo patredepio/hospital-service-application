@@ -19,7 +19,7 @@ const searchRender = React.memo((props) => {
       }}
     >
       <div>{product.name}</div>
-      <div>{product.displayQuantity}</div>
+      <div>{product.quantity}</div>
       <div>{product.sellingPrice}</div>
       <div className={classes.desktopOnly}>
         {product.productCategory?.category}

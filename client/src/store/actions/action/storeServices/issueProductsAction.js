@@ -109,59 +109,69 @@ export const issueRequistionMethod = (
 
       // remove the quantity from store quantity
       requistionProducts.forEach(async (product) => {
-        if (product.approvedQty > 0) {
-          if (
-            new Date(product.storeProduct.expiryDate).getTime() <
-            new Date(product.expiryDate).getTime()
-          ) {
-            product.expiryDate = product.storeProduct.expiryDate
-              .split("T")[0]
-              .slice(0, -3);
-          }
-          const updatedStoreItemResponse = await updateProductQuantity(
-            token,
-            product.storeProduct._id,
-            JSON.stringify({ quantity: +product.approvedQty })
-          );
-          if (updatedStoreItemResponse?.ok) {
-            const newProduct = await updatedStoreItemResponse.json();
-            // setProductLogs
-            const movementResponse = Object.create(null);
-
-            movementResponse.movement = `${requistion?.location?.name} ${requistion?.clinic?.name} ${requistion?.unit?.name}  SIV ${requistion?.siv}`;
-            movementResponse.issued = +product.approvedQty;
-            movementResponse.balance = newProduct.quantity;
-            movementResponse.product = newProduct._id;
-            movementResponse.location = location;
-            movementResponse.unit = unit;
-            movementResponse.clinic = clinic;
-            const productLogResponse = await addProductLogs(
+        try {
+          if (product.approvedQty > 0) {
+            if (
+              new Date(product.storeProduct.expiryDate).getTime() <
+              new Date(product.expiryDate).getTime()
+            ) {
+              product.expiryDate = product.storeProduct.expiryDate
+                .split("T")[0]
+                .slice(0, -3);
+            }
+            const updatedStoreItemResponse = await updateProductQuantity(
               token,
-              JSON.stringify(movementResponse)
+              product.storeProduct._id,
+              JSON.stringify({ quantity: +product.approvedQty })
             );
+            if (updatedStoreItemResponse?.ok) {
+              const newProduct = await updatedStoreItemResponse.json();
+              // setProductLogs
+              const movementResponse = Object.create(null);
 
-            if (productLogResponse?.ok) {
-              Object.keys(movementResponse).forEach(
-                (key) => delete movementResponse[key]
+              movementResponse.movement = `${requistion?.location?.name} ${requistion?.clinic?.name} ${requistion?.unit?.name}  SIV ${requistion?.siv}`;
+              movementResponse.issued = +product.approvedQty;
+              movementResponse.balance = newProduct.quantity;
+              movementResponse.product = newProduct._id;
+              movementResponse.location = location;
+              movementResponse.unit = unit;
+              movementResponse.clinic = clinic;
+              const productLogResponse = await addProductLogs(
+                token,
+                JSON.stringify(movementResponse)
               );
+
+              if (productLogResponse?.ok) {
+                Object.keys(movementResponse).forEach(
+                  (key) => delete movementResponse[key]
+                );
+              } else {
+                throw {
+                  message: productLogResponse.statusText,
+                  status: productLogResponse.status,
+                };
+              }
             } else {
               throw {
-                message: productLogResponse.statusText,
-                status: productLogResponse.status,
+                status: updatedStoreItemResponse.status,
+                message: updatedStoreItemResponse.statusText,
               };
             }
-          } else {
-            throw {
-              status: updatedStoreItemResponse.status,
-              message: updatedStoreItemResponse.statusText,
-            };
+          }
+        } catch (error) {
+          if (error.status === 401) {
+            dispatch(clearAuthentication(error.status));
           }
         }
       });
-      const mainRequistionProducts = [...requistionProducts].map((product) => {
-        delete product.storeProduct;
-        return product;
-      });
+      const mainRequistionProducts = JSON.parse(
+        JSON.stringify(
+          [...requistionProducts].map((product) => {
+            delete product.storeProduct;
+            return product;
+          })
+        )
+      );
       const quantityPrice = mainRequistionProducts.reduce((acc, cur) => {
         acc += +cur.quantityPrice;
         return acc;

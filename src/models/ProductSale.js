@@ -56,7 +56,34 @@ const productSalesSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    products: [],
+    products: [
+      {
+        hmoPrice: {
+          type: Number,
+        },
+        name: {
+          type: String,
+        },
+        quantity: {
+          type: Number,
+        },
+        price: {
+          type: Number,
+        },
+        quantityPrice: {
+          type: Number,
+        },
+        packSize: {
+          type: Number,
+        },
+        id: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+        expiryDate: {
+          type: Date,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

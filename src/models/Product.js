@@ -38,9 +38,6 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    displayQuantity: {
-      type: String,
-    },
     packSize: {
       type: Number,
       required: true,
@@ -48,7 +45,6 @@ const productSchema = new mongoose.Schema(
     },
     minimumQuantity: {
       type: Number,
-      required: true,
     },
     markUp: {
       type: Number,
@@ -123,12 +119,6 @@ productSchema.pre("save", async function (next) {
     } else {
       product.nhiaPrice = tenPercent;
     }
-  }
-
-  if (product.isModified("quantity")) {
-    product.displayQuantity = `${Math.floor(
-      +product.quantity / product.packSize
-    )} * ${product.packSize}`;
   }
 
   next();

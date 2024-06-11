@@ -18,7 +18,6 @@ import TransferPreviewItem from "../../../components/TransferPreviewItem/Transfe
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import { getClinics } from "../../../store/actions/action/generalLogin/generalLogin";
 import classes from "./TransferProducts.module.css";
-// import { notificationMessenger } from "../../../Utility/general";
 const TransferProductsComponent = React.memo((props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({

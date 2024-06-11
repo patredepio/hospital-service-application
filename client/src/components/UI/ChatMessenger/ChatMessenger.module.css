@@ -3,6 +3,8 @@
   z-index: 100;
   width: 70%;
   text-align: center;
+  left: 15%;
+  top: 30%;
   border-radius: 10px;
   transition: all 0.3s ease-out;
 }
@@ -21,5 +23,9 @@
 @media (min-width: 40rem) {
   .messenger {
     font-size: small;
+  }
+  .chatMessage {
+    width: 500px;
+    left: calc(50%-250px);
   }
 }

@@ -2,7 +2,37 @@ const mongoose = require("mongoose");
 
 const transferSchema = new mongoose.Schema(
   {
-    products: [],
+    products: [
+      {
+        id: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+        name: {
+          type: String,
+        },
+        onHandQuantity: {
+          type: Number,
+        },
+        quantity: {
+          type: Number,
+        },
+        costPrice: {
+          type: Number,
+        },
+        unitCostPrice: {
+          type: Number,
+        },
+        expiryDate: {
+          type: Date,
+        },
+        packSize: {
+          type: Number,
+        },
+        totalPrice: {
+          type: Number,
+        },
+      },
+    ],
     unit: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

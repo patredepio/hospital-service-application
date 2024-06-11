@@ -119,7 +119,7 @@ export const addPrescriptionItem = (
       prescriptionItem.set("packSize", newProduct.packSize);
       prescriptionItem.set("expiryDate", expiryDate);
       if (pricing === "NHIA") {
-        prescriptionItem.set("HmoPrice", newProduct.nhiaPrice * 9);
+        prescriptionItem.set("hmoPrice", newProduct.nhiaPrice * 9);
       }
       prescriptionItem.set("id", newProduct._id);
       const { length, totalPrice } = updateRequistionTabHandler([
@@ -157,10 +157,10 @@ export const updatePrescriptionPrice = (
       );
       // For NHIA HMO PRICE
       if (pricing === "NHIA") {
-        product.set("HmoPrice", selectedProduct.nhiaPrice * 9);
+        product.set("hmoPrice", selectedProduct.nhiaPrice * 9);
       } else {
-        if (product.has("HmoPrice")) {
-          product.delete("HmoPrice");
+        if (product.has("hmoPrice")) {
+          product.delete("hmoPrice");
         }
       }
       product.set(

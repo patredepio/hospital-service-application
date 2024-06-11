@@ -32,7 +32,34 @@ const requistionSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    products: [],
+    products: [
+      {
+        id: {
+          type: mongoose.Schema.Types.ObjectId,
+        },
+        name: {
+          type: String,
+        },
+        onHandQuantity: {
+          type: Number,
+        },
+        costPrice: {
+          type: Number,
+        },
+        stockRequired: {
+          type: Number,
+        },
+        approvedQty: {
+          type: Number,
+        },
+        packSize: {
+          type: Number,
+        },
+        quantityPrice: {
+          type: Number,
+        },
+      },
+    ],
     requistionProcess: {
       type: Boolean,
       required: true,

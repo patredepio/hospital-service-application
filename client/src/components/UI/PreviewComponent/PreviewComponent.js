@@ -13,7 +13,7 @@ const previewComponent = React.memo((props) => {
         {requiste.get("onHandQuantity")}
       </div>
       <div>
-        {requiste.get("stockRequired")} * {requiste.get("packSize")}
+        {requiste.get("stockRequired")} ✕ {requiste.get("packSize")}
       </div>
       <div>
         {Intl.NumberFormat("en-GB").format(requiste.get("quantityPrice"))}

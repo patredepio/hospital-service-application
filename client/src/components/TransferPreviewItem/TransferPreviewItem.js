@@ -20,7 +20,8 @@ const transferPreviewItem = React.memo((props) => {
                 props.location,
                 props.unit,
                 props.clinic,
-                props.setRequistionState
+                props.setRequistionState,
+                props.socket
               )
             : props.receiveProducts(
                 props.token,
