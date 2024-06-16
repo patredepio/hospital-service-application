@@ -130,10 +130,12 @@ export const addPotentialRequisteHandler = (
   setPrice,
   setNumber
 ) => {
-  const requistes = database.filter(
-    (product) =>
-      product.quantity <= product.minimumQuantity || product.quantity === 0
-  );
+  const requistes = database
+    .filter(
+      (product) =>
+        product.quantity <= product.minimumQuantity || product.quantity === 0
+    )
+    .slice(0, 10);
   requistes.forEach((req) => {
     addRequistionItemHandler(
       req._id,

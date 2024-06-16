@@ -63,7 +63,8 @@ export const submitEditForm = (
   $location,
   setState,
   options,
-  clinic
+  clinic,
+  setSearch
 ) => {
   return async (dispatch) => {
     dispatch(setLoader());
@@ -166,6 +167,7 @@ export const submitEditForm = (
                 setState(false);
                 dispatch(initProductDatabase(token, $location, unit, clinic));
                 dispatch(sendProductMessenger("changes saved"));
+                setSearch("");
               } else {
                 dispatch(clearLoader());
                 e.target.reset();

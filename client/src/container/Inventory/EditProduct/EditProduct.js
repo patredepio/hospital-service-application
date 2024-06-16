@@ -78,7 +78,7 @@ const EditProduct = (props) => {
     [dispatch]
   );
   const submitEditFormHandler = useCallback(
-    (event, id, token, unit, location, setState, options, clinic) =>
+    (event, id, token, unit, location, setState, options, clinic, setSearch) =>
       dispatch(
         submitEditForm(
           event,
@@ -88,7 +88,8 @@ const EditProduct = (props) => {
           location,
           setState,
           options,
-          clinic
+          clinic,
+          setSearch
         )
       ),
     [dispatch]
@@ -132,7 +133,7 @@ const EditProduct = (props) => {
   }, [props.socket]);
   const renderedProducts = products.map((product) => {
     const parsedDate = Date.parse(`${product.expiryDate}`);
-    const expiryDate = Intl.DateTimeFormat("en-gb", {
+    const expiryDate = Intl.DateTimeFormat("en-GB", {
       year: "2-digit",
       month: "2-digit",
     }).format(parsedDate);
@@ -231,6 +232,7 @@ const EditProduct = (props) => {
             editProduct={submitEditFormHandler}
             setModal={setModal}
             setAddState={null}
+            setSearch={setSearch}
           />
           <button
             className={classes.removeBtn}

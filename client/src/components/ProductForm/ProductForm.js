@@ -69,7 +69,8 @@ const productForm = (props) => {
                 $location,
                 props.setModal,
                 props.options,
-                clinic
+                clinic,
+                props.setSearch
               );
         }}
       >
