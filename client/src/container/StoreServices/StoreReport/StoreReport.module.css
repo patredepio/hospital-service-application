@@ -72,7 +72,7 @@
   border: 1px solid #ccc;
 }
 
-.requistionItem:nth-child(2) {
+.requistionItem:nth-child(even) {
   background-color: white;
 }
 .requistionItem:hover,
