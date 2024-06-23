@@ -2,12 +2,13 @@
   background-color: white;
   border-radius: 2px;
   border: 1px solid #25447d;
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1.7rem;
+  width: 1.7rem;
   padding: 0.2rem;
   cursor: pointer;
   position: relative;
   margin: 1rem;
+  margin-bottom: 2rem;
 }
 .Logo:hover {
   background-color: #b1ccef;
@@ -62,8 +63,8 @@
 }
 @media (min-width: 40rem) {
   .Logo {
-    height: 2rem;
-    width: 2rem;
+    height: 2.1rem;
+    width: 2.1rem;
     padding: 0.4rem;
   }
 }

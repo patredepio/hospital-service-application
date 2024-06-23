@@ -125,7 +125,6 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
     await product.save();
     res.status(200).send(product);
   } catch (e) {
-    console.log(e.message);
     res.status(400).send();
   }
 });
@@ -144,7 +143,6 @@ router.patch("/api/product/quantity/:id", authentication, async (req, res) => {
     await product.save();
     res.status(200).send(product);
   } catch (e) {
-    console.log(e.message);
     res.status(400).send();
   }
 });
@@ -163,7 +161,6 @@ router.patch("/api/product/expiries/:id", authentication, async (req, res) => {
     await product.save();
     res.status(200).send();
   } catch (error) {
-    console.log(error.message);
     res.status(400).send();
   }
 });
@@ -225,7 +222,6 @@ router.get("/api/fetch-products", authentication, async (req, res) => {
     }
     res.status(200).send(products);
   } catch (error) {
-    console.log(error.message);
     res.status(500).send();
   }
 });

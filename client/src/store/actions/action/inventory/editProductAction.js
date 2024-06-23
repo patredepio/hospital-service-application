@@ -124,7 +124,7 @@ export const submitEditForm = (
         });
         if (!Object.keys(form).length) {
           dispatch(clearLoader());
-          dispatch(sendProductMessenger("no changes have be made", true));
+          dispatch(sendProductMessenger("no changes have been made", true));
         } else {
           try {
             const sendEditResponse = await sendEditReq(

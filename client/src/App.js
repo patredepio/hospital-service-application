@@ -6,7 +6,7 @@ import Spinner from "./components/UI/Spinner/Spinner";
 import "./App.css";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./hoc/Layout/Layout";
-
+import "./fonts/Montserrat-VariableFont_wght.ttf";
 import { reAuthenticate } from "./store/actions/action/auth/loginAction";
 import io from "socket.io-client";
 // institution

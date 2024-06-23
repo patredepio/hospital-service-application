@@ -4,7 +4,6 @@ const Requistion = require("../models/Requistion");
 const router = new express.Router();
 
 router.post("/api/requistion", authentication, async (req, res) => {
-  console.log(req.body);
   const requistion = new Requistion({
     ...req.body,
     requistingPharmacist: req.user._id,

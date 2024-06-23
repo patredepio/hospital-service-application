@@ -1,4 +1,3 @@
-import { object } from "sharp/lib/is";
 import { addProductLogs } from "../../../../Utility/inventory/addProduct";
 import {
   addProductQuantity,
@@ -16,6 +15,7 @@ import {
   sendProductMessenger,
   resetProductMessenger,
 } from "../inventory/addProductAction";
+import { validateReceivedItems } from "../../../../Utility/receivedProducts/receivedProducts";
 export const getSuppliersMethod = (token, setState) => {
   return async (dispatch) => {
     try {
@@ -122,8 +122,8 @@ export const receiveProductsMethod = (
     );
 
     if (valid && receivedItems.length) {
-      // const supplier = structuredClone(state.selectedSupplier);
       const supplier = JSON.parse(JSON.stringify(state.selectedSupplier));
+      console.log(supplier);
 
       if (supplier && state.suppliers.length) {
         setState((prevState) => {
@@ -454,5 +454,111 @@ export const exchangeProductsMethod = (
     setTimeout(() => {
       dispatch(resetProductMessenger());
     }, 3000);
+  };
+};
+export const holdReceiveProducts = (e, state, setState) => {
+  return (dispatch) => {
+    if (e.target.innerText === "HELD") {
+      if (!sessionStorage.getItem("heldReceivedItems")) {
+        dispatch(sendProductMessenger("no Items held", true));
+        setTimeout(() => {
+          dispatch(resetProductMessenger());
+        }, 3000);
+      } else {
+        const heldReceivedItems = JSON.parse(
+          sessionStorage.getItem("heldReceivedItems")
+        );
+
+        setState((prevState) => {
+          return {
+            ...prevState,
+            heldProducts: heldReceivedItems,
+            hold: true,
+          };
+        });
+      }
+    } else {
+      const updatedProducts = state.receivedItems.map((product) =>
+        Object.fromEntries(product)
+      );
+      const supplier = state.suppliers.find(
+        (su) => su._id === state.selectedSupplier
+      );
+
+      const received = {
+        products: updatedProducts,
+        supplier,
+      };
+      if (sessionStorage.getItem("heldReceivedItems")) {
+        const heldReceivedItems = JSON.parse(
+          sessionStorage.getItem("heldReceivedItems")
+        );
+        heldReceivedItems.push(received);
+        sessionStorage.setItem(
+          "heldReceivedItems",
+          JSON.stringify(heldReceivedItems)
+        );
+      } else {
+        const heldReceivedItems = [];
+        heldReceivedItems.push(received);
+        sessionStorage.setItem(
+          "heldReceivedItems",
+          JSON.stringify(heldReceivedItems)
+        );
+      }
+      setState((prevState) => {
+        return {
+          ...prevState,
+          receivedItems: [],
+        };
+      });
+    }
+  };
+};
+export const uploadReceivedItem = (
+  index,
+  token,
+  location,
+  unit,
+  clinic,
+  setState
+) => {
+  return (dispatch, getState) => {
+    // const clinic = JSON.parse(sessionStorage.getItem("clinic"))?.id;
+    dispatch(initProductDatabase(token, location, unit, clinic));
+    const database = JSON.parse(
+      JSON.stringify([...getState().general.products.database])
+    );
+    // use get State to validation products quantities
+    const heldReceivedItems = JSON.parse(
+      sessionStorage.getItem("heldReceivedItems")
+    );
+
+    const [receivedItem] = heldReceivedItems.splice(index, 1);
+    // remove selected Prescription
+    sessionStorage.setItem(
+      "heldReceivedItems",
+      JSON.stringify(heldReceivedItems)
+    );
+    // CONVERTING THE OBJECT TO MAP BASED
+    const products = receivedItem.products.map((product) => {
+      const newProduct = new Map();
+      const keys = Object.keys(product);
+      keys.forEach((key) => {
+        newProduct.set(key, product[key]);
+      });
+      return newProduct;
+    });
+    receivedItem.products = products;
+    setState((prevState) => {
+      return {
+        ...prevState,
+        receivedItems: products,
+        selectedSupplier: receivedItem.supplier._id,
+        hold: false,
+      };
+    });
+    // VALIDATE QUANTITY
+    validateReceivedItems(database, setState);
   };
 };

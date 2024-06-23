@@ -21,6 +21,9 @@
   height: 200px;
   overflow: auto;
 }
+.searchedProducts > div {
+  overflow: hidden;
+}
 .searchedProducts::-webkit-scrollbar {
   width: 10px;
 }

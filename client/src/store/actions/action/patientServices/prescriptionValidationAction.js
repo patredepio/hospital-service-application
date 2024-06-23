@@ -849,7 +849,9 @@ export const uploadPrescription = (
   return (dispatch, getState) => {
     const clinic = JSON.parse(sessionStorage.getItem("clinic"))?.id;
     dispatch(initProductDatabase(token, location, unit, clinic));
-    const database = [...getState().general.products.database];
+    const database = JSON.parse(
+      JSON.stringify([...getState().general.products.database])
+    );
     // use get State to validation products quantities
     const prescriptions = JSON.parse(
       sessionStorage.getItem("heldPrescriptions")

@@ -69,6 +69,7 @@
   padding: 20px 10px;
   box-shadow: 2px 2px 2px 2px #25447d2e;
   margin: 0.5rem 0;
+  overflow: hidden;
 }
 .button {
   background-color: white;

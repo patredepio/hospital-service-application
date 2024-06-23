@@ -39,6 +39,9 @@
   border-radius: 2px;
   font-size: x-small;
 }
+.productItem > div {
+  overflow: hidden;
+}
 .empty {
   border: 2px solid #ccc;
   background-color: white;
@@ -49,7 +52,6 @@
 }
 .productItem:nth-child(even) {
   background-color: #b3c6fe;
-  /* #B3C6FE */
 }
 .productItem:hover,
 .productItem:active {
@@ -60,6 +62,7 @@
   grid-template-columns: auto 100px 100px;
   align-items: center;
 }
+
 @media (min-width: 40rem) {
   .desktopOnly {
     display: block;

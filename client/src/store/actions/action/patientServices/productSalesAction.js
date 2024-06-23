@@ -40,7 +40,7 @@ export const deleteSale = (
               movement.product = newProduct._id;
               movement.location = location;
               movement.unit = unit;
-              movement.clinic = clinic?.id;
+              movement.clinic = clinic;
               const productLogResponse = await addProductLogs(
                 token,
                 JSON.stringify(movement)
@@ -102,7 +102,7 @@ export const deleteSale = (
             };
           });
           dispatch(sendProductMessenger("sale deleted SuccessFully ✓"));
-          dispatch(initProductSalesDatabase(token, location, unit, clinic?.id));
+          dispatch(initProductSalesDatabase(token, location, unit, clinic));
         }
       } else {
         throw {
@@ -115,6 +115,7 @@ export const deleteSale = (
         dispatch(clearAuthentication(error.status));
       } else {
         dispatch(sendProductMessenger("unable to delete sale", true));
+        dispatch(setSalesLoader());
       }
     }
     setTimeout(() => {

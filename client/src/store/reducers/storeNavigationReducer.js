@@ -81,10 +81,10 @@ const storeIntialState = {
           linkName: "REQUISTION",
           linkHref: "/pharma-app/requistion",
         },
-        {
-          linkName: "REQUISTIONS",
-          linkHref: "/pharma-app/requistions",
-        },
+        // {
+        //   linkName: "REQUISTIONS",
+        //   linkHref: "/pharma-app/requistions",
+        // },
         {
           linkName: "TRANSFER",
           linkHref: "/pharma-app/transfer-products",

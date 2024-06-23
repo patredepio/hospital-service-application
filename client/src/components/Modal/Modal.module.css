@@ -1,8 +1,6 @@
 .Modal {
   position: fixed;
   z-index: 10;
-  /* background-image: linear-gradient(#e8f1fbbf, #eaf3fa84),
-    url("../../assets/images/pharmacy.avif"); */
   background-color: white;
   background-size: cover;
   background-position: center;

@@ -19,17 +19,21 @@ export const getAnalysisData = (database) => {
   } else {
     const patientsRegistered = database.filter((sale) => sale.patient);
     const noRegisteredPatients = database.filter((sale) => !sale.patient);
-    let patientNumber = Object.values(
-      patientsRegistered.reduce((acc, cur) => {
-        cur[cur.patient._id]
-          ? acc[cur.patient._id]++
-          : (acc[cur.patient._id] = 1);
+    let patientNumber = null;
+    if (patientsRegistered.length) {
+      patientNumber = Object.values(
+        patientsRegistered.reduce((acc, cur) => {
+          cur[cur.patient._id]
+            ? acc[cur.patient._id]++
+            : (acc[cur.patient._id] = 1);
+          return acc;
+        }, {})
+      ).reduce((acc, cur) => {
+        acc += cur;
         return acc;
-      }, {})
-    ).reduce((acc, cur) => {
-      acc += cur;
-      return acc;
-    });
+      });
+    }
+
     patientNumber = patientNumber + noRegisteredPatients.length;
     const { prescriptionNumber, totalPrice } = database.reduce(
       (acc, cur, _, arr) => {

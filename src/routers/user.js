@@ -82,7 +82,6 @@ router.get(
       }
       res.status(200).send(users);
     } catch (error) {
-      console.log(error.message);
       res.status(400).send();
     }
   }
@@ -194,7 +193,6 @@ router.patch("/api/users/:id", institutionAuthentication, async (req, res) => {
     await user.save();
     res.status(200).send();
   } catch (error) {
-    console.log(error.message);
     res.status(400).send();
   }
 });

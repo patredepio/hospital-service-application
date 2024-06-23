@@ -5,6 +5,7 @@ import Navbar from "../../components/Navigation/Navbar/Navbar";
 import Sidebar from "../../components/Navigation/Sidebar/Sidebar";
 import PharmacySite from "../../components/PharmacySite/PharmacySite";
 import Footer from "../../components/Navigation/Footer/Footer";
+import pharmacyImage from "../../assets/images/pharmacy.avif";
 const Layout = (props) => {
   const dispatch = useDispatch();
   const [showNav, setNav] = useState(false);
@@ -40,7 +41,12 @@ const Layout = (props) => {
         showBackdrop={showNav}
         closedNav={() => setNav(false)}
       />
-      <main>
+      <main
+        style={{
+          backgroundImage: `linear-gradient(#e8f1fbbf, #eaf3fa84),
+    url(${pharmacyImage})`,
+        }}
+      >
         {sessionStorage.getItem("isInstitution") ? null : isAuthenticated ? (
           <PharmacySite
             site={site}

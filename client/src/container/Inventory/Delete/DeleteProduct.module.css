@@ -35,6 +35,9 @@
   font-size: x-small;
   cursor: pointer;
 }
+.productItem > div {
+  overflow: hidden;
+}
 .interaction {
   text-transform: uppercase;
   font-size: x-small;

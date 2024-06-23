@@ -1,6 +1,6 @@
 const pharmaAuthentication = (req, res, next) => {
   try {
-    if (req.user.role.name === "INTERN PHARMACIST" && !req.user.status) {
+    if (req.user.role.name === "INTERN PHARMACIST" || !req.user.status) {
       throw new Error();
     }
     req.user;

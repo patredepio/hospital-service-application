@@ -1,9 +1,10 @@
 .PharmacyLogo {
   font-size: small;
-  font-weight: bolder;
   color: #f9a260;
   text-decoration: none;
   margin: 0 1rem;
+  letter-spacing: 2px;
+  font-family: "Montserrat", Arial, Helvetica, sans-serif;
 }
 @media (min-width: 40rem) {
   .PharmacyLogo {

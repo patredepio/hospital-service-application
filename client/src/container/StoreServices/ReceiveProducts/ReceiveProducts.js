@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
   initProductDatabase,
   clearProductDatabaseError,
@@ -8,11 +8,14 @@ import {
   clearMessage,
   sendMessage,
   exchangeProductsMethod,
+  holdReceiveProducts,
+  uploadReceivedItem,
 } from "../../../store";
 import ErrorHandler from "../../../hoc/ErrorHandler/ErrorHandler";
 import Modal from "../../../components/Modal/Modal";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
 import classes from "./ReceiveProducts.module.css";
+import HoldComponent from "../../../components/HoldComponent/HoldComponent";
 import {
   addToReceivedList,
   filteredProducts,
@@ -50,6 +53,8 @@ const ReceiveProducts = (props) => {
     addSupplier: false,
     suppliers: [],
     selectedSupplier: null,
+    hold: false,
+    heldProducts: [],
   });
 
   const productDatabase = useSelector(
@@ -81,6 +86,17 @@ const ReceiveProducts = (props) => {
       ),
     [dispatch]
   );
+  const holdReceiveProductsHandler = useCallback(
+    (e, state, setState) => dispatch(holdReceiveProducts(e, state, setState)),
+    [dispatch]
+  );
+  const uploadReceivedItemHandler = useCallback(
+    (index, token, location, unit, clinic, setState) =>
+      dispatch(
+        uploadReceivedItem(index, token, location, unit, clinic, setState)
+      ),
+    [dispatch]
+  );
   const exchangeProductsMethodHandler = useCallback(
     (token, setState, state, unit, location, clinic) =>
       dispatch(
@@ -108,6 +124,7 @@ const ReceiveProducts = (props) => {
     },
     { numberProducts: 0, sumTotal: 0 }
   );
+
   useEffect(() => {
     initProductDatabaseHandler(token, $location, unit, clinic);
     getSuppliersHandler(token, setState);
@@ -135,6 +152,28 @@ const ReceiveProducts = (props) => {
         />
       )}
       <ChatMessenger message={mainMessage} />
+      <Modal
+        show={state.hold}
+        modalClosed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              hold: false,
+            };
+          })
+        }
+      >
+        <HoldComponent
+          item={state.heldProducts}
+          component='Received Products'
+          retrieve={uploadReceivedItemHandler}
+          token={token}
+          location={$location}
+          unit={unit}
+          clinic={clinic}
+          setState={setState}
+        />
+      </Modal>
       <Modal
         show={state.addModal}
         modalClosed={() =>
@@ -442,6 +481,12 @@ const ReceiveProducts = (props) => {
             </div>
           </div>
           <div>
+            <Button
+              config={{ className: classes.hold }}
+              changed={(e) => holdReceiveProductsHandler(e, state, setState)}
+            >
+              {state.receivedItems.length ? "HOLD" : "HELD"}
+            </Button>
             <Button
               config={{
                 className: classes.confirm,

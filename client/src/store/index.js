@@ -115,6 +115,8 @@ import {
   getSuppliersMethod,
   receiveProductsMethod,
   exchangeProductsMethod,
+  holdReceiveProducts,
+  uploadReceivedItem,
 } from "./actions/action/storeServices/receiveProductsAction";
 import {
   prescriptionValidation,
@@ -427,6 +429,8 @@ export {
   addSupplier,
   getSuppliersMethod,
   receiveProductsMethod,
+  holdReceiveProducts,
+  uploadReceivedItem,
   exchangeProductsMethod,
   initSupplies,
   filterSupplies,

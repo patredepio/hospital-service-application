@@ -669,6 +669,8 @@ const PrescriptionValidation = (props) => {
                   onChange={(e) => {
                     if (e.target.value.match(/^[0-9]+$/)) {
                       setExtraCharge(+e.target.value);
+                    } else {
+                      setExtraCharge(0);
                     }
                   }}
                   style={{

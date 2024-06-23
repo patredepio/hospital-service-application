@@ -54,6 +54,9 @@
   padding: 10px;
   font-size: x-small;
 }
+.productItem > div {
+  overflow: hidden;
+}
 .productItem:hover {
   border: 1px solid #25447d;
 }

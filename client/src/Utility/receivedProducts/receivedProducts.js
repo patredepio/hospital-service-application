@@ -89,7 +89,7 @@ export const updateReceivedListPrice = (e, id, setState) => {
       const productIndex = receivedItems.findIndex(
         (item) => item.get("id") === id
       );
-      productItem.set("quantity", "0");
+      productItem.set("costPrice", 0);
       productItem.set(
         "qtyPrice",
 
@@ -194,4 +194,35 @@ export const setSelectedSupplyHandler = (id, setState, state) => {
       };
     });
   }
+};
+
+export const validateReceivedItems = (database, setState) => {
+  setState((prevState) => {
+    const products = [...prevState.receivedItems];
+    products.forEach((product) => {
+      const updatedProduct = database.find((p) => p._id === product.get("id"));
+      if (updatedProduct.quantity !== product.get("onHandQty")) {
+        product.set("onHandQty", updatedProduct.quantity);
+      }
+      if (updatedProduct.packSize !== product.get("packSize")) {
+        product.set("packSize", updatedProduct.packSize);
+      }
+      if (updatedProduct.costPrice !== product.get("costPrice")) {
+        product.set("costPrice", updatedProduct.costPrice);
+      }
+      if (
+        updatedProduct.expiryDate.split("T")[0].slice(0, 7) !==
+        product.get("expiryDate")
+      ) {
+        product.set(
+          "expiryDate",
+          updatedProduct.expiryDate.split["T"][0].slice(0, 7)
+        );
+      }
+    });
+    return {
+      ...prevState,
+      receivedItems: products,
+    };
+  });
 };
