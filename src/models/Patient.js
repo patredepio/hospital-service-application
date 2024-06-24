@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const patientSchema = new mongoose.Schema({
   regDate: {
     type: Date,
-    required: true,
   },
   admission: {
     type: Boolean,
