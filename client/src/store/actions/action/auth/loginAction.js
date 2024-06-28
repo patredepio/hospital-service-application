@@ -4,12 +4,9 @@ import {
   CLEAR_LOGIN_ERROR,
   RE_AUTHENTICATE,
   CLEAR_AUTHENTICATION,
-  clearProductSalesError,
-  clearProductDatabaseError,
 } from "../../../index";
 import { loginUser, logoutRequest } from "../../../../Utility/auth";
 import { LOG_OUT } from "../../actionTypes/actionTypes";
-import login from "../../../reducers/auth/loginReducer";
 
 export const authentication = (authStatus, text) => {
   return {

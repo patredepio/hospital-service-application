@@ -1,5 +1,4 @@
 import {
-  ADD_PRODUCT_FAILED,
   GET_PRODUCT_CATEGORIES_SUCCESS,
   SET_ADD_PRODUCT_LOADER,
   RESET_PRODUCT_MESSENGER,
@@ -9,8 +8,6 @@ import {
   CLEAR_ADD_PRODUCT_ERROR,
   OPEN_ADD_CATEGORY,
   CLOSE_ADD_CATEGORY,
-  initProductDatabase,
-  REMOVE_ADD_PRODUCT_LOADER,
 } from "../../../index";
 import {
   getCategory,
@@ -34,11 +31,7 @@ const setAddProductLoader = () => {
     type: SET_ADD_PRODUCT_LOADER,
   };
 };
-const setRemoveProductLoader = () => {
-  return {
-    type: SET_ADD_PRODUCT_LOADER,
-  };
-};
+
 const getCategoriesSuccess = (options) => {
   return {
     type: GET_PRODUCT_CATEGORIES_SUCCESS,

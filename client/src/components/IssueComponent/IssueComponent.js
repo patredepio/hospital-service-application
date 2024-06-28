@@ -15,6 +15,7 @@ const issueComponent = React.memo((props) => {
       numberProducts: 0,
     }
   );
+
   return (
     <div className={classes.mainContainer}>
       <Modal
@@ -176,6 +177,27 @@ const issueComponent = React.memo((props) => {
         >
           PREVIEW
         </Button>
+        {props.checkRequistion(props.requistion._id) ? (
+          <Button
+            config={{
+              className: classes.retrieve,
+            }}
+            changed={() =>
+              props.retrieveRequistion(props.setState, props.requistion._id)
+            }
+          >
+            RETRIEVE
+          </Button>
+        ) : (
+          <Button
+            config={{
+              className: classes.hold,
+            }}
+            changed={() => props.holdIssue(props.requistion, props.setState)}
+          >
+            HOLD
+          </Button>
+        )}
       </div>
     </div>
   );

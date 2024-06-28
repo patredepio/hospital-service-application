@@ -1,28 +1,3 @@
-// export const verifyUser = async (e, ResponseError, reqFunction) => {
-//   e.preventDefault();
-//   try {
-//     const response = await reqFunction(
-//       JSON.stringify(Object.fromEntries(new FormData(e.target)))
-//     );
-//     if (!response.ok) {
-//       throw new ResponseError("Bad Fetch Response", response);
-//     }
-//     const result = await response.json();
-//     sessionStorage.setItem(
-//       "location",
-//       JSON.stringify(Object.fromEntries(new FormData(e.target)).location)
-//     );
-//     sessionStorage.setItem(
-//       "unit",
-//       JSON.stringify(Object.fromEntries(new FormData(e.target)).unit)
-//     );
-//     sessionStorage.setItem("token", JSON.stringify(result.token));
-//     return response;
-//   } catch (err) {
-//     return err.response;
-//   }
-// };
-//
 export async function loginUser(data) {
   const response = await fetch("/api/users/login", {
     method: "POST",

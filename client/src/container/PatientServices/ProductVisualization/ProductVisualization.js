@@ -200,7 +200,7 @@ const ProductVisualization = React.memo((props) => {
           />
           <Input
             config={{
-              type: "date",
+              type: "datetime-local",
               name: "start_date",
               required: true,
             }}
@@ -208,7 +208,7 @@ const ProductVisualization = React.memo((props) => {
           />
           <Input
             config={{
-              type: "date",
+              type: "datetime-local",
               name: "end_date",
               required: true,
             }}

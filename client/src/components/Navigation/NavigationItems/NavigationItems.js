@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import NavigationItem from "./NavigationItem/NavigationItem";
 import NavigationLogo from "../NavigationLogo/NavigationLogo";
 import classes from "./NavigationItems.module.css";

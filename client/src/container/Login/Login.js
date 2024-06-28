@@ -82,6 +82,7 @@ const Login = () => {
       });
     }
   }, [departments.length]);
+
   return (
     <Fragment>
       {isAuthenticated && unit?.name !== "STORE" && (

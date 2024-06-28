@@ -2,8 +2,6 @@ import signup from "../../assets/images/NavigationImages/signup.png";
 import signin from "../../assets/images/NavigationImages/signin.png";
 import contact from "../../assets/images/NavigationImages/contact.png";
 import about from "../../assets/images/NavigationImages/about.png";
-import notification from "../../assets/images/NavigationImages/notification.png";
-import message from "../../assets/images/NavigationImages/message.png";
 import dashboard from "../../assets/images/NavigationImages/dashboard.png";
 import inventory from "../../assets/images/NavigationImages/inventory.png";
 import logout from "../../assets/images/NavigationImages/logout.png";
@@ -313,6 +311,7 @@ const storeNavigation = (state = storeIntialState, action) => {
           }
         }
       }
+
     case RESET_ACTIVE_LINK:
       // const links = structuredClone(state.authenticatedLinks);
       const links = JSON.parse(JSON.stringify(state.authenticatedLinks));

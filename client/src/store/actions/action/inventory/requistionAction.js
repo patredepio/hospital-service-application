@@ -9,7 +9,6 @@ import {
 } from "../../../index";
 import { getLastRequistion, postRequistion } from "../../../../Utility/product";
 import { calculateReorderLevelRequest } from "../../../../Utility/sales";
-import requistionComponent from "../../../../components/RequistionComponent/RequistionComponent";
 const setRequistionLoader = () => {
   return {
     type: SET_REQUISTION_LOADER,

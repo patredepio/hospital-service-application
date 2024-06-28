@@ -1,8 +1,5 @@
-import { logoutRequest } from "../../../../Utility/auth";
 import {
   addInstitutionRequest,
-  addDepartmentRequest,
-  addLocationRequest,
   loginInstitutionRequest,
   logoutInstitutionRequest,
 } from "../../../../Utility/institution/initInstitution";
@@ -75,9 +72,7 @@ export const registerInstitution = (e, setState) => {
           sendProductMessenger("Password doesn't met requirement", true)
         );
       } else {
-        {
-          dispatch(sendProductMessenger("Passwords don't match", true));
-        }
+        dispatch(sendProductMessenger("Passwords don't match", true));
       }
       setTimeout(() => {
         dispatch(resetProductMessenger());

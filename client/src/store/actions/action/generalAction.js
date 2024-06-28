@@ -8,14 +8,12 @@ import {
   resetProductMessenger,
   sendProductMessenger,
   resetFilteredProducts,
-  PATIENT_DATABASE,
   WARD_DATABASE,
   PRODUCT_SALES_DATABASE,
   PRODUCT_SALES_LOADER,
   PRODUCT_SALES_DATABASE_ERROR,
   CLEAR_PRODUCT_SALES_ERROR,
   getProductExpiryAction,
-  getPotentialExpiries,
 } from "../../index";
 import { getDatabase } from "../../../Utility/general";
 import { getAllProducts } from "../../../Utility/product";
@@ -99,10 +97,10 @@ export const initProductDatabase = (token, location, unit, clinic) => {
           sessionStorage.setItem("expired", JSON.stringify(true));
         }
       } else {
-        throw new Object({
+        throw {
           status: productResponse.err.response.status,
           message: productResponse.message,
-        });
+        };
       }
     } catch (error) {
       if (error.status === 401) {
@@ -253,7 +251,7 @@ export const filterSales = (e, token, location, unit, clinic) => {
       // 1 month duration
       formData.start_date = new Date().toISOString().split("T")[0].slice(0, -3);
       let now = new Date();
-      if (now.getMonth() == 11) {
+      if (now.getMonth() === 11) {
         let current = new Date(now.getFullYear() + 1, 0, 1);
         formData.end_date = `${current.getFullYear()}-${
           current.getMonth() + 1

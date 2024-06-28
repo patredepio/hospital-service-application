@@ -12,6 +12,7 @@ import {
   validateIssue,
   sendMessage,
   clearMessage,
+  holdIssue,
 } from "../../../store";
 import {
   storeProductHandler,
@@ -19,6 +20,8 @@ import {
   updateCostPriceHandler,
   updateStoreProductHandler,
   searchStoreProductHandler,
+  checkRequistionHeld,
+  retrieveRequistion,
 } from "../../../Utility/issueProducts/issueProducts";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import ErrorHandler from "../../../hoc/ErrorHandler/ErrorHandler";
@@ -86,6 +89,10 @@ const IssuedProducts = (props) => {
     () => dispatch(clearMessage()),
     [dispatch]
   );
+  const holdIssueHandler = useCallback(
+    (state, setState) => dispatch(holdIssue(state, setState)),
+    [dispatch]
+  );
   useEffect(() => {
     initRequistionHandler(token, setState, $location?.id, unit?.id);
   }, []);
@@ -128,6 +135,9 @@ const IssuedProducts = (props) => {
               validateIssue={validateIssueHandler}
               updateStoreProduct={updateStoreProductHandler}
               searchStoreProduct={searchStoreProductHandler}
+              holdIssue={holdIssueHandler}
+              retrieveRequistion={retrieveRequistion}
+              checkRequistion={checkRequistionHeld}
               state={state}
               database={productDatabase}
               show={state.modalPreview}

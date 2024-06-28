@@ -86,6 +86,7 @@ const ProductSalesReport = React.memo((props) => {
       clearMessageHandler
     );
   }, [props.socket]);
+
   return productSalesDatabaseLoader ? (
     <Spinner />
   ) : (

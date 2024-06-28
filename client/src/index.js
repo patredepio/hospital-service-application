@@ -41,9 +41,7 @@ const store = configureStore({
     messenger,
   },
 });
-console.log(
-  "notification on requistion,  main deploy on render,about,contact,edit user,userlogs,received message notification"
-);
+console.log("about,contact,userlogs,notification,errorComponent");
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>

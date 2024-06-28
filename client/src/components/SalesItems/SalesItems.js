@@ -8,7 +8,7 @@ const salesItems = memo((props) => {
       >
         <div>DATE</div>
         <div className={classes.props}>
-          <div>CLINIC</div>
+          <div>PATIENT TYPE</div>
           <div>PRICING TYPE</div>
         </div>
         <div className={[classes.desktopOnly, classes.props].join(" ")}>
@@ -41,7 +41,7 @@ const salesItems = memo((props) => {
                 </div>
               </div>
               <div className={classes.props}>
-                <div>{sale.serviceClinic}</div>
+                <div>{sale.patientType}</div>
                 <div>{sale.pricing}</div>
               </div>
               <div className={[classes.desktopOnly, classes.props].join(" ")}>
@@ -61,7 +61,10 @@ const salesItems = memo((props) => {
                     fontWeight: "bold",
                   }}
                 >
-                  {!sale.receipt || sale.pricing === "NHIA" ? (
+                  {sale.patientType === "OUT-PATIENT" &&
+                  (sale.pricing === "NHIA" ||
+                    sale.pricing === "FUCC" ||
+                    sale.pricing === "NNPC") ? (
                     <div className={classes.deficit}>
                       ₦
                       {Intl.NumberFormat("en-GB", {
@@ -82,7 +85,13 @@ const salesItems = memo((props) => {
                 </div>
               </div>
               <div>
-                {sale.receipt ? (
+                {sale.receipt ||
+                (!sale.receipt && sale.patientType === "REQUISTION") ||
+                (sale.patientType === "IN-PATIENT" &&
+                  (sale.pricing === "NORMAL" ||
+                    sale.pricing === "NHIA" ||
+                    sale.pricing === "NNPC" ||
+                    sale.pricing === "FUCC")) ? (
                   <div className={classes.paid}>✓ Paid</div>
                 ) : (
                   <div className={classes.receipt}> + Add a Receipt</div>

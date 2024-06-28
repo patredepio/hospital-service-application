@@ -100,6 +100,7 @@ const ProductInventory = (props) => {
         key={product._id}
         className={[classes.productStructure, classes.productItem].join(" ")}
         onClick={() => {
+          setSearch("");
           setInventory(true);
           setProductId(product._id);
           setProductName(product.name);

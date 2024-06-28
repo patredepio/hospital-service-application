@@ -123,7 +123,7 @@ const salesReport = React.memo((props) => {
             />
             <Input
               config={{
-                type: "date",
+                type: "datetime-local",
                 name: "start_date",
                 required: true,
               }}
@@ -131,7 +131,7 @@ const salesReport = React.memo((props) => {
             />
             <Input
               config={{
-                type: "date",
+                type: "datetime-local",
                 name: "end_date",
                 required: true,
               }}

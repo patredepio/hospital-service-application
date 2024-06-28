@@ -7,9 +7,6 @@ import {
   accessChats,
   setLatestMessage,
   createGroupChatRequest,
-  notificationRequest,
-  setNotificationRequest,
-  getNotificationRequest,
   deleteGroupChatRequest,
   editGroupChatUsersRequest,
   renameGroupChatRequest,
@@ -489,51 +486,51 @@ export const createGroupChat = (token, state, setState) => {
 };
 // for notification
 
-export const postNotification = (token, message, setState) => {
-  return async (dispatch) => {
-    if (!message._id) {
-      return;
-    }
-    setState((prevState) => {
-      return {
-        ...prevState,
-        notificationLoading: true,
-      };
-    });
-    try {
-      const response = await notificationRequest(
-        token,
-        JSON.stringify({ message: message._id })
-      );
-      if (response?.ok) {
-        const notification = await response.json();
-        setState((prevState) => {
-          return {
-            ...prevState,
-            notificationLoading: false,
-          };
-        });
-      } else {
-        throw {
-          message: response.statusText,
-          status: response.status,
-        };
-      }
-    } catch (error) {
-      if (error.status === 401) {
-        dispatch(clearAuthentication(error.status));
-      } else {
-        sendProductMessenger("Unable to add notification", true);
-        setState((prevState) => {
-          return {
-            ...prevState,
-            notificationLoading: false,
-          };
-        });
-      }
-    }
-  };
-};
+// export const postNotification = (token, message, setState) => {
+//   return async (dispatch) => {
+//     if (!message._id) {
+//       return;
+//     }
+//     setState((prevState) => {
+//       return {
+//         ...prevState,
+//         notificationLoading: true,
+//       };
+//     });
+//     try {
+//       const response = await notificationRequest(
+//         token,
+//         JSON.stringify({ message: message._id })
+//       );
+//       if (response?.ok) {
+//         const notification = await response.json();
+//         setState((prevState) => {
+//           return {
+//             ...prevState,
+//             notificationLoading: false,
+//           };
+//         });
+//       } else {
+//         throw {
+//           message: response.statusText,
+//           status: response.status,
+//         };
+//       }
+//     } catch (error) {
+//       if (error.status === 401) {
+//         dispatch(clearAuthentication(error.status));
+//       } else {
+//         sendProductMessenger("Unable to add notification", true);
+//         setState((prevState) => {
+//           return {
+//             ...prevState,
+//             notificationLoading: false,
+//           };
+//         });
+//       }
+//     }
+//   };
+// };
 
 export const getChatsMethod = (token, setState) => {
   return async (dispatch) => {

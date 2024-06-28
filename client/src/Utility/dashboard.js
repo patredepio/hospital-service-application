@@ -1,4 +1,3 @@
-import { getAllPatients } from "./patient";
 import { ResponseError } from "./auth";
 import { getSales, getSalesDatabase } from "./sales";
 import { getDatabase } from "./general";

@@ -1,7 +1,3 @@
-// // calculation reorderLevel using sales
-// // after reducing it to its array of products with the quantity spaning over 3 months
-// // use it to edit the products minqty
-
 import React, {
   Fragment,
   useCallback,

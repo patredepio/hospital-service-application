@@ -67,7 +67,7 @@ const userSchema = new mongoose.Schema({
 userSchema.methods.generateToken = async function () {
   const user = this;
   const token = jwt.sign({ _id: user.id.toString() }, process.env.ADMINKEY, {
-    expiresIn: "2h",
+    expiresIn: "6h",
   });
   if (!token) {
     throw new Error("Unable to authenicate");

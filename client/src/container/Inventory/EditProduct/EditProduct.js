@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import classes from "./EditProduct.module.css";
-// import Input from "../../../components/UI/Input/Input";
 import ProductForm from "../../../components/ProductForm/ProductForm";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import RenderContainer from "../../../components/RenderContainer/RenderContainer";
@@ -144,6 +143,7 @@ const EditProduct = (props) => {
         onClick={() => {
           initProductCategoriesHandler(token);
           setModal(true);
+          setSearch("");
           setEditFormHandler(
             product._id,
             productDatabase,

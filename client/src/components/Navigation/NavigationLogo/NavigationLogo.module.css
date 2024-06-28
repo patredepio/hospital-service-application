@@ -68,3 +68,11 @@
     padding: 0.4rem;
   }
 }
+
+@media (min-width: 85.4rem) {
+  .Logo {
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: 0.5rem;
+  }
+}

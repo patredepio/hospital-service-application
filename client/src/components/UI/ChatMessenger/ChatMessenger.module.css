@@ -1,15 +1,16 @@
 .chatMessage {
   position: fixed;
   z-index: 100;
-  width: 70%;
+  width: 100%;
   text-align: center;
-  left: 15%;
-  top: 30%;
+  background-color: transparent;
+  top: 10%;
   border-radius: 10px;
   transition: all 0.3s ease-out;
 }
 
 .messenger {
+  width: 70%;
   background-color: white;
   font-size: x-small;
   margin: 1rem auto;
@@ -23,9 +24,5 @@
 @media (min-width: 40rem) {
   .messenger {
     font-size: small;
-  }
-  .chatMessage {
-    width: 500px;
-    left: calc(50%-250px);
   }
 }

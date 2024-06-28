@@ -153,6 +153,7 @@ import {
   initRequistion,
   issueRequistionMethod,
   validateIssue,
+  holdIssue,
 } from "./actions/action/storeServices/issueProductsAction";
 import {
   deleteSale,
@@ -446,6 +447,7 @@ export {
   validateIssue,
   getOutOfStock,
   initOutOfStock,
+  holdIssue,
   // Pharmacovigilance
   getPharmacovigilances,
   // Feedback

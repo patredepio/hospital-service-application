@@ -123,7 +123,6 @@ export const receiveProductsMethod = (
 
     if (valid && receivedItems.length) {
       const supplier = JSON.parse(JSON.stringify(state.selectedSupplier));
-      console.log(supplier);
 
       if (supplier && state.suppliers.length) {
         setState((prevState) => {

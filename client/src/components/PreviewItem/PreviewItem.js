@@ -83,11 +83,6 @@ const previewItem = React.memo((props) => {
             {props.location.name}, {props.unit.name} PHARMACY
           </h4>
           <h5>{props.supplies ? `${props.supplier.name}` : null}</h5>
-          {/* <h5>
-            {props.productSales
-              ? `${props.sale.serviceClinic} ${props.sale.patientType}`
-              : null}
-          </h5> */}
         </div>
       </div>
 
@@ -123,7 +118,17 @@ const previewItem = React.memo((props) => {
           ))}
         </div>
         {props.productSales
-          ? !props.sale.receipt && (
+          ? // inverted
+            !(
+              props.sale.receipt ||
+              (!props.sale.receipt &&
+                props.sale.patientType === "REQUISTION") ||
+              (props.sale.patientType === "IN-PATIENT" &&
+                (props.sale.pricing === "NORMAL" ||
+                  props.sale.pricing === "NHIA" ||
+                  props.sale.pricing === "NNPC" ||
+                  props.sale.pricing === "FUCC"))
+            ) && (
               <form
                 className={classes.addReceipt}
                 onSubmit={(e) =>

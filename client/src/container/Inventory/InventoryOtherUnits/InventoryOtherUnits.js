@@ -94,6 +94,7 @@ const InventoryOtherUnits = memo((props) => {
         className={[classes.productStructure, classes.productItem].join(" ")}
         onClick={() => {
           // new action
+          setSearch("");
           setInventory(true);
           getOtherUnitsInventoryActionHandler(
             token,

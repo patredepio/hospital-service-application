@@ -20,11 +20,12 @@ export const registerUser = (e, form, setForm, token) => {
   e.preventDefault();
   const formData = Object.fromEntries(new FormData(e.target).entries());
   return async (dispatch) => {
-    // "(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$";
     const pattern =
       /(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$/;
     if (!pattern.test(formData.password)) {
-      sendProductMessenger("password doesn`t meet the requirement", true);
+      dispatch(
+        sendProductMessenger("password doesn`t meet the requirement", true)
+      );
       setTimeout(() => {
         dispatch(resetProductMessenger());
       }, 2500);

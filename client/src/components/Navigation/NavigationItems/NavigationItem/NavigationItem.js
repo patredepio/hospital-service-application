@@ -1,4 +1,4 @@
-import { NavLink, Navigate, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
 import classes from "./NavigationItem.module.css";
 const navigationItem = React.memo((props) => {

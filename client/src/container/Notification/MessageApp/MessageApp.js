@@ -31,8 +31,6 @@ import {
   clearMessage,
   editChat,
   deleteChat,
-  addNotificationMethod,
-  filterNotificationMethod,
 } from "../../../store";
 import MiniChatBox from "../../../components/Chat/MiniChatBox/MiniChatBox";
 
@@ -47,7 +45,6 @@ const MessageApp = (props) => {
   const notificationArray = useSelector(
     (state) => state.navigation.authenticatedLinks[1].notification
   );
-  console.log(notificationArray);
   const [state, setState] = useState({
     addChat: false,
     loading: false,
@@ -118,14 +115,6 @@ const MessageApp = (props) => {
     () => dispatch(clearMessage()),
     [dispatch]
   );
-  const addNotificationHandler = useCallback(
-    (notification) => dispatch(addNotificationMethod(notification)),
-    [dispatch]
-  );
-  const filterNotificationHandler = useCallback(
-    (index) => dispatch(filterNotificationMethod(index)),
-    [dispatch]
-  );
   const deleteChatHandler = useCallback(
     (token, state, setState) => dispatch(deleteChat(token, state, setState)),
     [dispatch]
@@ -178,7 +167,6 @@ const MessageApp = (props) => {
     });
     props.socket.on("message received", (newMessageReceived) => {
       if (!chat || !chat._id === newMessageReceived.chat._id) {
-        let notificationMessage = null;
         setTimeout(() => {
           clearMessageHandler();
         }, 4000);
@@ -186,33 +174,11 @@ const MessageApp = (props) => {
           mainMessageHandler(
             `New Message from ${newMessageReceived.sender.firstName} ${newMessageReceived.sender.lastName}`
           );
-
-          notificationMessage = {
-            type: "message",
-            message: `New Message from ${newMessageReceived.sender.firstName} ${newMessageReceived.sender.lastName}`,
-            chat: newMessageReceived,
-          };
         } else {
           mainMessageHandler(
             `Message from ${newMessageReceived.sender.firstName} ${newMessageReceived.sender.lastName} in ${newMessageReceived.chat.name}`
           );
-          notificationMessage = {
-            type: "message",
-            message: `Message from ${newMessageReceived.sender.firstName} ${newMessageReceived.sender.lastName} in ${newMessageReceived.chat.name}`,
-            chat: newMessageReceived,
-          };
         }
-        // addNotificationHandler(notificationMessage);
-        // console.log("ran");
-        // set notification and also upload notification
-        // {type:'requistion  message', action:'receive '}
-        // SINGLE
-        // message:New message from person redirect to chat
-        // GROUP CHAT
-        // Message: new Message from this groupChat redirect to chat
-        // REQUISTION
-        // Message: new requistion from unit name
-        // find chat users
       } else {
         setState((prevState) => {
           return {

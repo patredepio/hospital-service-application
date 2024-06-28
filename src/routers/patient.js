@@ -64,7 +64,7 @@ router.get("/api/patients", authentication, async (req, res) => {
 
   try {
     const patients = await Patient.find(search)
-      .limit(30)
+      .limit(40)
       .sort({ fileNumber: -1 });
     if (!patients.length) {
       throw new Error("no patients found");

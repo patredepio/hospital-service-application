@@ -2,13 +2,13 @@ import React from "react";
 import Input from "../UI/Input/Input";
 import classes from "./RequistionComponent.module.css";
 import Button from "../UI/Button/Button";
-import Spinner from "../UI/Spinner/Spinner";
 const requistionComponent = React.memo((props) => {
   const searchedProducts = props.filteredProducts.map((product) => (
     <div
       className={[classes.searchRenderItem, classes.renderStructure].join(" ")}
       key={product._id}
       onClick={() => {
+        props.setSearch("");
         props.addRequistionItem(
           product._id,
           props.setRequistion,

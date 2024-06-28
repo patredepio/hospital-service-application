@@ -223,3 +223,51 @@ export const issueRequistionMethod = (
     }, 3000);
   };
 };
+
+// STORE ISSUE HOLD
+export const holdIssue = (state, setState) => {
+  return (dispatch) => {
+    const valid = state.products.some((product) => +product.approvedQty);
+    if (valid) {
+      const requistion = {
+        ...state,
+      };
+      if (sessionStorage.getItem("heldRequistions")) {
+        const heldRequistions = JSON.parse(
+          sessionStorage.getItem("heldRequistions")
+        );
+        heldRequistions.push(requistion);
+        sessionStorage.setItem(
+          "heldRequistions",
+          JSON.stringify(heldRequistions)
+        );
+      } else {
+        const heldRequistions = [];
+        heldRequistions.push(requistion);
+        sessionStorage.setItem(
+          "heldRequistions",
+          JSON.stringify(heldRequistions)
+        );
+      }
+      setState((prevState) => {
+        return {
+          ...prevState,
+          requistionComponent: false,
+          selectedRequistion: null,
+          selected: false,
+        };
+      });
+    } else {
+      dispatch(
+        sendProductMessenger(
+          "no changes have been made to this requistion",
+          true
+        )
+      );
+
+      setTimeout(() => {
+        dispatch(resetProductMessenger());
+      }, 3000);
+    }
+  };
+};

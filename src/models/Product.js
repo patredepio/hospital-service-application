@@ -99,7 +99,7 @@ const productSchema = new mongoose.Schema(
 
 productSchema.pre("save", async function (next) {
   const product = this;
-  if (product.isModified("costPrice")) {
+  if (product.isModified("costPrice") || product.isModified("packSize")) {
     product.unitCostPrice = (product.costPrice / product.packSize).toFixed(2);
     const sellingPrice = (product.unitCostPrice * product.markUp).toFixed(2);
     product.sellingPrice = sellingPrice;
