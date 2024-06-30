@@ -104,6 +104,17 @@ productSchema.pre("save", async function (next) {
     const sellingPrice = (product.unitCostPrice * product.markUp).toFixed(2);
     product.sellingPrice = sellingPrice;
     product.nnpcPrice = (sellingPrice * 1.2).toFixed(2);
+    if (product.fgPrice === 0) {
+      product.nhiaPrice = sellingPrice;
+    } else if (sellingPrice > +product.fgPrice) {
+      product.nhiaPrice = (
+        sellingPrice -
+        product.fgPrice +
+        +tenPercent
+      ).toFixed(2);
+    } else {
+      product.nhiaPrice = tenPercent;
+    }
   }
   if (product.isModified("fgPrice")) {
     const sellingPrice = (+product.unitCostPrice * product.markUp).toFixed(2);
