@@ -12,6 +12,7 @@ import {
   clearMessage,
   addReceiptHandler,
 } from "../../../store";
+import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import SalesItems from "../../../components/SalesItems/SalesItems";
 import { setSaleHandler } from "../../../Utility/PatientServices/productSales";
 import Input from "../../../components/UI/Input/Input";
@@ -105,6 +106,17 @@ const ProductSales = (props) => {
   }, [props.socket]);
   return (
     <Fragment>
+      <Backdrop
+        show={state.form}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              form: false,
+            };
+          })
+        }
+      />
       <ChatMessenger message={mainMessage} />
       <Message
         message={message}

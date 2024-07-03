@@ -91,7 +91,9 @@ router.post("/api/users/login", async (req, res) => {
   try {
     const user = await User.findUser(req.body);
     const token = await user.generateToken();
-    res.status(200).send({ token, user: { _id: user._id } });
+    res
+      .status(200)
+      .send({ token, user: { _id: user._id, username: user.username } });
   } catch (e) {
     res.status(400).send({ error: e.message });
   }

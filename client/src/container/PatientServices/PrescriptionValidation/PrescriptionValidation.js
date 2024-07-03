@@ -311,7 +311,8 @@ const PrescriptionValidation = (props) => {
       setTotalPrice,
       setNumberProducts,
       setExtraCharge,
-      format
+      format,
+      extraCharge
     ) =>
       dispatch(
         holdPrescription(
@@ -323,7 +324,8 @@ const PrescriptionValidation = (props) => {
           setTotalPrice,
           setNumberProducts,
           setExtraCharge,
-          format
+          format,
+          extraCharge
         )
       )
   );
@@ -371,7 +373,8 @@ const PrescriptionValidation = (props) => {
       setTotalPrice,
       setNumberProducts,
       setPreview,
-      setFormat
+      setFormat,
+      setExtraCharge
     ) =>
       dispatch(
         uploadPrescription(
@@ -383,7 +386,8 @@ const PrescriptionValidation = (props) => {
           setTotalPrice,
           setNumberProducts,
           setPreview,
-          setFormat
+          setFormat,
+          setExtraCharge
         )
       ),
     [dispatch]
@@ -437,8 +441,9 @@ const PrescriptionValidation = (props) => {
       } else {
         clearTimeout(timer);
       }
-    }, 500);
+    }, 1000);
   }, [osValue, osRef]);
+
   return (
     <div className={classes.prescriptionValidation}>
       <ChatMessenger message={mainMessage} />
@@ -516,6 +521,7 @@ const PrescriptionValidation = (props) => {
           setNumberProducts={setNumberProducts}
           setPreview={setPrescriptionPreview}
           setFormat={setFormat}
+          setExtraCharge={setExtraCharge}
         />
       </Modal>
 
@@ -716,7 +722,8 @@ const PrescriptionValidation = (props) => {
                     setTotalPrice,
                     setNumberProducts,
                     setExtraCharge,
-                    format
+                    format,
+                    extraCharge
                   );
                 }}
               >

@@ -11,6 +11,7 @@ import {
   sendMessage,
   clearMessage,
 } from "../../../store";
+import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import ErrorHandler from "../../../hoc/ErrorHandler/ErrorHandler";
 import Message from "../../../components/UI/Message/Message";
 import Spinner from "../../../components/UI/Spinner/Spinner";
@@ -136,6 +137,17 @@ const ProductVisualization = React.memo((props) => {
   ) : (
     <div className={classes.productVisualization}>
       <ChatMessenger message={mainMessage} />
+      <Backdrop
+        show={state.salesForm}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              salesForm: false,
+            };
+          })
+        }
+      />
       <Message
         message={message}
         error={errorMessage}

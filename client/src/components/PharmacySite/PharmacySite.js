@@ -5,6 +5,7 @@ const pharmacySite = React.memo((props) => (
     <div>SITE : {props.site}</div>
     <div className={classes.desktopOnly}>CLINIC : {props.clinic}</div>
     <div>UNIT : {props.unit}</div>
+    <div>USER : {props.username} </div>
   </div>
 ));
 

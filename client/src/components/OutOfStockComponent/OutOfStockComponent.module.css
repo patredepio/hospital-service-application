@@ -19,10 +19,11 @@
   position: absolute;
   width: 100%;
   padding: 1rem;
-  top: 100px;
+  top: 108px;
   background-color: white;
-  height: 100px;
+  height: 120px;
   overflow: hidden;
+  box-shadow: 2px 2px 2px 2px #aaaaaaaa;
 }
 
 .renderContainer::-webkit-scrollbar {
@@ -45,9 +46,9 @@
 }
 .renderItem {
   font-size: small;
-  box-shadow: 2px 2px 2px 2px #aaaaaaaa;
   padding: 0.2rem;
   cursor: pointer;
+  border: 1px solid transparent;
 }
 .renderItem:hover,
 .renderItem:active {

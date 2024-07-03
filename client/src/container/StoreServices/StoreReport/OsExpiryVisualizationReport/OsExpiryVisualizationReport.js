@@ -14,6 +14,7 @@ import {
   filterOsExpiryVisualization,
   initOsExpiryVisualization,
 } from "../../../../store/actions/action/storeServices/storeRequistionsAction";
+import Backdrop from "../../../../components/UI/Backdrop/Backdrop";
 import { getDate } from "../../../../Utility/general";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
 const OsExpiryVisualizationReport = memo((props) => {
@@ -103,6 +104,17 @@ const OsExpiryVisualizationReport = memo((props) => {
   return (
     <div className={classes.osExpiryContainer}>
       <ChatMessenger message={mainMessage} />
+      <Backdrop
+        show={state.form}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              form: false,
+            };
+          })
+        }
+      />
       <Message
         message={message}
         error={errorMessage}

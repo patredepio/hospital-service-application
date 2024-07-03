@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import classes from "./Footer.module.css";
 import PharmacyLogo from "../../PharmacyLogo/PharmacyLogo";
 const footer = React.memo((props) => {
-  const name = JSON.parse(sessionStorage.getItem("institution"))?.username;
   return (
     <div className={classes.Footer}>
       <div className={classes.Footer_Information}>
@@ -27,7 +26,7 @@ const footer = React.memo((props) => {
       </div>
       <div>
         Copyright © {props.year}
-        <PharmacyLogo name={name} />
+        <PharmacyLogo name={props.name} />
         -All rights reserved
       </div>
     </div>

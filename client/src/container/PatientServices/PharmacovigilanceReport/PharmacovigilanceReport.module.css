@@ -35,6 +35,7 @@
   right: 25%;
   top: 25%;
   font-weight: bold;
+  z-index: 2;
 }
 .filterForm input {
   font-size: x-small;
@@ -109,6 +110,9 @@
   .filterForm {
     width: 400px;
     right: 10%;
+  }
+  .filterForm span {
+    font-size: small;
   }
   .ctn {
     font-size: small;

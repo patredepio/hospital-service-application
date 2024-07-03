@@ -180,9 +180,6 @@ const OsExpiryVisualizationReport = lazy(() => {
     "./container/StoreServices/StoreReport/OsExpiryVisualizationReport/OsExpiryVisualizationReport"
   );
 });
-// const ExchangeProducts = lazy(() => {
-//   return import("./container/StoreServices/ExchangeProducts/ExchangeProducts");
-// });
 
 const ENDPOINT = "http://localhost:3001";
 const socket = io(ENDPOINT);

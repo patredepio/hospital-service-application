@@ -104,7 +104,9 @@ const ReceiveTransferProducts = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch,
+      setState
     );
   }, [props.socket]);
   return (

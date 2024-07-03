@@ -67,9 +67,17 @@ const IssuedProducts = (props) => {
   );
 
   const issueRequistionHandler = useCallback(
-    (token, setState, state, location, unit, clinic) =>
+    (token, setState, state, location, unit, clinic, socket) =>
       dispatch(
-        issueRequistionMethod(token, setState, state, location, unit, clinic)
+        issueRequistionMethod(
+          token,
+          setState,
+          state,
+          location,
+          unit,
+          clinic,
+          socket
+        )
       ),
     [dispatch]
   );
@@ -100,7 +108,9 @@ const IssuedProducts = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch,
+      setState
     );
   }, [props.socket]);
   return (
@@ -161,6 +171,7 @@ const IssuedProducts = (props) => {
               issueRequistion={issueRequistionHandler}
               siv={state.selectedRequistion.siv}
               clinic={clinic}
+              socket={props.socket}
             />
           )
         ) : (

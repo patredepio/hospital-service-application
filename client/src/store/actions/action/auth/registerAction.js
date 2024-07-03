@@ -5,6 +5,7 @@ import {
   resetProductMessenger,
 } from "../../../index";
 import { registerUserReq } from "../../../../Utility/auth";
+
 const initRegistration = () => {
   return {
     type: INIT_USER_REGISTRATION,
@@ -16,21 +17,84 @@ const registerUserProcess = () => {
   };
 };
 
+export const validatePassword = (
+  formData,
+  dispatch,
+  sendProductMessenger,
+  resetProductMessenger
+) => {
+  const isUpperCase = (text) => {
+    const pattern = /[A-Z]/;
+    return text.split("").some((char) => pattern.test(char));
+  };
+  const isLowerCase = (text) => {
+    const pattern = /[a-z]/;
+    return text.split("").some((char) => pattern.test(char));
+  };
+  const isContainSpecialChar = (text) => {
+    const pattern = /[^((0-9)|(a-z)|(A-Z)|\s)]/;
+    return text.split("").some((char) => pattern.test(char));
+  };
+  const isNumber = (text) => {
+    const pattern = /\d+/;
+    return text.split("").some((char) => pattern.test(char));
+  };
+  if (formData.password.length < 8) {
+    dispatch(sendProductMessenger("password must 8 characters long", true));
+    setTimeout(() => {
+      dispatch(resetProductMessenger());
+    }, 2500);
+    return;
+  }
+
+  if (!isUpperCase(formData.password)) {
+    dispatch(
+      sendProductMessenger("password must contain uppercase character", true)
+    );
+    setTimeout(() => {
+      dispatch(resetProductMessenger());
+    }, 2500);
+    return;
+  }
+  if (!isLowerCase(formData.password)) {
+    dispatch(
+      sendProductMessenger("password must contain lowercase character", true)
+    );
+    setTimeout(() => {
+      dispatch(resetProductMessenger());
+    }, 2500);
+    return;
+  }
+  if (!isNumber(formData.password)) {
+    dispatch(
+      sendProductMessenger("password must contain a number from 0-9", true)
+    );
+    setTimeout(() => {
+      dispatch(resetProductMessenger());
+    }, 2500);
+    return;
+  }
+
+  if (!isContainSpecialChar(formData.password)) {
+    dispatch(
+      sendProductMessenger("password must contain a special character", true)
+    );
+    setTimeout(() => {
+      dispatch(resetProductMessenger());
+    }, 2500);
+    return;
+  }
+};
 export const registerUser = (e, form, setForm, token) => {
   e.preventDefault();
   const formData = Object.fromEntries(new FormData(e.target).entries());
   return async (dispatch) => {
-    const pattern =
-      /(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$/;
-    if (!pattern.test(formData.password)) {
-      dispatch(
-        sendProductMessenger("password doesn`t meet the requirement", true)
-      );
-      setTimeout(() => {
-        dispatch(resetProductMessenger());
-      }, 2500);
-      return;
-    }
+    validatePassword(
+      formData,
+      dispatch,
+      sendProductMessenger,
+      resetProductMessenger
+    );
     if (formData.retypePassword === formData.password) {
       if (!form.departments.length || !form.userRoles.length) {
         if (!form.departments.length) {

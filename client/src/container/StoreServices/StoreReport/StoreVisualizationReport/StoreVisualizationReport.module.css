@@ -1,8 +1,11 @@
 .visualization {
   border: 1px solid #ccc;
   background-color: #ffffff87;
-  margin: 0.5rem;
   position: relative;
+  min-height: 600px;
+}
+.graph {
+  padding: 15px;
 }
 .visualization h4 {
   font-size: x-small;

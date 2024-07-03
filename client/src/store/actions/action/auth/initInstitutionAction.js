@@ -8,17 +8,19 @@ import {
   sendProductMessenger,
 } from "../inventory/addProductAction";
 import { clearAuthentication, authentication, logout } from "./loginAction";
+import { validatePassword } from "./registerAction";
 
 export const registerInstitution = (e, setState) => {
   e.preventDefault();
   return async (dispatch) => {
     const formData = Object.fromEntries(new FormData(e.target).entries());
-    if (
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*.?]{10,30}$/.test(
-        formData.password
-      ) &&
-      formData.password === formData.confirmPassword
-    ) {
+    if (formData.password === formData.confirmPassword) {
+      validatePassword(
+        formData,
+        dispatch,
+        sendProductMessenger,
+        resetProductMessenger
+      );
       setState((prevState) => {
         return {
           ...prevState,
@@ -63,17 +65,7 @@ export const registerInstitution = (e, setState) => {
         }
       }
     } else {
-      if (
-        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*.?]{10,30}$/.test(
-          formData.password
-        )
-      ) {
-        dispatch(
-          sendProductMessenger("Password doesn't met requirement", true)
-        );
-      } else {
-        dispatch(sendProductMessenger("Passwords don't match", true));
-      }
+      dispatch(sendProductMessenger("Passwords don't match", true));
       setTimeout(() => {
         dispatch(resetProductMessenger());
       }, 3000);

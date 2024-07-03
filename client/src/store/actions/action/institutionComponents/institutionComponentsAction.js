@@ -15,6 +15,7 @@ import {
   deleteUserMethod,
   updateUser,
 } from "../../../../Utility/usersChat";
+import { validatePassword } from "../auth/registerAction";
 export const getDepartmentsMethod = (token, setState) => {
   setState((prevState) => {
     return {
@@ -359,6 +360,7 @@ export const deactivateUserMethod = (setState, token, state) => {
     });
   };
 };
+
 export const editUserMethod = (e, setState, token, state) => {
   e.preventDefault();
   return async (dispatch) => {
@@ -383,22 +385,12 @@ export const editUserMethod = (e, setState, token, state) => {
     // check for password
     if (state.password) {
       if (state.password === state.retypePassword) {
-        const pattern =
-          /(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$/;
-        if (pattern.test(state.password)) {
-          body.password = state.password;
-        } else {
-          dispatch(
-            sendProductMessenger(
-              `Password don't match the password requirements`,
-              true
-            )
-          );
-          setTimeout(() => {
-            dispatch(resetProductMessenger());
-          }, 3000);
-          return;
-        }
+        validatePassword(
+          state,
+          dispatch,
+          sendProductMessenger,
+          resetProductMessenger
+        );
       } else {
         dispatch(sendProductMessenger(`Passwords don't match`, true));
         setTimeout(() => {

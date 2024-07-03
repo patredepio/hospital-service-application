@@ -279,6 +279,7 @@ export const receiveRequistionMethod = (
             requistions: [],
           };
         });
+
         dispatch(
           initReceiveRequistion(token, setState, location, unit, clinic)
         );

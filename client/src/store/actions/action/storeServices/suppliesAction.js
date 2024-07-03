@@ -97,10 +97,14 @@ export const filterSupplies = (
       } else {
         formData.exchange = true;
       }
-      const supplierId = state.suppliers.find(
-        (supplier) => supplier.name === formData.supplier
-      )._id;
-      formData.supplier = supplierId;
+      if (formData.supplier === "ALL") {
+        delete formData.supplier;
+      } else {
+        const supplierId = state.suppliers.find(
+          (supplier) => supplier.name === formData.supplier
+        )._id;
+        formData.supplier = supplierId;
+      }
       formData.unit = unit;
       formData.location = location;
       formData.clinic = clinic;

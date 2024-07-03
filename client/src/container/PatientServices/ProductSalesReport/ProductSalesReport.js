@@ -11,7 +11,7 @@ import Message from "../../../components/UI/Message/Message";
 import ErrorHandler from "../../../hoc/ErrorHandler/ErrorHandler";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import { Navigate } from "react-router-dom";
-
+import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import {
   setProductDispensed,
   getAnalysisData,
@@ -91,6 +91,17 @@ const ProductSalesReport = React.memo((props) => {
     <Spinner />
   ) : (
     <div>
+      <Backdrop
+        show={state.salesForm}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              salesForm: false,
+            };
+          })
+        }
+      />
       <ChatMessenger message={mainMessage} />
       <Message
         message={message}

@@ -14,6 +14,7 @@ import {
   sendProductMessenger,
   resetProductMessenger,
 } from "../../../store";
+import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
 import Message from "../../../components/UI/Message/Message";
 import Button from "../../../components/UI/Button/Button";
@@ -234,6 +235,17 @@ const PharmacovigilanceReport = (props) => {
 
   return (
     <Fragment>
+      <Backdrop
+        show={state.filter}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              filter: false,
+            };
+          })
+        }
+      />
       <Message
         message={message}
         error={errorMessage}

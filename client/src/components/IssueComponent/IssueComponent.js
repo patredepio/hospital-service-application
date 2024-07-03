@@ -93,15 +93,15 @@ const issueComponent = React.memo((props) => {
               <div className={classes.requistionProductInformation}>
                 <div>{product?.name}</div>
                 <input
-                  value={Intl.NumberFormat("en-GB").format(
-                    +product?.approvedQty
-                  )}
+                  value={+product?.approvedQty}
+                  min={1}
                   onChange={(e) =>
                     props.updateStockRequired(e, product.id, props.setState)
                   }
                 />
                 <input
-                  value={Intl.NumberFormat("en-GB").format(+product?.costPrice)}
+                  value={product?.costPrice}
+                  min={1}
                   onChange={(e) =>
                     props.updateCostPrice(e, product.id, props.setState)
                   }

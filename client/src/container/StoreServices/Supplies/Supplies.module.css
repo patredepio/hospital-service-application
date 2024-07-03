@@ -29,6 +29,7 @@
   top: 1%;
   right: 15%;
   border: 1px solid #ccc;
+  z-index: 2;
 }
 .filterForm input,
 .filterForm select {

@@ -11,8 +11,8 @@ import {
   clearMessage,
   sendProductMessenger,
   resetProductMessenger,
-  clearRequistionLoader,
 } from "../../../store";
+import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import { Navigate } from "react-router-dom";
 import classes from "./OsReport.module.css";
 import FilterButton from "../../../components/UI/FilterButton/FilterButton";
@@ -138,6 +138,17 @@ const OsReport = (props) => {
   }, [props.socket]);
   return (
     <Fragment>
+      <Backdrop
+        show={state.form}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              form: false,
+            };
+          })
+        }
+      />
       <Message
         message={message}
         error={errorMessage}

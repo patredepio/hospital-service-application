@@ -12,6 +12,7 @@ import {
   sendMessage,
 } from "../../../../store";
 import { dataAnalysis } from "../../../../Utility/storeServices/storeVisualizationReport";
+import Backdrop from "../../../../components/UI/Backdrop/Backdrop";
 import Message from "../../../../components/UI/Message/Message";
 import { useDispatch, useSelector } from "react-redux";
 import ChatMessenger from "../../../../components/UI/ChatMessenger/ChatMessenger";
@@ -69,6 +70,18 @@ const StoreVisualizationReport = (props) => {
   const newData = dataAnalysis(state);
   return (
     <div className={classes.visualization}>
+      <Backdrop
+        show={state.form || state.filterReport}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              form: false,
+              filterReport: false,
+            };
+          })
+        }
+      />
       <ChatMessenger message={mainMessage} />
       <Message
         message={message}
@@ -165,7 +178,7 @@ const StoreVisualizationReport = (props) => {
       {state.loading ? (
         <Spinner />
       ) : (
-        <div>
+        <div className={classes.graph}>
           {newData.length ? (
             <Carousel
               data={newData}

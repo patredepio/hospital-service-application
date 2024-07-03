@@ -19,6 +19,7 @@ import {
 } from "../../../store";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import ErrorHandler from "../../../hoc/ErrorHandler/ErrorHandler";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Message from "../../../components/UI/Message/Message";
@@ -173,6 +174,17 @@ const ReportInventory = (props) => {
   }, []);
   return (
     <Fragment>
+      <Backdrop
+        show={state.filter}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              filter: false,
+            };
+          })
+        }
+      />
       <Message
         message={message}
         error={errorMessage}

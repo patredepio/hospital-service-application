@@ -84,9 +84,7 @@ export const deleteSale = (
               };
             });
             dispatch(sendProductMessenger("sale deleted SuccessFully ✓"));
-            dispatch(
-              initProductSalesDatabase(token, location, unit, clinic?.id)
-            );
+            dispatch(initProductSalesDatabase(token, location, unit, clinic));
           } else {
             throw {
               message: addDepositResponse.statusText,

@@ -15,7 +15,8 @@
 .filterForm {
   width: 200px;
   padding: 10px;
-  backdrop-filter: blur(15px);
+  /* backdrop-filter: blur(15px); */
+  background-color: white;
   border: 1px solid rgba(165, 202, 253, 0.18);
   box-shadow: 0 8px 32px 0 #25447d53;
   position: absolute;
@@ -24,6 +25,7 @@
   font-weight: bold;
   font-size: x-small;
   text-transform: uppercase;
+  z-index: 2;
 }
 .filterForm input {
   font-size: x-small;

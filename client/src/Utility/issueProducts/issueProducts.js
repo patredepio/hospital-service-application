@@ -33,92 +33,46 @@ export const storeProductHandler = (id, setState, state, products) => {
 };
 
 export const updateStockRequiredHandler = (e, id, setState) => {
-  if (e.target.value && /^[0-9]\d*(\.\d+)?$/.test(+e.target.value)) {
-    setState((prevState) => {
-      const requistion = { ...prevState.selectedRequistion };
-      const productItem = requistion.products.find(
-        (product) => product.id === id
-      );
-      const productIndex = requistion.products.findIndex(
-        (item) => item.id === id
-      );
-      productItem.approvedQty = +e.target.value;
-      productItem.quantityPrice = +(
-        +productItem.approvedQty * +productItem.costPrice
-      ).toFixed(2);
+  setState((prevState) => {
+    const requistion = { ...prevState.selectedRequistion };
+    const productItem = requistion.products.find(
+      (product) => product.id === id
+    );
+    const productIndex = requistion.products.findIndex(
+      (item) => item.id === id
+    );
+    productItem.approvedQty = +e.target.value;
+    productItem.quantityPrice = +(
+      +productItem.approvedQty * +productItem.costPrice
+    ).toFixed(2);
 
-      requistion.products.splice(productIndex, 1, productItem);
-      return {
-        ...prevState,
-        selectedRequistion: requistion,
-      };
-    });
-  } else {
-    setState((prevState) => {
-      const requistion = { ...prevState.selectedRequistion };
-      const productItem = requistion.products.find(
-        (product) => product.id === id
-      );
-      const productIndex = requistion.products.findIndex(
-        (item) => item.id === id
-      );
-      productItem.approvedQty = 0;
-      productItem.quantityPrice = +(
-        +productItem.approvedQty * +productItem.costPrice
-      ).toFixed(2);
-
-      requistion.products.splice(productIndex, 1, productItem);
-      return {
-        ...prevState,
-        selectedRequistion: requistion,
-      };
-    });
-  }
+    requistion.products.splice(productIndex, 1, productItem);
+    return {
+      ...prevState,
+      selectedRequistion: requistion,
+    };
+  });
 };
 export const updateCostPriceHandler = (e, id, setState) => {
-  if (e.target.value && /^[0-9]\d*(\.\d+)?$/.test(+e.target.value)) {
-    setState((prevState) => {
-      const requistion = { ...prevState.selectedRequistion };
-      const productItem = requistion.products.find(
-        (product) => product.id === id
-      );
-      const productIndex = requistion.products.findIndex(
-        (item) => item.id === id
-      );
-      productItem.costPrice = +e.target.value;
-      productItem.quantityPrice = +(
-        +productItem.approvedQty * +productItem.costPrice
-      ).toFixed(2);
+  setState((prevState) => {
+    const requistion = { ...prevState.selectedRequistion };
+    const productItem = requistion.products.find(
+      (product) => product.id === id
+    );
+    const productIndex = requistion.products.findIndex(
+      (item) => item.id === id
+    );
+    productItem.costPrice = +e.target.value;
+    productItem.quantityPrice = +(
+      +productItem.approvedQty * +productItem.costPrice
+    ).toFixed(2);
 
-      requistion.products.splice(productIndex, 1, productItem);
-      return {
-        ...prevState,
-        selectedRequistion: requistion,
-      };
-    });
-  } else {
-    setState((prevState) => {
-      const requistion = { ...prevState.selectedRequistion };
-      const productItem = requistion.products.find(
-        (product) => product.id === id
-      );
-      const productIndex = requistion.products.findIndex(
-        (item) => item.id === id
-      );
-      productItem.costPrice = 0;
-      productItem.quantityPrice = +(
-        +productItem.approvedQty *
-        +productItem.costPrice *
-        productItem.packSize
-      ).toFixed(2);
-
-      requistion.products.splice(productIndex, 1, productItem);
-      return {
-        ...prevState,
-        selectedRequistion: requistion,
-      };
-    });
-  }
+    requistion.products.splice(productIndex, 1, productItem);
+    return {
+      ...prevState,
+      selectedRequistion: requistion,
+    };
+  });
 };
 
 export const searchStoreProductHandler = (e, setState, products) => {

@@ -12,6 +12,7 @@ const Layout = (props) => {
   const unit = JSON.parse(sessionStorage.getItem("unit"))?.name;
   const site = JSON.parse(sessionStorage.getItem("location"))?.name;
   const clinic = JSON.parse(sessionStorage.getItem("clinic"))?.name;
+  const username = JSON.parse(sessionStorage.getItem("id"))?.username;
   const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
   const setActiveLinkHandler = useCallback(
     (index, authStatus) => dispatch(setActiveLink(index, authStatus)),
@@ -52,12 +53,16 @@ const Layout = (props) => {
             site={site}
             unit={unit}
             clinic={clinic}
+            username={username}
           />
         ) : null}
-
         {props.children}
       </main>
-      <Footer year={new Date().getFullYear()} />
+
+      <Footer
+        year={new Date().getFullYear()}
+        name={JSON.parse(sessionStorage.getItem("institution"))?.username}
+      />
     </Fragment>
   );
 };

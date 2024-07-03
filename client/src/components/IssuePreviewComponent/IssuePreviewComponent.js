@@ -52,7 +52,8 @@ const issuePreviewComponent = React.memo((props) => {
                   props.state,
                   props.mainLocation?.id,
                   props.mainUnit?.id,
-                  props.clinic?.id
+                  props.clinic?.id,
+                  props.socket
                 )
               }
             >

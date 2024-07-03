@@ -71,7 +71,7 @@ export const addRequistionItemHandler = (
         ]);
         setPrice(requistionInformation.totalPrice);
         setNumber(requistionInformation.length);
-        return [...prevRequistion, requistionItem];
+        return [requistionItem, ...prevRequistion];
       }
     }
   });

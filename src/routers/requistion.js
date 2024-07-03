@@ -111,7 +111,11 @@ router.patch("/api/requistion/:id", authentication, async (req, res) => {
     }
     updates.forEach((update) => (requistion[update] = req.body[update]));
     await requistion.save();
-    res.status(200).send();
+    const mainRequistion = await Requistion.findById(requistion._id)
+      .populate("location")
+      .populate("unit")
+      .populate("clinic");
+    res.status(200).send(mainRequistion);
   } catch (error) {
     res.status(400).send();
   }

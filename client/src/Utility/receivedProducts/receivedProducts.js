@@ -32,7 +32,7 @@ export const addToReceivedList = (setState, state, products, id) => {
       searchRender: false,
       search: "",
       filteredProducts: [],
-      receivedItems: [...prevState.receivedItems, productItem],
+      receivedItems: [productItem, ...prevState.receivedItems],
     };
   });
 };

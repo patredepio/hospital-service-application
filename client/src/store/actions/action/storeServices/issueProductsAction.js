@@ -82,7 +82,8 @@ export const issueRequistionMethod = (
   state,
   location,
   unit,
-  clinic
+  clinic,
+  socket
 ) => {
   return async (dispatch) => {
     try {
@@ -186,7 +187,15 @@ export const issueRequistionMethod = (
         })
       );
       if (requistionResponse?.ok) {
+        const newRequistion = await requistionResponse.json();
         dispatch(sendProductMessenger("Requistion has been issued"));
+        socket.emit("requistion", {
+          type: "issuedRequistion",
+          message: `Your requistion has been issued`,
+          clinicName: newRequistion.clinic?.name,
+          unitName: newRequistion.unit?.name,
+          locationName: newRequistion.location?.name,
+        });
         Object.keys(requistion).forEach((key) => delete requistion[key]);
 
         dispatch(initRequistion(token, setState, location, unit));

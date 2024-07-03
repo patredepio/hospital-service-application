@@ -11,6 +11,7 @@ import {
   clearMessage,
 } from "../../../../store";
 import { Navigate } from "react-router-dom";
+import Backdrop from "../../../../components/UI/Backdrop/Backdrop";
 import Input from "../../../../components/UI/Input/Input";
 import ErrorHandler from "../../../../hoc/ErrorHandler/ErrorHandler";
 import Message from "../../../../components/UI/Message/Message";
@@ -92,6 +93,17 @@ const DailySalesReport = React.memo((props) => {
   return (
     <Fragment>
       <ChatMessenger message={mainMessage} />
+      <Backdrop
+        show={state.salesForm}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              salesForm: false,
+            };
+          })
+        }
+      />
       <Message
         message={message}
         error={errorMessage}

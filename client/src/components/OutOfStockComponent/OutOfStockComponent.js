@@ -33,6 +33,7 @@ const outOfStockComponent = React.memo((props) => {
               placeholder: "TAB TOPIRAMATE 50MG",
               value: props.state.osValue,
               ref: props.osRef,
+              autoFocus: true,
             }}
             label='PRODUCT NAME'
             changed={(e) => {

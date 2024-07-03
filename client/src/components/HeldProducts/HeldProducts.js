@@ -23,11 +23,18 @@ const heldProducts = React.memo((props) => {
                   props.setTotalPrice,
                   props.setNumberProducts,
                   props.setPreview,
-                  props.setFormat
+                  props.setFormat,
+                  props.setExtraCharge
                 )
               }
             >
-              <div>{prescription.receipent?.name || "UNREGISTERED"}</div>
+              <div>
+                {prescription.receipent?.lastName
+                  ? `${prescription.receipent?.lastName} ${prescription.receipent?.firstName}`
+                  : prescription.receipent?.name
+                  ? prescription.receipent?.name
+                  : "UNREGISTERED"}
+              </div>
               <div>
                 ₦
                 {Intl.NumberFormat("en-GB").format(

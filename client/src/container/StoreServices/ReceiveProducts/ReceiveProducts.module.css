@@ -103,6 +103,9 @@
   padding: 10px;
   font-size: x-small;
 }
+.otherProps > div {
+  overflow: hidden;
+}
 .otherProps input {
   font-size: x-small;
   text-transform: uppercase;

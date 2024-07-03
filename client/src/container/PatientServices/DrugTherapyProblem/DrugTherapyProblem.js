@@ -7,6 +7,7 @@ import {
   filterDrugTherapyProblem,
 } from "../../../store";
 import { Navigate } from "react-router-dom";
+import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
 import DrugTherapyProblemItem from "../../../components/DrugTherapyProblemItem/DrugTherapyProblemItem";
@@ -120,6 +121,17 @@ const DrugTherapyProblem = (props) => {
 
   return (
     <Fragment>
+      <Backdrop
+        show={state.filter}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              filter: false,
+            };
+          })
+        }
+      />
       <ChatMessenger message={mainMessage} />
       {!isAuthenticated && !token && (
         <Navigate

@@ -12,6 +12,7 @@
   top: 0;
   right: 7%;
   font-size: small;
+  z-index: 2;
 }
 .salesForm input,
 .salesForm select {

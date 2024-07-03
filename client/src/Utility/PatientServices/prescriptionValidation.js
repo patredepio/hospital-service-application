@@ -128,7 +128,7 @@ export const addPrescriptionItem = (
       ]);
       setNumberProducts(length);
       setTotalPrice(totalPrice);
-      return [...prevProducts, prescriptionItem];
+      return [prescriptionItem, ...prevProducts];
     }
   });
   setSearchRender(false);

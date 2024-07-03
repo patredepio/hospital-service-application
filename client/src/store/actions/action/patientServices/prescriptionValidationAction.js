@@ -765,7 +765,8 @@ export const holdPrescription = (
   setTotalPrice,
   setNumberProducts,
   setExtraCharge,
-  format
+  format,
+  extraCharge
 ) => {
   return (dispatch) => {
     if (e.target.innerText === "HELD") {
@@ -797,7 +798,8 @@ export const holdPrescription = (
         products: updatedProducts,
         receipent: preview.receipent,
         selectedReceipent: preview.selectedReceipent,
-        totalPrice,
+        totalPrice: Math.ceil((totalPrice + +extraCharge) / 100) * 100,
+        extraCharge,
         length,
         format,
       };
@@ -844,7 +846,8 @@ export const uploadPrescription = (
   setTotalPrice,
   setNumberProducts,
   setPreview,
-  setFormat
+  setFormat,
+  setExtraCharge
 ) => {
   return (dispatch, getState) => {
     const clinic = JSON.parse(sessionStorage.getItem("clinic"))?.id;
@@ -873,6 +876,8 @@ export const uploadPrescription = (
     setProducts(products);
     setTotalPrice(selectedPrescription.totalPrice);
     setNumberProducts(selectedPrescription.length);
+    setExtraCharge(selectedPrescription.extraCharge);
+
     setPreview((prevState) => {
       return {
         ...prevState,

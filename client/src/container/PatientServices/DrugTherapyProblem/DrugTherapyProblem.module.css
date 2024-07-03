@@ -77,8 +77,9 @@
   padding: 10px;
   border: 1px solid #aaaaaaaa;
   position: absolute;
-  right: 0;
+  right: 10%;
   font-weight: bold;
+  z-index: 2;
 }
 .filterForm div label {
   font-size: x-small;
@@ -126,7 +127,7 @@
     font-size: small;
   }
 }
-@media (min-width: 64rem) {
+@media (min-width: 40rem) {
   .title {
     grid-template-columns: 200px 250px 250px auto;
     font-size: small;
@@ -134,8 +135,12 @@
   .heading {
     font-size: small;
   }
+  .filterForm {
+    padding: 15px;
+  }
   .interaction,
-  .filterForm label {
+  .filterForm label,
+  .filterForm span {
     font-size: small;
   }
 }

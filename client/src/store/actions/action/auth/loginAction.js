@@ -46,6 +46,7 @@ export const authenticating = (e, state) => {
 
     if (loginResponse?.ok) {
       const { token, user } = await loginResponse.json();
+
       // User id
       sessionStorage.setItem("id", JSON.stringify(user));
       // for Navbar

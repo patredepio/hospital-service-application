@@ -6,6 +6,7 @@ import {
   getFeedback,
   filterFeedback,
 } from "../../../../store";
+import Backdrop from "../../../../components/UI/Backdrop/Backdrop";
 import ChatMessenger from "../../../../components/UI/ChatMessenger/ChatMessenger";
 import Message from "../../../../components/UI/Message/Message";
 import classes from "./FeedbackReport.module.css";
@@ -83,6 +84,17 @@ const Feedback = memo((props) => {
   }, [props.socket]);
   return (
     <div className={classes.report}>
+      <Backdrop
+        show={state.form}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              form: false,
+            };
+          })
+        }
+      />
       <ChatMessenger message={mainMessage} />
       <Message
         message={message}

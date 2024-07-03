@@ -6,7 +6,7 @@ import SalesItem from "../../../components/SalesItem/SalesItem";
 import Message from "../../../components/UI/Message/Message";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
-import Modal from "../../../components/Modal/Modal";
+import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import PreviewItem from "../../../components/PreviewItem/PreviewItem";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
 import { useSelector, useDispatch } from "react-redux";
@@ -79,6 +79,17 @@ const Supplies = (props) => {
   }, [props.socket]);
   return (
     <div className={classes.suppliesReport}>
+      <Backdrop
+        show={state.modal}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              modal: false,
+            };
+          })
+        }
+      />
       <ChatMessenger message={mainMessage} />
       <Message
         message={message}
@@ -130,7 +141,10 @@ const Supplies = (props) => {
             }}
             title='SUPPLIER'
             inputType='select'
-            options={state.suppliers.map((supplier) => supplier.name)}
+            options={[
+              "ALL",
+              ...state.suppliers.map((supplier) => supplier.name),
+            ]}
           />
           <Input
             config={{

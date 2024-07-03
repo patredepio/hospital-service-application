@@ -13,6 +13,7 @@ import {
   clearMessage,
   sendMessage,
 } from "../../../store";
+import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
 import FilterButton from "../../../components/UI/FilterButton/FilterButton";
 import { storeNotificationMessenger } from "../../../Utility/general";
@@ -70,6 +71,17 @@ const StoreReport = (props) => {
   }, [props.socket]);
   return (
     <div className={classes.storeCtn}>
+      <Backdrop
+        show={state.form}
+        closed={() =>
+          setState((prevState) => {
+            return {
+              ...prevState,
+              form: false,
+            };
+          })
+        }
+      />
       <ChatMessenger message={mainMessage} />
       <Message
         message={message}

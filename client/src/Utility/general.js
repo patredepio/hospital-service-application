@@ -1,3 +1,9 @@
+import {
+  getTransfersMethod,
+  initReceiveRequistion,
+  initRequistion,
+} from "../store";
+
 export async function sendReq(token, data, reqFunction, ResponseError) {
   try {
     const response = await reqFunction(token, data);
@@ -106,29 +112,63 @@ export function getDate(formattedDate) {
 export const storeNotificationMessenger = (
   socket,
   mainMessageHandler,
-  clearMessageHandler
+  clearMessageHandler,
+  dispatch,
+  setState
 ) => {
   socket.on("requistion_message", (message) => {
     const unitName = JSON.parse(sessionStorage.getItem("unit"))?.name;
     const locationName = JSON.parse(sessionStorage.getItem("location"))?.name;
     const clinicName = JSON.parse(sessionStorage.getItem("clinic"))?.name;
+
+    const token = JSON.parse(sessionStorage.getItem("token"));
+    const $location = JSON.parse(sessionStorage.getItem("location"))?.id;
+    const unit = JSON.parse(sessionStorage.getItem("unit"))?.id;
+    const clinic = JSON.parse(sessionStorage.getItem("clinic"))?.id;
     if (message.type === "transfer") {
       if (
         message.locationName === locationName &&
         message.unit === unitName &&
         clinicName === message.clinic
       ) {
+        // init Transfers
+        if (window.location.pathname === "/pharma-app/transfer-products") {
+          dispatch(
+            getTransfersMethod(token, setState, $location, unit, clinic)
+          );
+        }
+
         setTimeout(() => {
           clearMessageHandler();
         }, 4000);
         mainMessageHandler(`${message.message}`);
       }
     } else {
-      if (unitName === "STORE") {
+      if (!message.type === "issuedRequistion" && unitName === "STORE") {
+        // init Requistions
+        if (window.location.pathname === "/pharma-app/issue-products") {
+          dispatch(initRequistion(token, setState, $location, unit));
+        }
         setTimeout(() => {
           clearMessageHandler();
         }, 4000);
         mainMessageHandler(`${message.message}`);
+      } else {
+        if (
+          message.clinicName === clinicName &&
+          message.unitName === unitName &&
+          message.locationName === locationName
+        ) {
+          if (window.location.pathname === "/pharma-app/requistion") {
+            dispatch(
+              initReceiveRequistion(token, setState, $location, unit, clinic)
+            );
+          }
+          setTimeout(() => {
+            clearMessageHandler();
+          }, 4000);
+          mainMessageHandler(`${message.message}`);
+        }
       }
     }
   });

@@ -130,9 +130,8 @@ const registerUserComponent = memo((props) => {
         }}
       />
       <span className={props.classes.direction}>
-        Password must contain at least 8 characters long, min 1 Uppercase 1
-        Lowercase 1 Number 1 special character and only contains symbols from
-        the alphabet, numbers and chosen special characters (@#$%^&+!=)
+        Password must contain at least 8 characters long, min 1 Uppercase, 1
+        Lowercase ,1 Number, 1 special character.
       </span>
       <Input
         label='RETYPE PASSWORD'
