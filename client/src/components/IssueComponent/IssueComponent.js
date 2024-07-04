@@ -95,6 +95,7 @@ const issueComponent = React.memo((props) => {
                 <input
                   value={+product?.approvedQty}
                   min={1}
+                  autoFocus={true}
                   onChange={(e) =>
                     props.updateStockRequired(e, product.id, props.setState)
                   }
@@ -119,7 +120,7 @@ const issueComponent = React.memo((props) => {
                   <div>{product.onHandQuantity}</div>
                 </div>
                 <div>
-                  REQUIRED : {product.stockRequired} ✕{product.packSize}
+                  REQUIRED : {product.stockRequired} ✕ {product.packSize}
                 </div>
               </div>
               {product?.storeProduct?.name ? (
@@ -138,7 +139,7 @@ const issueComponent = React.memo((props) => {
                   <div>STORE</div>
                   <div>{product?.storeProduct?.name}</div>
                   <div>
-                    <div> ON HAND QTY:</div>
+                    <div> ON HAND QTY : </div>
                     <div>
                       {product?.storeProduct.quantity} ✕
                       {product?.storeProduct.packSize}

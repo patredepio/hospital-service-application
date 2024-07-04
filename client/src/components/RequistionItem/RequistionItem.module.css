@@ -1,3 +1,7 @@
+.mainContainer {
+  min-height: 600px;
+  position: relative;
+}
 .requistion {
   display: flex;
   justify-content: space-between;
@@ -74,7 +78,7 @@
   position: absolute;
   background-color: #ffffff;
   right: 0;
-  bottom: 10px;
+  bottom: 0;
   margin-right: 10px;
   border-radius: 10px;
   box-shadow: 2px 2px 2px 2px #aaaaaaaa;

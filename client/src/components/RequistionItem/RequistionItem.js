@@ -7,7 +7,7 @@ const requistionItem = React.memo((props) => {
   const $locationName = JSON.parse(sessionStorage.getItem("location"))?.name;
   const clinicName = JSON.parse(sessionStorage.getItem("clinic"))?.name;
   return (
-    <Fragment>
+    <div className={classes.mainContainer}>
       <h4 className={classes.title}>REQUISTION LIST</h4>
       <div className={classes.addRequistionBtn}>
         {props.requistions ||
@@ -84,7 +84,7 @@ const requistionItem = React.memo((props) => {
           </div>
         )}
       </div>
-    </Fragment>
+    </div>
   );
 });
 export default requistionItem;
