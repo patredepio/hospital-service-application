@@ -69,7 +69,7 @@ const Feedback = memo((props) => {
         >
           <h4>Product and Services Feedback</h4>
           <Input
-            config={{ name: "name", required: true }}
+            config={{ name: "name", required: true, autoFocus: true }}
             label='NAME'
           />
           <Input

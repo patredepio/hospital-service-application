@@ -52,13 +52,14 @@ const drugTherapyProblemsComponent = React.memo((props) => {
               name: "intervention",
               required: true,
               placeholder: "Intervention ....",
+              autoFocus: true,
             }}
             inputType='text-area'
           />
           <Input
-            label='OUTCOME'
+            title='OUTCOME'
             inputType='select'
-            options={["SUCCESSFUL", "NOTSUCCESSFUL"]}
+            options={["SUCCESSFUL", "UNSUCCESSFUL"]}
             config={{
               name: "outcome",
               required: true,

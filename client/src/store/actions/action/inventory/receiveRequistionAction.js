@@ -83,174 +83,179 @@ export const receiveRequistionMethod = (
             };
           });
           const unitName = JSON.parse(sessionStorage.getItem("unit"))?.name;
+
           if (unitName === "STORE") {
             const productResponse = await addProductQuantity(
               token,
               product.id,
               JSON.stringify({ quantity: +product.approvedQty })
             );
-            if (productResponse?.ok) {
-              // check for expiry
-              const newProduct = await productResponse.json();
-              if (
-                new Date(Date.parse(newProduct.expiryDate)).getTime() >
-                  new Date(Date.parse(product.expiryDate)).getTime() ||
-                product.onHandQuantity === 0
-              ) {
-                const expiryResponse = await editProductById(
-                  token,
-                  newProduct._id,
-                  JSON.stringify({ expiryDate: product.expiryDate })
-                );
+            if (+product.approvedQty > 0) {
+              if (productResponse?.ok) {
+                // check for expiry
+                const newProduct = await productResponse.json();
+                if (
+                  new Date(Date.parse(newProduct.expiryDate)).getTime() >
+                    new Date(Date.parse(product.expiryDate)).getTime() ||
+                  product.onHandQuantity === 0
+                ) {
+                  const expiryResponse = await editProductById(
+                    token,
+                    newProduct._id,
+                    JSON.stringify({ expiryDate: product.expiryDate })
+                  );
 
-                if (!expiryResponse?.ok) {
-                  throw {
-                    message: expiryResponse.statusText,
-                    status: expiryResponse.status,
-                  };
+                  if (!expiryResponse?.ok) {
+                    throw {
+                      message: expiryResponse.statusText,
+                      status: expiryResponse.status,
+                    };
+                  }
                 }
-              }
-              // check for costPrice
-              if (newProduct.costPrice !== product.costPrice) {
-                const costPriceResponse = await editProductById(
+                // check for costPrice
+                if (newProduct.costPrice !== product.costPrice) {
+                  const costPriceResponse = await editProductById(
+                    token,
+                    newProduct._id,
+                    JSON.stringify({ costPrice: product.costPrice })
+                  );
+                  if (!costPriceResponse?.ok) {
+                    throw {
+                      message: costPriceResponse.statusText,
+                      status: costPriceResponse.status,
+                    };
+                  }
+                }
+                // check for packSize
+                if (newProduct.packSize !== product.packSize) {
+                  const packSizeResponse = await editProductById(
+                    token,
+                    newProduct._id,
+                    JSON.stringify({ packSize: product.packSize })
+                  );
+                  if (!packSizeResponse?.ok) {
+                    throw {
+                      message: packSizeResponse.statusText,
+                      status: packSizeResponse.status,
+                    };
+                  }
+                }
+                // addProductLogs
+                const movementResponse = Object.create(null);
+                movementResponse.movement = state.selectedRequistion.siv;
+                movementResponse.received = +product.approvedQty;
+                movementResponse.balance = newProduct.quantity;
+                movementResponse.product = newProduct._id;
+                movementResponse.location = location;
+                movementResponse.unit = unit;
+                const productLogsResponse = await addProductLogs(
                   token,
-                  newProduct._id,
-                  JSON.stringify({ costPrice: product.costPrice })
+                  movementResponse
                 );
-                if (!costPriceResponse?.ok) {
+                if (productLogsResponse?.ok) {
+                  Object.keys(movementResponse).forEach(
+                    (key) => delete movementResponse[key]
+                  );
+                } else {
                   throw {
-                    message: costPriceResponse.statusText,
-                    status: costPriceResponse.status,
+                    message: productLogsResponse.statusText,
+                    status: productLogsResponse.status,
                   };
                 }
-              }
-              // check for packSize
-              if (newProduct.packSize !== product.packSize) {
-                const packSizeResponse = await editProductById(
-                  token,
-                  newProduct._id,
-                  JSON.stringify({ packSize: product.packSize })
-                );
-                if (!packSizeResponse?.ok) {
-                  throw {
-                    message: packSizeResponse.statusText,
-                    status: packSizeResponse.status,
-                  };
-                }
-              }
-              // addProductLogs
-              const movementResponse = Object.create(null);
-              movementResponse.movement = state.selectedRequistion.siv;
-              movementResponse.received = +product.approvedQty;
-              movementResponse.balance = newProduct.quantity;
-              movementResponse.product = newProduct._id;
-              movementResponse.location = location;
-              movementResponse.unit = unit;
-              const productLogsResponse = await addProductLogs(
-                token,
-                movementResponse
-              );
-              if (productLogsResponse?.ok) {
-                Object.keys(movementResponse).forEach(
-                  (key) => delete movementResponse[key]
-                );
               } else {
                 throw {
-                  message: productLogsResponse.statusText,
-                  status: productLogsResponse.status,
+                  message: productResponse.statusText,
+                  status: productResponse.status,
                 };
               }
-            } else {
-              throw {
-                message: productResponse.statusText,
-                status: productResponse.status,
-              };
             }
           } else {
-            const productResponse = await addProductQuantity(
-              token,
-              product.id,
-              JSON.stringify({
-                quantity: +product.approvedQty * product.packSize,
-              })
-            );
-            if (productResponse?.ok) {
-              const newProduct = await productResponse.json();
-              if (
-                new Date(Date.parse(newProduct.expiryDate)).getTime() >
-                  new Date(Date.parse(product.expiryDate)).getTime() ||
-                newProduct.quantity === 0
-              ) {
-                // check for expiry
-                const expiryResponse = await editProductById(
-                  token,
-                  newProduct._id,
-                  JSON.stringify({ expiryDate: product.expiryDate })
-                );
-                if (!expiryResponse?.ok) {
-                  throw {
-                    message: expiryResponse.statusText,
-                    status: expiryResponse.status,
-                  };
-                }
-              }
-              // check for costPrice
-              if (newProduct.costPrice !== product.costPrice) {
-                const costPriceResponse = await editProductById(
-                  token,
-                  newProduct._id,
-                  JSON.stringify({ costPrice: product.costPrice })
-                );
-                if (!costPriceResponse?.ok) {
-                  throw {
-                    message: costPriceResponse.statusText,
-                    status: costPriceResponse.status,
-                  };
-                }
-              }
-              // check for packSize
-              if (newProduct.packSize !== product.packSize) {
-                const packSizeResponse = await editProductById(
-                  token,
-                  newProduct._id,
-                  JSON.stringify({ packSize: product.packSize })
-                );
-                if (!packSizeResponse?.ok) {
-                  throw {
-                    message: packSizeResponse.statusText,
-                    status: packSizeResponse.status,
-                  };
-                }
-              }
-              // addProductLogs
-              const movementResponse = Object.create(null);
-              movementResponse.movement = `SIV ${state.selectedRequistion?.siv}`;
-              movementResponse.received =
-                +product.approvedQty * +product.packSize;
-              movementResponse.balance = newProduct.quantity;
-              movementResponse.product = newProduct._id;
-              movementResponse.location = location;
-              movementResponse.unit = unit;
-              movementResponse.clinic = clinic;
-              const productLogsResponse = await addProductLogs(
+            if (+product.approvedQty > 0) {
+              const productResponse = await addProductQuantity(
                 token,
-                JSON.stringify(movementResponse)
+                product.id,
+                JSON.stringify({
+                  quantity: +product.approvedQty * product.packSize,
+                })
               );
-              if (productLogsResponse?.ok) {
-                Object.keys(movementResponse).forEach(
-                  (key) => delete movementResponse[key]
+              if (productResponse?.ok) {
+                const newProduct = await productResponse.json();
+                if (
+                  new Date(Date.parse(newProduct.expiryDate)).getTime() >
+                    new Date(Date.parse(product.expiryDate)).getTime() ||
+                  newProduct.quantity === 0
+                ) {
+                  // check for expiry
+                  const expiryResponse = await editProductById(
+                    token,
+                    newProduct._id,
+                    JSON.stringify({ expiryDate: product.expiryDate })
+                  );
+                  if (!expiryResponse?.ok) {
+                    throw {
+                      message: expiryResponse.statusText,
+                      status: expiryResponse.status,
+                    };
+                  }
+                }
+                // check for costPrice
+                if (newProduct.costPrice !== product.costPrice) {
+                  const costPriceResponse = await editProductById(
+                    token,
+                    newProduct._id,
+                    JSON.stringify({ costPrice: product.costPrice })
+                  );
+                  if (!costPriceResponse?.ok) {
+                    throw {
+                      message: costPriceResponse.statusText,
+                      status: costPriceResponse.status,
+                    };
+                  }
+                }
+                // check for packSize
+                if (newProduct.packSize !== product.packSize) {
+                  const packSizeResponse = await editProductById(
+                    token,
+                    newProduct._id,
+                    JSON.stringify({ packSize: product.packSize })
+                  );
+                  if (!packSizeResponse?.ok) {
+                    throw {
+                      message: packSizeResponse.statusText,
+                      status: packSizeResponse.status,
+                    };
+                  }
+                }
+                // addProductLogs
+                const movementResponse = Object.create(null);
+                movementResponse.movement = `SIV ${state.selectedRequistion?.siv}`;
+                movementResponse.received =
+                  +product.approvedQty * +product.packSize;
+                movementResponse.balance = newProduct.quantity;
+                movementResponse.product = newProduct._id;
+                movementResponse.location = location;
+                movementResponse.unit = unit;
+                movementResponse.clinic = clinic;
+                const productLogsResponse = await addProductLogs(
+                  token,
+                  JSON.stringify(movementResponse)
                 );
+                if (productLogsResponse?.ok) {
+                  Object.keys(movementResponse).forEach(
+                    (key) => delete movementResponse[key]
+                  );
+                } else {
+                  throw {
+                    message: productLogsResponse.statusText,
+                    status: productLogsResponse.status,
+                  };
+                }
               } else {
                 throw {
-                  message: productLogsResponse.statusText,
-                  status: productLogsResponse.status,
+                  message: productResponse.statusText,
+                  status: productResponse.status,
                 };
               }
-            } else {
-              throw {
-                message: productResponse.statusText,
-                status: productResponse.status,
-              };
             }
           }
         } catch (error) {

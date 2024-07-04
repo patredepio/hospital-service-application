@@ -22,15 +22,16 @@
   position: absolute;
   text-transform: uppercase;
   padding: 0.2rem;
-  color: #02a523;
-  background-color: white;
-  right: 5%;
-  top: 0;
-  width: 25%;
+  color: white;
+  background-color: rgb(252, 4, 4);
+  right: 10%;
+  top: 15%;
+  width: 100px;
   text-align: center;
-  /* transform: translateX(); */
-
-  transform: rotate(40deg) translateX(79px) translateY(-45.5px);
+  transform: translateX(50%) translateY(-100%);
+}
+.addRequistion {
+  margin-bottom: 3rem;
 }
 .onGoing {
   background-color: #f9a260;
@@ -81,6 +82,8 @@
 .confirm {
   background-color: white;
   color: #25447d;
+  z-index: 2;
+  position: relative;
 }
 
 .requistionList::-webkit-scrollbar {
@@ -121,4 +124,7 @@
   .title {
     font-size: small;
   }
+  /* .label {
+    transform: rotate(40deg) translateX(99px) translateY(-86.5px);
+  } */
 }

@@ -48,6 +48,7 @@ const prescriptionPreview = React.memo((props) => {
                 placeholder: "WARD NAME",
                 required: true,
                 name: "name",
+                autoFocus: true,
               }}
               label='WARD NAME'
             />
@@ -93,6 +94,7 @@ const prescriptionPreview = React.memo((props) => {
                 required: true,
                 name: "receipt",
                 placeholder: "INPUT LAST 6 DIGITS",
+                autoFocus: true,
               }}
             />
             <Input
@@ -450,6 +452,7 @@ const prescriptionPreview = React.memo((props) => {
               required: true,
               name: "receipt",
               placeholder: "INPUT LAST 6 DIGITS",
+              autoFocus: true,
             }}
           />
 
@@ -473,6 +476,7 @@ const prescriptionPreview = React.memo((props) => {
                 required: true,
                 name: "collector",
                 placeholder: "ENTER NAME OF COLLECTOR",
+                autoFocus: true,
               }}
               changed={(e) =>
                 props.setPrescriptionPreview((prevState) => {
@@ -540,6 +544,7 @@ const prescriptionPreview = React.memo((props) => {
               name: "collector",
               placeholder: "ENTER NAME OF COLLECTOR",
               value: props.prescriptionPreview.collector,
+              autoFocus: true,
             }}
             changed={(e) =>
               props.setPrescriptionPreview((prevState) => {
@@ -581,6 +586,7 @@ const prescriptionPreview = React.memo((props) => {
               required: true,
               name: "collector",
               placeholder: "ENTER NAME OF COLLECTOR",
+              autoFocus: true,
             }}
             changed={(e) =>
               props.setPrescriptionPreview((prevState) => {

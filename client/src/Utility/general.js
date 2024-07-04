@@ -133,9 +133,11 @@ export const storeNotificationMessenger = (
       ) {
         // init Transfers
         if (window.location.pathname === "/pharma-app/transfer-products") {
-          dispatch(
-            getTransfersMethod(token, setState, $location, unit, clinic)
-          );
+          if (dispatch) {
+            dispatch(
+              getTransfersMethod(token, setState, $location, unit, clinic)
+            );
+          }
         }
 
         setTimeout(() => {
@@ -144,30 +146,42 @@ export const storeNotificationMessenger = (
         mainMessageHandler(`${message.message}`);
       }
     } else {
-      if (!message.type === "issuedRequistion" && unitName === "STORE") {
+      if (message.type === "sending" && unitName === "STORE") {
         // init Requistions
         if (window.location.pathname === "/pharma-app/issue-products") {
-          dispatch(initRequistion(token, setState, $location, unit));
+          if (dispatch) {
+            dispatch(initRequistion(token, setState, $location, unit));
+          }
         }
         setTimeout(() => {
           clearMessageHandler();
         }, 4000);
         mainMessageHandler(`${message.message}`);
       } else {
-        if (
-          message.clinicName === clinicName &&
-          message.unitName === unitName &&
-          message.locationName === locationName
-        ) {
-          if (window.location.pathname === "/pharma-app/requistion") {
-            dispatch(
-              initReceiveRequistion(token, setState, $location, unit, clinic)
-            );
+        if (message.type === "issuedRequistion") {
+          if (
+            message.clinicName === clinicName &&
+            message.unitName === unitName &&
+            message.locationName === locationName
+          ) {
+            if (window.location.pathname === "/pharma-app/requistion") {
+              if (dispatch) {
+                dispatch(
+                  initReceiveRequistion(
+                    token,
+                    setState,
+                    $location,
+                    unit,
+                    clinic
+                  )
+                );
+              }
+            }
+            setTimeout(() => {
+              clearMessageHandler();
+            }, 4000);
+            mainMessageHandler(`${message.message}`);
           }
-          setTimeout(() => {
-            clearMessageHandler();
-          }, 4000);
-          mainMessageHandler(`${message.message}`);
         }
       }
     }

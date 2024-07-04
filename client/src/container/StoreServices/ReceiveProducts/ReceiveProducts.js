@@ -294,6 +294,7 @@ const ReceiveProducts = (props) => {
                 config={{
                   placeholder: "SEARCH THE NAME OF THE PRODUCT",
                   value: state.search,
+                  autoFocus: true,
                 }}
                 changed={(e) => {
                   setState((prevState) => {
@@ -401,6 +402,7 @@ const ReceiveProducts = (props) => {
                     <div>{item.get("name")}</div>
                     <input
                       value={+item.get("quantity")}
+                      autoFocus={true}
                       min={1}
                       style={{
                         fontWeight: "bold",

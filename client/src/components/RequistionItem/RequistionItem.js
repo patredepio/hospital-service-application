@@ -9,7 +9,7 @@ const requistionItem = React.memo((props) => {
   return (
     <Fragment>
       <h4 className={classes.title}>REQUISTION LIST</h4>
-      <div className={classes.requistionList}>
+      <div className={classes.addRequistionBtn}>
         {props.requistions ||
         (unitName === "STORE" &&
           $locationName === "USELU" &&
@@ -32,6 +32,9 @@ const requistionItem = React.memo((props) => {
             </Button>
           </div>
         )}
+      </div>
+
+      <div className={classes.requistionList}>
         {props.state.requistions.length ? (
           props.state.requistions.map((requistion) => (
             <div
@@ -57,7 +60,7 @@ const requistionItem = React.memo((props) => {
                 <div>{requistion.unit?.name} PHARMACY</div>
               </div>
               {requistion.issuance && requistion.reception ? null : (
-                <div className={classes.label}>ONGOING</div>
+                <div className={classes.label}>PENDING</div>
               )}
 
               <div className={classes.requistionInformation}>

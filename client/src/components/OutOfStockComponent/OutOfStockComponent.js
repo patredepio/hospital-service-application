@@ -34,6 +34,7 @@ const outOfStockComponent = React.memo((props) => {
               value: props.state.osValue,
               ref: props.osRef,
               autoFocus: true,
+              autoComplete: "on",
             }}
             label='PRODUCT NAME'
             changed={(e) => {

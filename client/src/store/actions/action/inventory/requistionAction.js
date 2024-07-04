@@ -156,6 +156,7 @@ export const sendRequistion = (
         const $location = JSON.parse(sessionStorage.getItem("location"));
         const unit = JSON.parse(sessionStorage.getItem("unit"));
         socket.emit("requistion", {
+          type: "sending",
           message: `Requistion was sent from ${$location?.name}, ${unit?.name}, ${clinic?.name}`,
         });
         dispatch(sendProductMessenger("Requistion sent successfully"));

@@ -130,6 +130,7 @@ const TransferProductsComponent = React.memo((props) => {
           updateProductItem={updateProductItem}
           deleteItem={deleteProductItem}
           validateTransfer={validateTransferHandler}
+          setRequistionState={props.setRequistionState}
           transfers
         />
       )}

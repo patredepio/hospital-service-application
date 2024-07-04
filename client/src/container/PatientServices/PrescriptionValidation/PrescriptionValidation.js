@@ -473,6 +473,7 @@ const PrescriptionValidation = (props) => {
               ...prevState,
               osModal: false,
               osRender: false,
+              osValue: "",
             };
           });
         }}

@@ -105,6 +105,7 @@ const productContainer = React.memo((props) => {
                   type='number'
                   value={product.get("quantity")}
                   min='0'
+                  autoFocus={true}
                   style={{
                     padding: "10px",
                     border: "none",

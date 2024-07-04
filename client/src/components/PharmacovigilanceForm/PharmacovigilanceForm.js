@@ -24,6 +24,7 @@ const pharmacovigilanceForm = memo((props) => {
                 placeholder: "NAME OF PATIENT",
                 required: true,
                 name: "patient",
+                autoFocus: true,
               }}
               label='NAME OF PATIENT'
             />
