@@ -49,6 +49,7 @@ const prescriptionPreview = React.memo((props) => {
                 required: true,
                 name: "name",
                 autoFocus: true,
+                autoComplete: "on",
               }}
               label='WARD NAME'
             />
