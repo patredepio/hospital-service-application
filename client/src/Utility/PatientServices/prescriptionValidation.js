@@ -30,7 +30,7 @@ export const validatePrescription = (prescription) => {
         }
         return acc;
       },
-      { valid: true, quantity: true }
+      { valid: false, quantity: false }
     );
   }
 };

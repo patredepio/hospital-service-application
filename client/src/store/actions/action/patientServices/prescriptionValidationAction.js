@@ -820,6 +820,10 @@ export const holdPrescription = (
           JSON.stringify(heldPrescriptions)
         );
       }
+      dispatch(sendProductMessenger("prescription held"));
+      setTimeout(() => {
+        dispatch(resetProductMessenger());
+      }, 2000);
       setProducts([]);
       setPreview((prevState) => {
         return {
@@ -874,7 +878,9 @@ export const uploadPrescription = (
     });
     selectedPrescription.products = products;
     setProducts(products);
-    setTotalPrice(selectedPrescription.totalPrice);
+    setTotalPrice(
+      +selectedPrescription.totalPrice - +selectedPrescription.extraCharge
+    );
     setNumberProducts(selectedPrescription.length);
     setExtraCharge(selectedPrescription.extraCharge);
 
