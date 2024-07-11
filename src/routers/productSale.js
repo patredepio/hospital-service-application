@@ -54,99 +54,98 @@ router.get("/api/productsales/search", authentication, async (req, res) => {
     res.status(400).send();
   }
 });
-router.post(
-  "/api/sales-reorderlevel",
-  authentication,
-  pharmaAuthentication,
-  async (req, res) => {
-    if (!req.body.type) {
-      return res.status(400).send();
-    } else {
-      if (req.body.type === "store") {
-        try {
-          const sales = await ProductSale.find({
-            createdAt: { $gte: new Date(req.body.date) },
-          }).sort({ createdAt: -1 });
-          if (!sales.length) {
-            return res.status(404).send();
-          }
-          const products = sales
-            .flatMap((sale) => sale.products)
-            .reduce((acc, cur) => {
-              const duplicate = acc.find(
+router.post("/api/sales-reorderlevel", authentication, async (req, res) => {
+  if (!req.body.type) {
+    return res.status(400).send();
+  } else {
+    if (req.body.type === "store") {
+      try {
+        const sales = await ProductSale.find({
+          createdAt: { $gte: new Date(req.body.date) },
+        }).sort({ createdAt: -1 });
+        if (!sales.length) {
+          return res.status(404).send();
+        }
+        const products = sales
+          .flatMap((sale) => sale.products)
+          .reduce((acc, cur) => {
+            const duplicate = acc.find((product) => product.name === cur.name);
+            if (duplicate) {
+              const index = acc.findIndex(
                 (product) => product.name === cur.name
               );
-              if (duplicate) {
-                const index = acc.findIndex(
-                  (product) => product.name === cur.name
-                );
-                duplicate.quantity = duplicate.quantity + cur.quantity;
-                acc.splice(index, 1, duplicate);
-              } else {
-                const data = {
-                  name: cur.name,
-                  quantity: cur.quantity,
-                  packSize: cur.packSize,
-                };
-                acc.push(data);
-              }
+              duplicate.quantity = duplicate.quantity + cur.quantity;
+              acc.splice(index, 1, duplicate);
+            } else {
+              const data = {
+                name: cur.name,
+                quantity: cur.quantity,
+                packSize: cur.packSize,
+              };
+              acc.push(data);
+            }
+            return acc;
+          }, []);
+
+        products.forEach(async (product) => {
+          const storeLocation = await Unit.findOne({ name: "STORE" });
+          // for Store
+          await Product.updateOne(
+            { name: product.name, unit: { $eq: storeLocation._id } },
+            {
+              minimumQuantity: Math.ceil(product.quantity / product.packSize),
+            }
+          );
+        });
+
+        res.status(200).send();
+      } catch (error) {
+        res.status(400).send();
+      }
+    } else if (req.body.type === "otherUnits") {
+      try {
+        const sales = await ProductSale.find({
+          createdAt: { $gte: new Date(req.body.date) },
+          ...req.body,
+        }).sort({ createdAt: -1 });
+        if (!sales.length) {
+          return res.status(404).send();
+        }
+        const products = Object.entries(
+          sales
+            .flatMap((sale) => sale.products)
+            .reduce((acc, cur) => {
+              acc[cur.name]
+                ? (acc[cur.name] += +cur.quantity)
+                : (acc[cur.name] = cur.quantity);
               return acc;
-            }, []);
-          products.forEach(async (product) => {
-            const storeLocation = await Unit.findOne({ name: "STORE" });
-            // for Store
-            await Product.updateMany(
-              { name: product.name, unit: { $eq: storeLocation._id } },
-              {
-                minimumQuantity: Math.ceil(product.quantity / product.packSize),
-              }
-            );
-          });
-          res.status(200).send();
-        } catch (error) {
-          res.status(400).send();
-        }
-      } else if (req.body.type === "otherUnits") {
-        // location,unit,clinic => req.body
-        try {
-          const sales = await ProductSale.find({
-            createdAt: { $gte: new Date(req.body.date) },
-            ...req.body,
-          }).sort({ createdAt: -1 });
-          if (!sales.length) {
-            return res.status(404).send();
-          }
-          const products = Object.entries(
-            sales
-              .flatMap((sale) => sale.products)
-              .reduce((acc, cur) => {
-                acc[cur.name]
-                  ? (acc[cur.name] += +cur.quantity)
-                  : (acc[cur.name] = cur.quantity);
-                return acc;
-              }, {})
-          ).map(([key, value]) => {
-            return {
-              name: key,
-              quantity: value,
-            };
-          });
-          products.forEach(async (product) => {
-            const storeLocation = await Unit.findOne({ name: "STORE" });
-            // check for store and other units  products
-            await Product.updateMany(
-              { name: product.name, unit: { $ne: storeLocation._id } },
-              { minimumQuantity: Math.ceil(product.quantity / 4) }
-            );
-          });
-          res.status(200).send();
-        } catch (error) {
-          res.status(400).send();
-        }
+            }, {})
+        ).map(([key, value]) => {
+          return {
+            name: key,
+            quantity: value,
+          };
+        });
+
+        products.forEach(async (product) => {
+          // check for store and other units  products
+          await Product.updateOne(
+            {
+              name: product.name,
+              unit: req.body.unit,
+              location: req.body.location,
+              clinic: req.body.clinic,
+            },
+            { minimumQuantity: Math.ceil(product.quantity / 4) }
+          );
+        });
+        res.status(200).send();
+      } catch (error) {
+        res.status(400).send();
       }
     }
   }
-);
+});
 
 router.patch("/api/productsales/:id", authentication, async (req, res) => {
   const _id = req.params.id;

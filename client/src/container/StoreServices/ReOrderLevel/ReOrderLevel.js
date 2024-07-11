@@ -14,6 +14,7 @@ import {
   sendProductMessenger,
   resetProductMessenger,
   clearAuthentication,
+  setReorderHandler,
 } from "../../../store";
 import FilterButton from "../../../components/UI/FilterButton/FilterButton";
 import Input from "../../../components/UI/Input/Input";
@@ -27,7 +28,7 @@ import Button from "../../../components/UI/Button/Button";
 import classes from "./ReOrderLevel.module.css";
 import { Navigate } from "react-router-dom";
 import { calculateReorderLevelRequest } from "../../../Utility/sales";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { getDate, storeNotificationMessenger } from "../../../Utility/general";
 const ReOrderLevel = React.memo((props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -83,6 +84,11 @@ const ReOrderLevel = React.memo((props) => {
   );
   const clearAuthenticationHandler = useCallback(
     (status) => dispatch(clearAuthentication(status)),
+    [dispatch]
+  );
+  const setReOrderLevelHandler = useCallback(
+    (token, location, unit, clinic) =>
+      dispatch(setReorderHandler(token, location, unit, clinic)),
     [dispatch]
   );
   const downloadPdf = async () => {
@@ -155,14 +161,11 @@ const ReOrderLevel = React.memo((props) => {
     const format = Object.fromEntries(new FormData(e.target).entries());
 
     const presentDate = new Date();
-    const formattedString = presentDate.setMonth(
+    const formattedDate = presentDate.setMonth(
       presentDate.getMonth() - +format.date,
-      1
+      0
     );
-
-    const dateString = `${new Date(formattedString).getFullYear()}-${
-      new Date(formattedString).getMonth() + 1
-    }-${new Date(formattedString).getDate()}`;
+    const dateString = getDate(formattedDate);
     try {
       const response = await calculateReorderLevelRequest(
         token,
@@ -200,6 +203,7 @@ const ReOrderLevel = React.memo((props) => {
   const reorderListLength = state.reorderList.length;
   useEffect(() => {
     initProductDatabaseHandler(token, $location, unit, clinic);
+    setReOrderLevelHandler(token, $location, unit, clinic);
   }, []);
 
   useEffect(() => {

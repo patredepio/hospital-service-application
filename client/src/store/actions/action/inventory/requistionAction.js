@@ -9,6 +9,7 @@ import {
 } from "../../../index";
 import { getLastRequistion, postRequistion } from "../../../../Utility/product";
 import { calculateReorderLevelRequest } from "../../../../Utility/sales";
+import { getDate } from "../../../../Utility/general";
 const setRequistionLoader = () => {
   return {
     type: SET_REQUISTION_LOADER,
@@ -31,7 +32,8 @@ export const clearRequistionModal = () => {
 };
 export const setMinimumQuantityHandler = (token, location, unit, clinic) => {
   const date = new Date();
-  const newDate = date.setMonth(date.getMonth() - 1);
+  const newDate = date.setMonth(date.getMonth() - 1, 0);
+
   return async (dispatch) => {
     try {
       dispatch(setRequistionLoader());
@@ -39,6 +41,39 @@ export const setMinimumQuantityHandler = (token, location, unit, clinic) => {
         token,
         JSON.stringify({
           type: "otherUnits",
+          date: newDate,
+          location,
+          unit,
+          clinic,
+        })
+      );
+      if (!setMinimumResponse?.ok) {
+        throw {
+          message: setMinimumResponse?.statusText,
+          status: setMinimumResponse.status,
+        };
+      } else {
+        dispatch(clearRequistionLoader());
+      }
+    } catch (error) {
+      dispatch(clearRequistionLoader());
+      if (error.status === 401) {
+        dispatch(clearAuthentication(error.status));
+      }
+    }
+  };
+};
+export const setReorderHandler = (token, location, unit, clinic) => {
+  const date = new Date();
+  const newDate = date.setMonth(date.getMonth() - 1, 0);
+
+  return async (dispatch) => {
+    try {
+      dispatch(setRequistionLoader());
+      const setMinimumResponse = await calculateReorderLevelRequest(
+        token,
+        JSON.stringify({
+          type: "store",
           date: newDate,
           location,
           unit,

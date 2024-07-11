@@ -15,6 +15,7 @@ import {
   sendProductMessenger,
 } from "../inventory/addProductAction";
 import { getProductExpiryAction } from "../inventory/productInventoryAction";
+import { setReorderHandler } from "../inventory/requistionAction";
 // DONT TOUCH THIS O
 // IT IS FOR ANOTHER MODULE
 export const initStoreReportRequistion = (token, setState) => {
@@ -198,6 +199,8 @@ export const initStoreVisualization = (token, setState, object) => {
     dispatch(storeVisualizationRequistions(token, setState, object));
     dispatch(storeVisualizationSupplies(token, setState, object));
     dispatch(getProductExpiryAction(token, $location, unit, clinic));
+    dispatch(setReorderHandler(token, $location, unit, clinic));
+    // dispatch(setMinimumQuantityHandler(token, $location, unit, clinic));
   };
 };
 
