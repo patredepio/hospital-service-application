@@ -103,6 +103,7 @@ const issueComponent = React.memo((props) => {
                 <input
                   value={product?.costPrice}
                   min={1}
+                  autoFocus={true}
                   onChange={(e) =>
                     props.updateCostPrice(e, product.id, props.setState)
                   }

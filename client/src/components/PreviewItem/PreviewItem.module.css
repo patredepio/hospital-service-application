@@ -3,6 +3,21 @@
   margin: 0.5rem;
   background-color: #ffffff8b;
   border: 1px solid #ccc;
+  height: 400px;
+  overflow: auto;
+}
+.previewContainer::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.previewContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.previewContainer::-webkit-scrollbar-thumb {
+  background: #25447d;
 }
 .title {
   font-weight: bold;

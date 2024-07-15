@@ -117,28 +117,31 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
 
   try {
     const _id = req.params.id;
-    const product = await Product.findById(_id);
+    const product = await Product.findById(_id).populate("unit");
     if (!product) {
       return res.status(404).send();
     }
-
-    updates.forEach(async (update) => {
-      if (
-        update === "name" ||
-        update === "costPrice" ||
-        update === "packSize" ||
-        update === "productCategory"
-      ) {
-        await Product.updateMany(
-          { name: product.name },
-          { [update]: req.body[update] }
-        );
-      } else {
-        product[update] = req.body[update];
-        await product.save();
-      }
-    });
-
+    if (product.unit?.name === "STORE") {
+      updates.forEach(async (update) => {
+        if (
+          update === "name" ||
+          update === "costPrice" ||
+          update === "packSize" ||
+          update === "productCategory"
+        ) {
+          await Product.updateMany(
+            { name: product.name },
+            { [update]: req.body[update] }
+          );
+        } else {
+          product[update] = req.body[update];
+          await product.save();
+        }
+      });
+    } else {
+      updates.forEach((update) => (product[update] = req.body[update]));
+      await product.save();
+    }
     res.status(200).send(product);
   } catch (e) {
     res.status(400).send();
