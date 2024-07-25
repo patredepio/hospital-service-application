@@ -79,7 +79,7 @@ const previewItem = React.memo((props) => {
           <h4>
             {props.location.name}, {props.unit.name} PHARMACY
           </h4>
-          <h5>{props.supplies ? `${props.supplier.name}` : null}</h5>
+          <h5>{props.supplies ? `${props.supplier?.name}` : null}</h5>
         </div>
       </div>
       <div className={classes.salesInformation}>
@@ -102,7 +102,7 @@ const previewItem = React.memo((props) => {
               ? props.sale.patient?.firstName
                 ? props.sale?.patient?.fileNumber
                 : "UNREGISTERED"
-              : props.supplier.contact}
+              : props.supplier?.contact}
           </div>
         </div>
         {props.sale?.collector ? (
