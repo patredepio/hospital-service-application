@@ -3,9 +3,9 @@ import {
   resetProductMessenger,
   sendProductMessenger,
 } from "../inventory/addProductAction";
-import { initProductDatabase } from "../generalAction";
+import { initProductDatabase } from "../general/generalAction";
 import { addProductLogs } from "../../../../Utility/inventory/addProduct";
-import { addProductQuantity } from "../../../../Utility/product";
+import { addProductQuantity } from "../../../../Utility/product/product";
 
 export const validateProductReturn = (state, setState) => {
   return (dispatch) => {

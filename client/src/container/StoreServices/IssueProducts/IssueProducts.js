@@ -21,12 +21,12 @@ import {
   updateStoreProductHandler,
   searchStoreProductHandler,
   checkRequistionHeld,
-  retrieveRequistion,
 } from "../../../Utility/issueProducts/issueProducts";
+import { retrieveRequistion } from "../../../store";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import ErrorHandler from "../../../hoc/ErrorHandler/ErrorHandler";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const IssuedProducts = (props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -81,6 +81,11 @@ const IssuedProducts = (props) => {
       ),
     [dispatch]
   );
+  const retrieveRequistionHandler = useCallback(
+    (setState, id, token, location, unit, clinic) =>
+      dispatch(retrieveRequistion(setState, id, token, location, unit, clinic)),
+    [dispatch]
+  );
   const validateIssueHandler = useCallback(
     (state, setState) => dispatch(validateIssue(state, setState)),
     [dispatch]
@@ -114,7 +119,7 @@ const IssuedProducts = (props) => {
     );
   }, [props.socket]);
   return (
-    <Fragment>
+    <div className={classes.container}>
       <ChatMessenger message={mainMessage} />
       {productDatabaseError.message && (
         <ErrorHandler
@@ -130,7 +135,7 @@ const IssuedProducts = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}
@@ -146,12 +151,16 @@ const IssuedProducts = (props) => {
               updateStoreProduct={updateStoreProductHandler}
               searchStoreProduct={searchStoreProductHandler}
               holdIssue={holdIssueHandler}
-              retrieveRequistion={retrieveRequistion}
+              retrieveRequistion={retrieveRequistionHandler}
               checkRequistion={checkRequistionHeld}
               state={state}
               database={productDatabase}
               show={state.modalPreview}
               store={state.storeProducts}
+              token={token}
+              location={$location?.id}
+              unit={unit?.id}
+              clinic={clinic?.id}
             />
           )
         ) : state.previewComponent ? (
@@ -221,7 +230,7 @@ const IssuedProducts = (props) => {
             )}
           </div>
         ))}
-    </Fragment>
+    </div>
   );
 };
 

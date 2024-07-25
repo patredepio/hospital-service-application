@@ -24,7 +24,7 @@ import {
 } from "../../../store/index";
 import { useDispatch, useSelector } from "react-redux";
 import { addFormHandler } from "../../../Utility/inventory/addProduct";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 
 const AddProduct = (props) => {
   const dispatch = useDispatch();
@@ -124,7 +124,8 @@ const AddProduct = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   const { name } = formState;
@@ -165,7 +166,7 @@ const AddProduct = (props) => {
       )}
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

@@ -13,7 +13,7 @@ import Message from "../../components/UI/Message/Message";
 import ChatMessenger from "../../components/UI/ChatMessenger/ChatMessenger";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import ErrorHandler from "../../hoc/ErrorHandler/ErrorHandler";
-import { storeNotificationMessenger } from "../../Utility/general";
+import { storeNotificationMessenger } from "../../Utility/general/general";
 const Dashboard = (props) => {
   const dispatch = useDispatch();
   const slideList = useSelector((state) => state.dashboard.slides);
@@ -54,7 +54,8 @@ const Dashboard = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
 
@@ -93,7 +94,7 @@ const Dashboard = (props) => {
       )}
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

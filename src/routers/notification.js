@@ -4,22 +4,31 @@ const router = new express.Router();
 const authentication = require("../authentication/authentication");
 const User = require("../models/User");
 
+// router.post("/api/notification", authentication, async (req, res) => {
+//   try {
+//     const notification = new Notification({
+//       message: req.body.id,
+//     });
+//     await notification.save();
+//     await notification.populate("message");
+//     const sentNotification = await User.populate(notification, {
+//       path: "sender",
+//       select: "firstName lastName",
+//     });
+//     const finalNotification = await User.populate(sentNotification, {
+//       path: "chat",
+//       select: "name",
+//     });
+//     res.status(201).send(finalNotification);
+//   } catch (error) {
+//     res.status(400).send();
+//   }
+// });
 router.post("/api/notification", authentication, async (req, res) => {
   try {
-    const notification = new Notification({
-      message: req.body.id,
-    });
+    const notification = new Notification({ ...req.body });
     await notification.save();
-    await notification.populate("message");
-    const sentNotification = await User.populate(notification, {
-      path: "sender",
-      select: "firstName lastName",
-    });
-    const finalNotification = await User.populate(sentNotification, {
-      path: "chat",
-      select: "name",
-    });
-    res.status(201).send(finalNotification);
+    res.status(201).send();
   } catch (error) {
     res.status(400).send();
   }

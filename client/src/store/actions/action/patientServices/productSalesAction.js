@@ -1,14 +1,20 @@
-import { addProductQuantity } from "../../../../Utility/product";
-import { deleteSaleRequest, editSaleRequest } from "../../../../Utility/sales";
+import { addProductQuantity } from "../../../../Utility/product/product";
+import {
+  deleteSaleRequest,
+  editSaleRequest,
+} from "../../../../Utility/sales/sales";
 import { addProductLogs } from "../../../../Utility/inventory/addProduct";
-import { initProductSalesDatabase, setSalesLoader } from "../generalAction";
+import {
+  initProductSalesDatabase,
+  setSalesLoader,
+} from "../general/generalAction";
 import { clearAuthentication } from "../auth/loginAction";
 import {
   resetProductMessenger,
   sendProductMessenger,
 } from "../inventory/addProductAction";
-import { updateDepositBalance } from "../../../../Utility/patient";
-import { addReceipt } from "../../../../Utility/general";
+import { updateDepositBalance } from "../../../../Utility/patient/patient";
+import { addReceipt } from "../../../../Utility/general/general";
 export const deleteSale = (
   token,
   id,

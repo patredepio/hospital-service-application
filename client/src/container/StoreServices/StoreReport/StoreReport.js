@@ -16,7 +16,7 @@ import {
 import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
 import FilterButton from "../../../components/UI/FilterButton/FilterButton";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const StoreReport = (props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -66,7 +66,8 @@ const StoreReport = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   return (
@@ -89,7 +90,7 @@ const StoreReport = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

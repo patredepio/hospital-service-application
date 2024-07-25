@@ -1,3 +1,15 @@
+.container {
+  min-height: 600px;
+  font-size: x-small;
+}
+.departmentLogin {
+  text-decoration: none;
+  color: #25447d;
+}
+.departmentLogin:hover {
+  color: #16284b;
+  text-decoration: underline;
+}
 .loginForm {
   padding: 2rem;
   border-radius: 10px;
@@ -31,6 +43,9 @@ input {
   background-color: white;
 }
 @media (min-width: 40rem) {
+  .container {
+    font-size: small;
+  }
   .loginForm {
     max-width: 500px;
   }

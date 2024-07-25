@@ -60,3 +60,36 @@ export const getSupplyRequest = async (token, object) => {
   });
   return response;
 };
+export const editSupplierRequest = async (id, token, body) => {
+  const response = await fetch(`/api/supplier/${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+    body,
+  });
+  return response;
+};
+export const deleteSupplierRequest = async (id, token) => {
+  const response = await fetch(`/api/supplier/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+  });
+  return response;
+};
+
+export const editSupplier = (id, suppliers, setState) => {
+  const supplier = suppliers.find((supp) => supp._id === id);
+  setState((prevState) => {
+    return {
+      ...prevState,
+      editSupplier: supplier,
+      name: supplier.name,
+      contact: supplier.contact,
+    };
+  });
+};

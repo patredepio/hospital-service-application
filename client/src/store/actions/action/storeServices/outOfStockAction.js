@@ -1,4 +1,4 @@
-import { getOutOfStockRequest } from "../../../../Utility/product";
+import { getOutOfStockRequest } from "../../../../Utility/product/product";
 import { clearAuthentication } from "../auth/loginAction";
 
 export const getOutOfStock = (setState, token, object) => {

@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendMessage, clearMessage } from "../../../../store";
 import ChatMessenger from "../../../../components/UI/ChatMessenger/ChatMessenger";
 import Message from "../../../../components/UI/Message/Message";
-import { storeNotificationMessenger } from "../../../../Utility/general";
+import {
+  storeNotificationMessenger,
+  getDate,
+} from "../../../../Utility/general/general";
 import Carousel from "../../../../components/UI/Carousel/Carousel";
 import { Navigate } from "react-router-dom";
 import classes from "./OsExpiryVisualizationReport.module.css";
@@ -15,7 +18,6 @@ import {
   initOsExpiryVisualization,
 } from "../../../../store/actions/action/storeServices/storeRequistionsAction";
 import Backdrop from "../../../../components/UI/Backdrop/Backdrop";
-import { getDate } from "../../../../Utility/general";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
 const OsExpiryVisualizationReport = memo((props) => {
   const dispatch = useDispatch();
@@ -84,7 +86,8 @@ const OsExpiryVisualizationReport = memo((props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   useEffect(() => {
@@ -121,7 +124,7 @@ const OsExpiryVisualizationReport = memo((props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

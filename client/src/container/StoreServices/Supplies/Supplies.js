@@ -19,7 +19,7 @@ import {
 } from "../../../store";
 import { Navigate } from "react-router-dom";
 import { setSelectedSupplyHandler } from "../../../Utility/receivedProducts/receivedProducts";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const Supplies = (props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -74,7 +74,8 @@ const Supplies = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   return (
@@ -97,7 +98,7 @@ const Supplies = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

@@ -53,7 +53,7 @@ const DeleteUser = memo((props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

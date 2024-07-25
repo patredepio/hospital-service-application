@@ -45,7 +45,7 @@ const InstitutionComponents = () => {
     getDepartmentsHandler(token, setState);
   }, []);
   return (
-    <Fragment>
+    <div className={classes.container}>
       {!isAuthenticated && !token && (
         <Navigate
           to='/institution/log-out'
@@ -113,60 +113,8 @@ const InstitutionComponents = () => {
           </div>
         </div>
       )}
-    </Fragment>
+    </div>
   );
 };
 
 export default InstitutionComponents;
-{
-  /* <Modal
-        show={state.department.show}
-        modalClosed={() =>
-          setState((prevState) => {
-            return {
-              ...prevState,
-              department: {
-                ...prevState.department,
-                show: false,
-              },
-            };
-          })
-        }
-      >
-        <div className={classes.modalDepartment}>
-          <h5>ADD NEW DEPARTMENT</h5>
-          <Input
-            label='DEPARTMENT'
-            config={{
-              placeholder: "DEPARTMENT",
-              required: true,
-              autoFocus: true,
-              name: "department",
-              value: state.department.value,
-            }}
-            changed={(e) =>
-              setState((prevState) => {
-                return {
-                  ...prevState,
-                  department: {
-                    ...prevState.department,
-                    value: e.target.value,
-                  },
-                };
-              })
-            }
-          />
-          <span
-            style={{ fontSize: "9.5px", display: "block", fontWeight: "bold" }}
-          >
-            N.B ADD MULTIPLE DEPARTMENTS USING A COMMAS e.g ADMIN, PHARMACY
-          </span>
-          <Button
-            changed={() => addDepartment(state.department.value, setState)}
-            config={{ className: classes.confirm }}
-          >
-            ADD
-          </Button>
-        </div>
-      </Modal> */
-}

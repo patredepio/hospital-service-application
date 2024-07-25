@@ -1,15 +1,18 @@
 import { addProductLogs } from "../../../../Utility/inventory/addProduct";
-import { updateProductQuantity } from "../../../../Utility/product";
+import { updateProductQuantity } from "../../../../Utility/product/product";
 import {
   getSuppliersRequest,
   getSupplyRequest,
   deleteSupplyRequest,
+  editSupplierRequest,
+  deleteSupplierRequest,
 } from "../../../../Utility/storeServices/storeServices";
 import { clearAuthentication } from "../auth/loginAction";
 import {
   resetProductMessenger,
   sendProductMessenger,
 } from "../inventory/addProductAction";
+import { getSuppliersMethod } from "./receiveProductsAction";
 
 export const initSupplies = (token, setState, location, unit, clinic) => {
   return async (dispatch) => {
@@ -353,5 +356,98 @@ export const getCompletedExchanges = (
         };
       });
     }
+  };
+};
+export const editSupplierMethod = (e, setState, supplier, token) => {
+  e.preventDefault();
+  return async (dispatch) => {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        loading: true,
+      };
+    });
+    const editForm = Object.fromEntries(new FormData(e.target).entries());
+    const form = {};
+    if (editForm.name !== supplier.name) {
+      form.name = editForm.name;
+    }
+    if (editForm.contact !== supplier.contact) {
+      form.contact = editForm.contact;
+    }
+    try {
+      const editResponse = await editSupplierRequest(
+        supplier._id,
+        token,
+        JSON.stringify(form)
+      );
+      if (editResponse?.ok) {
+        setState((prevState) => {
+          return {
+            ...prevState,
+            editSupplier: null,
+          };
+        });
+        dispatch(getSuppliersMethod(token, setState));
+        dispatch(sendProductMessenger("supplier edited"));
+      } else {
+        throw {
+          message: editResponse.statusText,
+          status: editResponse.status,
+        };
+      }
+    } catch (error) {
+      if (error.status === 401) {
+        dispatch(clearAuthentication(error.status));
+      }
+      dispatch(sendProductMessenger("unable to edit supplier", true));
+    }
+    setTimeout(() => {
+      dispatch(resetProductMessenger());
+    }, 3000);
+    setState((prevState) => {
+      return {
+        ...prevState,
+        loading: false,
+      };
+    });
+  };
+};
+
+export const deleteSupplierMethod = (id, token, setState) => {
+  return async (dispatch) => {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        loading: true,
+        deleteModal: false,
+      };
+    });
+    try {
+      const deleteResponse = await deleteSupplierRequest(id, token);
+      if (deleteResponse?.ok) {
+        dispatch(sendProductMessenger("supplier deleted successfully "));
+        dispatch(getSuppliersMethod(token, setState));
+      } else {
+        throw {
+          message: deleteResponse.statusText,
+          status: deleteResponse.status,
+        };
+      }
+    } catch (error) {
+      if (error.status === 401) {
+        dispatch(clearAuthentication(error.status));
+      }
+      dispatch(sendProductMessenger("unable to delete supplier", true));
+    }
+    setTimeout(() => {
+      dispatch(resetProductMessenger());
+    }, 3000);
+    setState((prevState) => {
+      return {
+        ...prevState,
+        loading: false,
+      };
+    });
   };
 };

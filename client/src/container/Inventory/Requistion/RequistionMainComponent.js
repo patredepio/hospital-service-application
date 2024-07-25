@@ -21,7 +21,7 @@ import {
   deleteRequistionItemHandler,
   addPotentialRequisteHandler,
 } from "../../../Utility/inventory/requistion";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 
 const RequistionMainComponent = React.memo((props) => {
   const dispatch = useDispatch();
@@ -121,13 +121,7 @@ const RequistionMainComponent = React.memo((props) => {
       );
     }
   }, [length]);
-  useEffect(() => {
-    storeNotificationMessenger(
-      props.socket,
-      mainMessageHandler,
-      clearMessageHandler
-    );
-  }, [props.socket]);
+
   return (
     <React.Fragment>
       {productDatabaseError.message && (

@@ -1,10 +1,14 @@
 .Sidebar {
   position: fixed;
-  top: 9%;
+  top: 7.5%;
   background-color: #e8f1fb;
   height: 100%;
   z-index: 3;
   transition: transform 0.3s ease-out;
+}
+.navigationContainer {
+  min-height: 600px;
+  overflow: auto;
 }
 .Open {
   transform: translateX(0);

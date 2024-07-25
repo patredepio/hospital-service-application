@@ -18,7 +18,7 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 import FilterButton from "../../../components/UI/FilterButton/FilterButton";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const ProductVisualization = React.memo((props) => {
   const dispatch = useDispatch();
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -154,7 +154,7 @@ const ProductVisualization = React.memo((props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

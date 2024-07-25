@@ -1,3 +1,6 @@
+.container {
+  min-height: 600px;
+}
 .requistion {
   display: flex;
   justify-content: space-between;
@@ -37,7 +40,7 @@
   padding: 5px;
 }
 .requistionList {
-  height: 400px;
+  height: 550px;
   padding: 1rem;
   overflow: auto;
 }

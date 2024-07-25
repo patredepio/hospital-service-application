@@ -26,7 +26,7 @@ import FilterButton from "../../../components/UI/FilterButton/FilterButton";
 import Input from "../../../components/UI/Input/Input";
 import PharmacovigilancePreview from "../../../components/PharmacovigilanceForm/PharmacovigilancePreview/PharmacovigilancePreview";
 import Spinner from "../../../components/UI/Spinner/Spinner";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 
 const PharmacovigilanceReport = (props) => {
   const dispatch = useDispatch();
@@ -253,7 +253,7 @@ const PharmacovigilanceReport = (props) => {
       <ChatMessenger message={mainMessage} />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

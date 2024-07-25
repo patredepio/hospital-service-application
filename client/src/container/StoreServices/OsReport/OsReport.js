@@ -23,7 +23,7 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import Message from "../../../components/UI/Message/Message";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 
 const OsReport = (props) => {
   const dispatch = useDispatch();
@@ -133,7 +133,8 @@ const OsReport = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   return (
@@ -155,7 +156,7 @@ const OsReport = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/login'
         />
       )}

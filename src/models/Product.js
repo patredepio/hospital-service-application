@@ -108,11 +108,8 @@ productSchema.pre("save", async function (next) {
     if (product.fgPrice === 0) {
       product.nhiaPrice = sellingPrice;
     } else if (sellingPrice > +product.fgPrice) {
-      product.nhiaPrice = (
-        sellingPrice -
-        product.fgPrice +
-        +tenPercent
-      ).toFixed(2);
+      const deficit = sellingPrice - product.fgPrice;
+      product.nhiaPrice = (deficit + +tenPercent).toFixed(2);
     } else {
       product.nhiaPrice = tenPercent;
     }
@@ -123,11 +120,8 @@ productSchema.pre("save", async function (next) {
     if (product.fgPrice === 0) {
       product.nhiaPrice = sellingPrice;
     } else if (sellingPrice > +product.fgPrice) {
-      product.nhiaPrice = (
-        sellingPrice -
-        product.fgPrice +
-        +tenPercent
-      ).toFixed(2);
+      const deficit = sellingPrice - product.fgPrice;
+      product.nhiaPrice = (deficit + +tenPercent).toFixed(2);
     } else {
       product.nhiaPrice = tenPercent;
     }

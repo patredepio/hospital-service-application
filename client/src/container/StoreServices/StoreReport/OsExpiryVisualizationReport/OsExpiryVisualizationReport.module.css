@@ -1,5 +1,6 @@
 .osExpiryContainer {
   position: relative;
+  min-height: 600px;
 }
 .osExpiryContainer h4 {
   margin-bottom: 4rem;

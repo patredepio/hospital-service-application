@@ -4,7 +4,7 @@ import {
   sendProductMessenger,
   resetProductMessenger,
 } from "../../../index";
-import { registerUserReq } from "../../../../Utility/auth";
+import { registerUserReq } from "../../../../Utility/auth/auth";
 
 const initRegistration = () => {
   return {

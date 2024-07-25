@@ -22,7 +22,7 @@ import { Navigate } from "react-router-dom";
 import ErrorHandler from "../../../hoc/ErrorHandler/ErrorHandler";
 import Message from "../../../components/UI/Message/Message";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const EditProduct = (props) => {
   const dispatch = useDispatch();
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -127,7 +127,8 @@ const EditProduct = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   const renderedProducts = products.map((product) => {
@@ -162,7 +163,7 @@ const EditProduct = (props) => {
     );
   });
   return (
-    <React.Fragment>
+    <div className={classes.container}>
       <ChatMessenger message={mainMessage} />
       <Message
         message={message}
@@ -170,7 +171,7 @@ const EditProduct = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}
@@ -251,7 +252,7 @@ const EditProduct = (props) => {
           </button>
         </div>
       )}
-    </React.Fragment>
+    </div>
   );
 };
 

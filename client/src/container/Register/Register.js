@@ -86,7 +86,7 @@ const Register = () => {
       {!isAuthenticated && !token && (
         <Navigate
           to='/institution/log-out'
-          replace
+          replace={true}
         />
       )}
       <Message

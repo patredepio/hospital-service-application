@@ -8,9 +8,12 @@ import {
   SET_EDIT_LOADER,
   CLEAR_EDIT_LOADER,
 } from "../../../index";
-import { getReqById, sendEditReq } from "../../../../Utility/general";
-import { ResponseError } from "../../../../Utility/auth";
-import { editProductById, getProductById } from "../../../../Utility/product";
+import { getReqById, sendEditReq } from "../../../../Utility/general/general";
+import { ResponseError } from "../../../../Utility/auth/auth";
+import {
+  editProductById,
+  getProductById,
+} from "../../../../Utility/product/product";
 import { addProductLogs } from "../../../../Utility/inventory/addProduct";
 const renderFilteredProducts = (products) => {
   return {

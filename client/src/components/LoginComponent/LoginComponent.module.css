@@ -1,15 +1,16 @@
+.container {
+  min-height: 600px;
+}
 .loginForm {
   max-width: 600px;
   width: 100%;
   margin: 1rem auto;
   padding: 1rem;
   box-shadow: 2px 2px 2px 2px #aaaaaaaa;
-  background-color: white;
   display: grid;
   grid-template-rows: auto;
   row-gap: 10px;
-  background-image: linear-gradient(#e8f1fbbf, #eaf3fa84),
-    url("../../assets/images/pharmacy.avif");
+  backdrop-filter: blur(20px);
   min-height: 500px;
 }
 .loginForm input,

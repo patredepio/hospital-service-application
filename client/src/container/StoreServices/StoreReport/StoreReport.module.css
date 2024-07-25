@@ -4,6 +4,7 @@
   border: 1px solid #ccc;
   margin: 0.5rem;
   font-size: x-small;
+  min-height: 600px;
 }
 
 .requistionForm {

@@ -13,7 +13,7 @@ import IssuePreviewComponent from "../../../components/IssuePreviewComponent/Iss
 import RequistionItem from "../../../components/RequistionItem/RequistionItem";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
 import RequistionMainComponent from "../Requistion/RequistionMainComponent";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const ReceiveRequistion = (props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -80,7 +80,7 @@ const ReceiveRequistion = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

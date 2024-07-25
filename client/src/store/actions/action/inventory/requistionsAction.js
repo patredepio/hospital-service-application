@@ -1,4 +1,4 @@
-import { getAllRequistion } from "../../../../Utility/product";
+import { getAllRequistion } from "../../../../Utility/product/product";
 import { clearAuthentication } from "../auth/loginAction";
 
 export const initRequistions = (token, setState, location, unit) => {

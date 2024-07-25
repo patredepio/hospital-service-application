@@ -7,13 +7,9 @@ const usernameLoginComponent = memo((props) => {
   return (
     <form
       className={classes.loginForm}
-      style={{
-        backgroundImage: `linear-gradient(#e8f1fbbf, #eaf3fa84),
-    url(${pharmacyImage})`,
-      }}
       onSubmit={(e) => props.getUsername(e, props.setState, props.state)}
     >
-      <h3 className={classes.login}>Login</h3>
+      <h3 className={classes.login}> Department Login</h3>
       <Input
         inputType='select'
         options={props.departments.map((dep) => dep.name)}

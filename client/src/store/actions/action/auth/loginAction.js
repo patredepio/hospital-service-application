@@ -5,7 +5,7 @@ import {
   RE_AUTHENTICATE,
   CLEAR_AUTHENTICATION,
 } from "../../../index";
-import { loginUser, logoutRequest } from "../../../../Utility/auth";
+import { loginUser, logoutRequest } from "../../../../Utility/auth/auth";
 import { LOG_OUT } from "../../actionTypes/actionTypes";
 
 export const authentication = (authStatus, text) => {

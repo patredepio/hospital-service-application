@@ -12,7 +12,7 @@ import {
   getProductExpires,
   getProductLogsByProduct,
   otherUnitsInventory,
-} from "../../../../Utility/product";
+} from "../../../../Utility/product/product";
 
 const setProductLogLoader = () => {
   return {

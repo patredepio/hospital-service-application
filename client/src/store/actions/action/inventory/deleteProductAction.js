@@ -7,7 +7,7 @@ import {
   resetFilteredProducts,
   initProductDatabase,
 } from "../../../index";
-import { deleteProductById } from "../../../../Utility/product";
+import { deleteProductById } from "../../../../Utility/product/product";
 const initDeleteProduct = () => {
   return {
     type: DELETE_PRODUCT_INIT,

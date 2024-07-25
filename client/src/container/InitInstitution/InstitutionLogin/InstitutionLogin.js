@@ -6,7 +6,7 @@ import Input from "../../../components/UI/Input/Input";
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import { loginInstitution } from "../../../store";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 const InstitutionLogin = () => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -24,11 +24,11 @@ const InstitutionLogin = () => {
   const errorMessage = useSelector((state) => state.addProduct.errorMessage);
   const message = useSelector((state) => state.addProduct.message);
   return (
-    <Fragment>
+    <div className={classes.container}>
       {isAuthenticated && token && (
         <Navigate
           to='/institution/components'
-          replace
+          replace={true}
         />
       )}
       <Message
@@ -42,12 +42,12 @@ const InstitutionLogin = () => {
           className={classes.loginForm}
           onSubmit={(e) => loginInstitutionHandler(e, setState)}
         >
-          <h3 className={classes.formTitle}>SIGN IN</h3>
+          <h3 className={classes.formTitle}>INSTITUTION LOGIN</h3>
           <Input
             config={{
               name: "username",
               required: true,
-              className: state.error ? classes.error : null,
+              className: state.error ? classes.error : classes.bottom,
               placeholder: "USERNAME",
               value: state.username,
             }}
@@ -61,6 +61,7 @@ const InstitutionLogin = () => {
               })
             }
           />
+          <div style={{ marginBottom: "20px" }}></div>
           <Input
             config={{
               name: "password",
@@ -87,9 +88,18 @@ const InstitutionLogin = () => {
           >
             LOGIN
           </Button>
+          <div>
+            <Link
+              className={classes.departmentLogin}
+              to={"/pharma-app/login"}
+              replace={true}
+            >
+              Department Login
+            </Link>
+          </div>
         </form>
       )}
-    </Fragment>
+    </div>
   );
 };
 

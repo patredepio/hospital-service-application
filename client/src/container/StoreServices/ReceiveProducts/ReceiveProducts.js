@@ -31,7 +31,7 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import Message from "../../../components/UI/Message/Message";
 import Input from "../../../components/UI/Input/Input";
 import Button from "../../../components/UI/Button/Button";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const ReceiveProducts = (props) => {
   const dispatch = useDispatch();
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -133,11 +133,12 @@ const ReceiveProducts = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   return (
-    <div>
+    <div className={classes.container}>
       {productDatabaseError.message && (
         <ErrorHandler
           error={productDatabaseError.message}
@@ -147,7 +148,7 @@ const ReceiveProducts = (props) => {
       )}
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}
@@ -262,7 +263,6 @@ const ReceiveProducts = (props) => {
               config={{
                 name: "contact",
                 placeholder: "SUPPLIER CONTACT",
-                required: true,
               }}
             />
             <Button

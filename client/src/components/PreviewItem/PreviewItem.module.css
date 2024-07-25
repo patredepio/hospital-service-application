@@ -3,21 +3,18 @@
   margin: 0.5rem;
   background-color: #ffffff8b;
   border: 1px solid #ccc;
-  height: 400px;
-  overflow: auto;
+  font-size: x-small;
 }
-.previewContainer::-webkit-scrollbar {
-  width: 10px;
+.salesInformation {
+  margin: 1rem auto;
+  border-radius: 2px;
+  max-width: 70%;
 }
-
-/* Track */
-.previewContainer::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-.previewContainer::-webkit-scrollbar-thumb {
-  background: #25447d;
+.salesInformation > div {
+  display: grid;
+  grid-template-columns: 70px auto;
+  padding: 10px;
+  letter-spacing: 0.1em;
 }
 .title {
   font-weight: bold;
@@ -75,6 +72,7 @@
 
 .list {
   margin: 0.5rem;
+  height: 350px;
   overflow: auto;
 }
 .list::-webkit-scrollbar {
@@ -138,6 +136,9 @@
 }
 
 @media (min-width: 40rem) {
+  .previewContainer {
+    font-size: small;
+  }
   .desktopOnly {
     display: block;
   }
@@ -157,5 +158,8 @@
   .title,
   .interactionBar {
     font-size: small;
+  }
+  .salesInformation > div {
+    grid-template-columns: 200px auto;
   }
 }

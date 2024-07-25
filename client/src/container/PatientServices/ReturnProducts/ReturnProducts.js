@@ -21,7 +21,7 @@ import ProductContainer from "../../../components/ProductContainer/ProductContai
 import { Navigate } from "react-router-dom";
 import MainPreview from "../../../components/MainPreview/MainPreview";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const ReturnProducts = (props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -94,7 +94,7 @@ const ReturnProducts = (props) => {
     );
   }, [props.socket]);
   return (
-    <Fragment>
+    <div style={{ minHeight: "600px" }}>
       <ChatMessenger message={mainMessage} />
       <Message
         message={message}
@@ -102,7 +102,7 @@ const ReturnProducts = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}
@@ -141,7 +141,7 @@ const ReturnProducts = (props) => {
           validateTransfer={validateProductReturnHandler}
         />
       )}
-    </Fragment>
+    </div>
   );
 };
 

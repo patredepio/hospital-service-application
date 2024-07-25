@@ -7,7 +7,7 @@ import { initRequistions, sendMessage, clearMessage } from "../../../store";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import IssuePreviewComponent from "../../../components/IssuePreviewComponent/IssuePreviewComponent";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const Requistions = React.memo((props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -43,7 +43,8 @@ const Requistions = React.memo((props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   return (
@@ -55,7 +56,7 @@ const Requistions = React.memo((props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

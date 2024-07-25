@@ -1,5 +1,5 @@
 .ctn {
-  height: 500px;
+  min-height: 600px;
   overflow: auto;
   padding: 1rem;
   font-size: x-small;

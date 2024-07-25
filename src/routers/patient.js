@@ -58,6 +58,7 @@ router.get("/api/patients", authentication, async (req, res) => {
           { lastName: { $regex: req.query.search, $options: "i" } },
           { fileNumber: { $regex: req.query.search, $options: "i" } },
           { firstName: { $regex: req.query.search, $options: "i" } },
+          { otherName: { $regex: req.query.search, $options: "i" } },
         ],
       }
     : {};

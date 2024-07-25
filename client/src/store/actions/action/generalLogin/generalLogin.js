@@ -1,5 +1,5 @@
-import { getUsername } from "../../../../Utility/auth";
-import { getDepartmentsRequest } from "../../../../Utility/general";
+import { getUsername } from "../../../../Utility/auth/auth";
+import { getDepartmentsRequest } from "../../../../Utility/general/general";
 import { clearAuthentication } from "../auth/loginAction";
 import {
   resetProductMessenger,

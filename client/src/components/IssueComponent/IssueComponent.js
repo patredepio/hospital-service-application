@@ -103,7 +103,6 @@ const issueComponent = React.memo((props) => {
                 <input
                   value={product?.costPrice}
                   min={1}
-                  autoFocus={true}
                   onChange={(e) =>
                     props.updateCostPrice(e, product.id, props.setState)
                   }
@@ -185,7 +184,14 @@ const issueComponent = React.memo((props) => {
               className: classes.retrieve,
             }}
             changed={() =>
-              props.retrieveRequistion(props.setState, props.requistion._id)
+              props.retrieveRequistion(
+                props.setState,
+                props.requistion._id,
+                props.token,
+                props.location,
+                props.unit,
+                props.clinic
+              )
             }
           >
             RETRIEVE

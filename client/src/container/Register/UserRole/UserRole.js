@@ -30,11 +30,11 @@ const UserRole = () => {
     getDepartmentsHandler(token, setState);
   }, []);
   return (
-    <Fragment>
+    <div className={classes.container}>
       {!isAuthenticated && !token && (
         <Navigate
           to='/institution/log-out'
-          replace
+          replace={true}
         />
       )}
       <Message
@@ -66,7 +66,7 @@ const UserRole = () => {
           <Button config={{ className: classes.confirm }}>ADD USER ROLE</Button>
         </form>
       )}
-    </Fragment>
+    </div>
   );
 };
 

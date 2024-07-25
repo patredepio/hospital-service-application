@@ -48,17 +48,14 @@
   width: 20px;
 }
 @media (min-width: 40rem) {
-  .Logo:hover .Logo_Description {
-    top: 120%;
-    left: 0;
-  }
   .Logo {
     margin: 0.5rem 1rem;
   }
 }
-@media (hover: none) {
+@media not all and (hover: none) {
   .Logo:hover .Logo_Description {
-    display: none;
+    top: 120%;
+    left: 0;
   }
 }
 @media (min-width: 40rem) {

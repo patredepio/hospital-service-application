@@ -10,8 +10,8 @@ import {
 import {
   addProductQuantity,
   editProductById,
-} from "../../../../Utility/product";
-import { initProductDatabase } from "../generalAction";
+} from "../../../../Utility/product/product";
+import { initProductDatabase } from "../general/generalAction";
 import { addProductLogs } from "../../../../Utility/inventory/addProduct";
 
 export const getTransfersMethod = (token, setState, location, unit, clinic) => {

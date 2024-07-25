@@ -14,7 +14,7 @@ import {
   deactivateUser,
   deleteUserMethod,
   updateUser,
-} from "../../../../Utility/usersChat";
+} from "../../../../Utility/users/usersChat";
 import { validatePassword } from "../auth/registerAction";
 export const getDepartmentsMethod = (token, setState) => {
   setState((prevState) => {

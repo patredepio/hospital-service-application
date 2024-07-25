@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Modal from "../../../components/Modal/Modal";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const ProductInventory = (props) => {
   const [inventory, setInventory] = useState(false);
   const [productName, setProductName] = useState("");
@@ -81,7 +81,8 @@ const ProductInventory = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   useEffect(() => {
@@ -161,11 +162,11 @@ const ProductInventory = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <div className={classes.container}>
       {!isAuthenticated && !token && (
         <Navigate
           to='/pharma-app/log-out'
-          replace
+          replace={true}
         />
       )}
       <ChatMessenger message={mainMessage} />
@@ -272,7 +273,7 @@ const ProductInventory = (props) => {
           {renderedProducts || null}
         </RenderContainer>
       )}
-    </React.Fragment>
+    </div>
   );
 };
 

@@ -27,8 +27,11 @@ import ReOrderLevelComponent from "../../../components/ReOrderLevelComponent/ReO
 import Button from "../../../components/UI/Button/Button";
 import classes from "./ReOrderLevel.module.css";
 import { Navigate } from "react-router-dom";
-import { calculateReorderLevelRequest } from "../../../Utility/sales";
-import { getDate, storeNotificationMessenger } from "../../../Utility/general";
+import { calculateReorderLevelRequest } from "../../../Utility/sales/sales";
+import {
+  getDate,
+  storeNotificationMessenger,
+} from "../../../Utility/general/general";
 const ReOrderLevel = React.memo((props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -216,18 +219,19 @@ const ReOrderLevel = React.memo((props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   return (
-    <Fragment>
+    <div className={classes.container}>
       <Message
         message={message}
         error={errorMessage}
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/login'
         />
       )}
@@ -286,7 +290,7 @@ const ReOrderLevel = React.memo((props) => {
           </div>
         </Fragment>
       )}
-    </Fragment>
+    </div>
   );
 });
 

@@ -1,5 +1,6 @@
 .prescriptionValidation {
   position: relative;
+  min-height: 600px;
 }
 .productSearch {
   width: 80%;

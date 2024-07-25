@@ -5,20 +5,20 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 // Reducers
-import dashboard from "./store/reducers/dashboardReducer";
-import navigation from "./store/reducers/navigationReducer";
-import storeNavigation from "./store/reducers/storeNavigationReducer";
-import institution from "./store/reducers/institutionNavigationReducer";
+import dashboard from "./store/reducers/dashboard/dashboardReducer";
+import navigation from "./store/reducers/navigation/navigationReducer";
+import storeNavigation from "./store/reducers/storeNavigation/storeNavigationReducer";
+import institution from "./store/reducers/institutionNavigation/institutionNavigationReducer";
 import login from "./store/reducers/auth/loginReducer";
 import addProduct from "./store/reducers/inventory/addProduct/addProductReducer";
-import general from "./store/reducers/generalReducer";
+import general from "./store/reducers/general/generalReducer";
 import editProduct from "./store/reducers/inventory/addProduct/editProductReducer";
 import productLog from "./store/reducers/inventory/addProduct/productLogReducer";
 import deleteProduct from "./store/reducers/inventory/addProduct/deleteProductReducer";
 import register from "./store/reducers/auth/registerReducer";
 import requistion from "./store/reducers/inventory/requistion/requistionReducer";
-import prescriptionValidation from "./store/reducers/prescriptionValidationReducer";
-import messenger from "./store/reducers/messengerReducer";
+import prescriptionValidation from "./store/reducers/prescriptionValidation/prescriptionValidationReducer";
+import messenger from "./store/reducers/messenger/messengerReducer";
 
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
@@ -41,7 +41,7 @@ const store = configureStore({
     messenger,
   },
 });
-console.log("about,contact,userlogs,notification,errorComponent");
+console.log("userlogs,notification");
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>

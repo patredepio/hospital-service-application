@@ -12,7 +12,7 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import Message from "../../../components/UI/Message/Message";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
 import { getDataAnalysis } from "../../../Utility/storeServices/storeDashboard";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const StoreDashboard = (props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -52,7 +52,8 @@ const StoreDashboard = (props) => {
       storeNotificationMessenger(
         props.socket,
         mainMessageHandler,
-        clearMessageHandler
+        clearMessageHandler,
+        dispatch
       );
     }
   }, [props.socket]);
@@ -89,7 +90,7 @@ const StoreDashboard = (props) => {
       <ChatMessenger message={mainMessage} />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

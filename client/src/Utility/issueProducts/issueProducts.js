@@ -135,18 +135,3 @@ export const checkRequistionHeld = (id) => {
     return false;
   }
 };
-
-export const retrieveRequistion = (setState, id) => {
-  const requistions = JSON.parse(sessionStorage.getItem("heldRequistions"));
-
-  const requistionIndex = requistions.findIndex((req) => req._id === id);
-
-  const [requistion] = requistions.splice(requistionIndex, 1);
-  sessionStorage.setItem("heldRequistions", JSON.stringify(requistions));
-  setState((prevState) => {
-    return {
-      ...prevState,
-      selectedRequistion: requistion,
-    };
-  });
-};

@@ -3,9 +3,8 @@ import {
   addProductQuantity,
   editProductById,
   getAllRequistion,
-  getProductById,
   setRequistion,
-} from "../../../../Utility/product";
+} from "../../../../Utility/product/product";
 import { clearAuthentication } from "../auth/loginAction";
 import {
   resetProductMessenger,

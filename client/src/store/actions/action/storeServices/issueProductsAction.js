@@ -3,9 +3,9 @@ import {
   getAllRequistion,
   setRequistion,
   updateProductQuantity,
-} from "../../../../Utility/product";
+} from "../../../../Utility/product/product";
 import { clearAuthentication } from "../auth/loginAction";
-import { initProductDatabase } from "../generalAction";
+import { initProductDatabase } from "../general/generalAction";
 import {
   resetProductMessenger,
   sendProductMessenger,
@@ -278,5 +278,42 @@ export const holdIssue = (state, setState) => {
         dispatch(resetProductMessenger());
       }, 3000);
     }
+  };
+};
+export const retrieveRequistion = (
+  setState,
+  id,
+  token,
+  location,
+  unit,
+  clinic
+) => {
+  return (dispatch, getState) => {
+    const requistions = JSON.parse(sessionStorage.getItem("heldRequistions"));
+    dispatch(initProductDatabase(token, location, unit, clinic));
+
+    const database = JSON.parse(
+      JSON.stringify([...getState().general.products.database])
+    );
+
+    const requistionIndex = requistions.findIndex((req) => req._id === id);
+
+    const [requistion] = requistions.splice(requistionIndex, 1);
+    sessionStorage.setItem("heldRequistions", JSON.stringify(requistions));
+    requistion.products.forEach((product) => {
+      const storeProduct = product.storeProduct;
+      const mainStoreProduct = database.find(
+        (storeP) => storeP._id === storeProduct._id
+      );
+      if (mainStoreProduct.quantity !== storeProduct.quantity) {
+        storeProduct.quantity = mainStoreProduct.quantity;
+      }
+    });
+    setState((prevState) => {
+      return {
+        ...prevState,
+        selectedRequistion: requistion,
+      };
+    });
   };
 };

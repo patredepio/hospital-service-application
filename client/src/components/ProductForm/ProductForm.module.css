@@ -30,23 +30,27 @@
   width: 99%;
   padding: 10px;
   z-index: 2;
-  background-color: #f1f1f1;
+  background-color: white;
   box-shadow: 2px 2px 2px #aaaaaa;
-
+  border-radius: 10px;
   overflow: auto;
 }
 #searchModal::-webkit-scrollbar {
-  width: 10px;
+  width: 15px;
+  cursor: pointer;
 }
 
 /* Track */
 #searchModal::-webkit-scrollbar-track {
-  background: #325ba8;
+  background: #cccccc;
 }
 
 /* Handle */
 .searchModal::-webkit-scrollbar-thumb {
-  background: #f1f1f1;
+  background: #25447d;
+}
+.searchModal::-webkit-scrollbar-thumb:hover {
+  background: #101d36;
 }
 
 .productItem {
@@ -147,8 +151,10 @@
   .productItem {
     margin: 0.2rem;
     font-size: small;
-    border: 1px solid #ccc;
     padding: 10px;
+  }
+  .productItem:hover {
+    border: 1px solid #25447d;
   }
   #searchModal {
     top: 100%;

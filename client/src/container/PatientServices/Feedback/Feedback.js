@@ -8,7 +8,7 @@ import { Navigate } from "react-router-dom";
 import Input from "../../../components/UI/Input/Input";
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const Feedback = memo((props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -45,7 +45,7 @@ const Feedback = memo((props) => {
     );
   }, [props.socket]);
   return (
-    <div>
+    <div className={classes.container}>
       <ChatMessenger message={mainMessage} />
       <Message
         message={message}
@@ -53,7 +53,7 @@ const Feedback = memo((props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

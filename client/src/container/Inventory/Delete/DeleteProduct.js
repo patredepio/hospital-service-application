@@ -17,7 +17,7 @@ import {
 } from "../../../store/index";
 import classes from "./DeleteProduct.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const DeleteProduct = (props) => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
@@ -75,7 +75,8 @@ const DeleteProduct = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   const renderedProducts = products.map((product) => {
@@ -110,7 +111,7 @@ const DeleteProduct = (props) => {
     );
   });
   return (
-    <React.Fragment>
+    <div className={classes.container}>
       <ChatMessenger message={mainMessage} />
       <h4
         style={{
@@ -162,7 +163,7 @@ const DeleteProduct = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}
@@ -202,7 +203,7 @@ const DeleteProduct = (props) => {
           </div>
         </div>
       )}
-    </React.Fragment>
+    </div>
   );
 };
 

@@ -48,7 +48,7 @@ import {
   fuccProductSale,
 } from "../../../store";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const PrescriptionValidation = (props) => {
   const dispatch = useDispatch();
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -343,24 +343,8 @@ const PrescriptionValidation = (props) => {
     [dispatch]
   );
   const prescriptionValidationHandler = useCallback(
-    (
-      prescription,
-      setPrescriptionPreview,
-      setPrescription,
-      token,
-      location,
-      unit
-    ) =>
-      dispatch(
-        prescriptionValidation(
-          prescription,
-          setPrescriptionPreview,
-          setPrescription,
-          token,
-          location,
-          unit
-        )
-      ),
+    (prescription, setPrescriptionPreview) =>
+      dispatch(prescriptionValidation(prescription, setPrescriptionPreview)),
     [dispatch]
   );
   const uploadPrescriptionHandler = useCallback(
@@ -461,7 +445,7 @@ const PrescriptionValidation = (props) => {
       )}
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}
@@ -700,7 +684,7 @@ const PrescriptionValidation = (props) => {
                 >
                   ₦
                   {Intl.NumberFormat("en-GB").format(
-                    Math.ceil((totalPrice + +extraCharge) / 100) * 100
+                    Math.ceil((totalPrice + +extraCharge) / 50) * 50
                   )}
                 </div>
               </div>
@@ -758,4 +742,4 @@ const PrescriptionValidation = (props) => {
   );
 };
 
-export default PrescriptionValidation;
+export default React.memo(PrescriptionValidation);

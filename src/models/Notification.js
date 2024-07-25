@@ -3,12 +3,28 @@ const mongoose = require("mongoose");
 const notificationSchema = new mongoose.Schema(
   {
     message: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Message",
+      type: "String",
+      required: true,
+    },
+    type: {
+      type: "String",
       required: true,
     },
     read: {
       type: Boolean,
+      default: false,
+    },
+    location: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Location",
+    },
+    unit: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Unit",
+    },
+    clinic: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Unit",
     },
   },
   {

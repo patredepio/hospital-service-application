@@ -8,10 +8,7 @@ const previewItem = React.memo((props) => {
     (acc, cur) => (acc += +cur.qtyPrice),
     0
   );
-  const saleSumTotal = props.products.reduce(
-    (acc, cur) => (acc += +cur.quantityPrice),
-    0
-  );
+
   return (
     <div className={classes.previewContainer}>
       <Modal
@@ -85,7 +82,36 @@ const previewItem = React.memo((props) => {
           <h5>{props.supplies ? `${props.supplier.name}` : null}</h5>
         </div>
       </div>
-
+      <div className={classes.salesInformation}>
+        <div>
+          <div>{props.productSales ? "NAME" : "SUPPLIER NAME"}</div>
+          <div>
+            {props.productSales
+              ? props.sale.patientType === "REQUISTION"
+                ? `${props.sale.ward?.name}`
+                : props.sale.patient?.firstName
+                ? `${props.sale.patient?.lastName} ${props.sale.patient?.firstName} `
+                : "UNREGISTERED"
+              : `${props.supplier?.name}`}
+          </div>
+        </div>
+        <div>
+          <div>{props.productSales ? "FILE NUMBER" : "TELEPHONE"}</div>
+          <div>
+            {props.productSales
+              ? props.sale.patient?.firstName
+                ? props.sale?.patient?.fileNumber
+                : "UNREGISTERED"
+              : props.supplier.contact}
+          </div>
+        </div>
+        {props.sale?.collector ? (
+          <div>
+            <div>COLLECTOR</div>
+            <div>{props.sale?.collector}</div>
+          </div>
+        ) : null}
+      </div>
       <div>
         <div className={classes.previewHeadings}>
           <div>PRODUCT NAME</div>
@@ -181,7 +207,7 @@ const previewItem = React.memo((props) => {
             ₦{" "}
             {Intl.NumberFormat("en-GB").format(
               props.productSales
-                ? Math.round(saleSumTotal)
+                ? Math.round(props.sale.totalPrice)
                 : Math.round(sumTotal)
             )}
           </div>

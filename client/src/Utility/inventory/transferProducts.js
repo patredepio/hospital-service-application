@@ -143,14 +143,16 @@ export async function editTransferRequest(token, id) {
   return response;
 }
 
-export const addExpiredProductsToList = async (database, state, setState) => {
-  const getExpiredProducts = database
-    .filter(
-      (pr) =>
-        Date.parse(pr.expiryDate) < Date.parse(new Date()) && pr.quantity > 0
-    )
-    .map((product) => product._id);
-  getExpiredProducts.forEach((id) => {
+export const addExpiredProductsToList = (database, state, setState) => {
+  const getExpiredProducts = new Set(
+    database
+      .filter(
+        (pr) =>
+          Date.parse(pr.expiryDate) < Date.parse(new Date()) && pr.quantity > 0
+      )
+      .map((product) => product._id)
+  );
+  [...getExpiredProducts].forEach((id) => {
     addToProductListHandler(id, database, state, setState);
   });
 };

@@ -18,7 +18,7 @@ import Message from "../../../../components/UI/Message/Message";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
 import ChatMessenger from "../../../../components/UI/ChatMessenger/ChatMessenger";
 import FilterButton from "../../../../components/UI/FilterButton/FilterButton";
-import { storeNotificationMessenger } from "../../../../Utility/general";
+import { storeNotificationMessenger } from "../../../../Utility/general/general";
 const DailySalesReport = React.memo((props) => {
   const dispatch = useDispatch();
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -117,7 +117,7 @@ const DailySalesReport = React.memo((props) => {
       )}
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

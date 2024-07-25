@@ -1,4 +1,4 @@
-import { getDrugTherapyRequest } from "../../../../Utility/product";
+import { getDrugTherapyRequest } from "../../../../Utility/product/product";
 import { clearAuthentication } from "../auth/loginAction";
 
 const getDrugTherapyProblem = (token, setState, object) => {

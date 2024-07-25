@@ -411,11 +411,11 @@ const prescriptionPreview = React.memo((props) => {
           </div>
         ))}
         <div className={classes.productTotal}>
-          <div>TOTAL :</div>
+          <div style={{ marginRight: "10px" }}>TOTAL : </div>
           <div>
             ₦
             {Intl.NumberFormat("en-GB").format(
-              Math.ceil((props.totalPrice + props.extraCharge) / 100) * 100
+              Math.ceil((props.totalPrice + props.extraCharge) / 50) * 50
             )}
           </div>
         </div>
@@ -463,6 +463,9 @@ const prescriptionPreview = React.memo((props) => {
               required: true,
               name: "amount",
               placeholder: "ENTER AMOUNT",
+              readOnly: true,
+              value:
+                Math.ceil((props.totalPrice + props.extraCharge) / 50) * 50,
             }}
           />
 

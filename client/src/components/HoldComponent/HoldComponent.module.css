@@ -4,7 +4,7 @@
 }
 .heldProducts {
   display: grid;
-  grid-template-columns: auto 50px;
+  grid-template-columns: auto 100px;
   font-weight: bold;
   margin: 0 0.2rem;
   font-size: x-small;

@@ -1,3 +1,6 @@
+.container {
+  min-height: 600px;
+}
 .categoryCtn {
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
@@ -39,6 +42,7 @@
   column-gap: 10px;
   align-items: center;
   cursor: pointer;
+  place-items: center;
 }
 .categoryHeadings {
   padding: 20px 10px;
@@ -56,6 +60,7 @@
   background-color: #ff1f75;
   color: white;
   cursor: pointer;
+  padding: 7px;
 }
 .edit,
 .delete {
@@ -98,6 +103,7 @@ button:disabled:hover {
 }
 .confirm:hover {
   background-color: #25447d;
+  color: white;
 }
 
 @media (min-width: 40rem) {

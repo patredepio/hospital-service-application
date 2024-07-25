@@ -5,6 +5,7 @@
 }
 .reportCtn {
   position: relative;
+  min-height: 600px;
 }
 .filterForm {
   position: absolute;

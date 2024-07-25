@@ -1,11 +1,11 @@
 import { addTransferRequest } from "../../../../Utility/inventory/transferProducts";
-import { updateProductQuantity } from "../../../../Utility/product";
+import { updateProductQuantity } from "../../../../Utility/product/product";
 import { addProductLogs } from "../../../../Utility/inventory/addProduct";
 import {
   resetProductMessenger,
   sendProductMessenger,
 } from "./addProductAction";
-import { initProductDatabase } from "../generalAction";
+import { initProductDatabase } from "../general/generalAction";
 import { clearAuthentication } from "../auth/loginAction";
 
 export const validateTransfer = (state, setState) => {

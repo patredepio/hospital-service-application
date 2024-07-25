@@ -18,7 +18,7 @@ import {
   editCategory,
 } from "../../../../Utility/inventory/addProduct";
 import { clearAuthentication } from "../auth/loginAction";
-import { fetchProducts } from "../../../../Utility/product";
+import { fetchProducts } from "../../../../Utility/product/product";
 import { deleteCategoryMethod } from "../../../../Utility/inventory/addProduct";
 
 export const clearProductError = () => {

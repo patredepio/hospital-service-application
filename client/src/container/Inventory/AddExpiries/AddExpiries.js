@@ -22,7 +22,7 @@ import {
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import MainPreview from "../../../components/MainPreview/MainPreview";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 
 const AddExpiries = (props) => {
   const dispatch = useDispatch();
@@ -94,16 +94,23 @@ const AddExpiries = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   useEffect(() => {
     if (productDatabase.length) {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          productList: [],
+        };
+      });
       addExpiredProductsToList(productDatabase, state, setState);
     }
   }, [length]);
   return (
-    <Fragment>
+    <div style={{ minHeight: "600px" }}>
       <ChatMessenger message={mainMessage} />
       <Message
         message={message}
@@ -111,7 +118,7 @@ const AddExpiries = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}
@@ -150,7 +157,7 @@ const AddExpiries = (props) => {
           validateTransfer={validateAddExpiriesHandler}
         />
       )}
-    </Fragment>
+    </div>
   );
 };
 

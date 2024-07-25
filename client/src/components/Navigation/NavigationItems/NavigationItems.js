@@ -4,7 +4,7 @@ import NavigationLogo from "../NavigationLogo/NavigationLogo";
 import classes from "./NavigationItems.module.css";
 import { useSelector, useDispatch } from "react-redux";
 // ACTIONS
-import { toggleFeatures } from "../../../store/actions/action/navigationAction";
+import { toggleFeatures } from "../../../store/actions/action/navigation/navigationAction";
 const NavigationItems = (props) => {
   const authenticatedNavItemList = useSelector((state) =>
     JSON.parse(sessionStorage.getItem("unit"))?.name === "STORE"

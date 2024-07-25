@@ -2,6 +2,10 @@ const express = require("express");
 const connectDb = require("./db/mongodb");
 const socketio = require("socket.io");
 const path = require("path");
+const cors = require("cors");
+const { rateLimit } = require("express-rate-limit");
+const cookieParser = require("cookie-parser");
+
 connectDb();
 const app = express();
 const port = process.env.PORT || 3001;
@@ -28,10 +32,21 @@ const unitServer = require("./routers/unit");
 const transferServer = require("./routers/transfer");
 const pharmacovigilanceServer = require("./routers/pharmacovigilance");
 const feedbackServer = require("./routers/feedback");
-
+const notificationServer = require("./routers/notification");
+app.use(cors());
+app.use(cookieParser());
 app.use(
   express.urlencoded({
     extended: true,
+  })
+);
+app.use(
+  rateLimit({
+    windowMs: 10 * 60 * 1000,
+    limit: 200,
+    message: "You have excceeded 100 requests",
+    standardHeaders: true,
+    legacyHeaders: false,
   })
 );
 app.use(express.json());
@@ -58,6 +73,8 @@ app.use(userRoleRouter);
 app.use(transferServer);
 app.use(pharmacovigilanceServer);
 app.use(feedbackServer);
+app.use(notificationServer);
+
 // ---------------------DEPLOYMENT----------------
 const __dirname1 = path.resolve();
 if (process.env.NODE_ENV === "production") {
@@ -79,7 +96,11 @@ const io = socketio(server, {
   pingTimeout: 60000,
   cors: {
     origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true,
   },
+  transports: ["websocket"],
+  allowEIO3: true,
 });
 
 io.on("connection", (socket) => {
@@ -95,6 +116,9 @@ io.on("connection", (socket) => {
   });
   socket.on("requistion", (message) => {
     io.emit("requistion_message", message);
+  });
+  socket.on("notification", (message) => {
+    io.emit("notification_message", message);
   });
 
   socket.on("typing", (room) => socket.in(room).emit("typing"));

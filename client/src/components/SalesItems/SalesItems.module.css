@@ -104,7 +104,7 @@
     display: grid;
   }
   .salesStructure {
-    grid-template-columns: 150px 180px 150px auto;
+    grid-template-columns: 150px 150px 150px auto;
   }
   .item,
   .empty {
@@ -113,7 +113,7 @@
 }
 @media (min-width: 50rem) {
   .salesStructure {
-    grid-template-columns: 200px 200px 200px auto;
+    grid-template-columns: 200px 180px 150px auto;
   }
 }
 

@@ -1,7 +1,7 @@
 import {
   addPharmacovigilanceRequest,
   getPharmacovigilanceRequest,
-} from "../../../../Utility/product";
+} from "../../../../Utility/product/product";
 import {
   addFeedbackRequest,
   getFeedbackRequest,

@@ -71,7 +71,7 @@ import {
   resetActiveLink,
   setActiveLink,
   resetFeatures,
-} from "./actions/action/navigationAction";
+} from "./actions/action/navigation/navigationAction";
 import {
   clearAuthentication,
   reAuthenticate,
@@ -86,7 +86,10 @@ import {
   submitEditForm,
   resetFilteredProducts,
 } from "./actions/action/inventory/editProductAction";
-import { clearError, initDashboard } from "./actions/action/dashboardAction";
+import {
+  clearError,
+  initDashboard,
+} from "./actions/action/dashboard/dashboardAction";
 import {
   clearProductDatabaseError,
   initProductDatabase,
@@ -95,7 +98,7 @@ import {
   initProductSalesDatabase,
   clearProductSalesError,
   filterSales,
-} from "./actions/action/generalAction";
+} from "./actions/action/general/generalAction";
 import {
   initProductLog,
   getProductExpiryAction,
@@ -149,12 +152,14 @@ import {
   addNotificationMethod,
   filterNotificationMethod,
   getUsersInstitutionRequest,
+  addNotificationAction,
 } from "./actions/action/message/messageAction";
 import {
   initRequistion,
   issueRequistionMethod,
   validateIssue,
   holdIssue,
+  retrieveRequistion,
 } from "./actions/action/storeServices/issueProductsAction";
 import {
   deleteSale,
@@ -175,6 +180,8 @@ import {
   filterSupplies,
   deleteSupply,
   getCompletedSupplies,
+  editSupplierMethod,
+  deleteSupplierMethod,
 } from "./actions/action/storeServices/suppliesAction";
 import {
   filterStoreReportRequistion,
@@ -201,7 +208,7 @@ import {
 import {
   addUserRoleMethod,
   getUserRoleMethod,
-} from "./actions/action/userRoleAction";
+} from "./actions/action/userRole/userRoleAction";
 import {
   getDepartments,
   getUserLogin,
@@ -428,6 +435,7 @@ export {
   addNotificationMethod,
   filterNotificationMethod,
   getUsersInstitutionRequest,
+  addNotificationAction,
   // store
   addSupplier,
   getSuppliersMethod,
@@ -436,6 +444,8 @@ export {
   uploadReceivedItem,
   exchangeProductsMethod,
   initSupplies,
+  deleteSupplierMethod,
+  editSupplierMethod,
   filterSupplies,
   deleteSupply,
   getCompletedSupplies,
@@ -450,6 +460,7 @@ export {
   getOutOfStock,
   initOutOfStock,
   holdIssue,
+  retrieveRequistion,
   // Pharmacovigilance
   getPharmacovigilances,
   // Feedback

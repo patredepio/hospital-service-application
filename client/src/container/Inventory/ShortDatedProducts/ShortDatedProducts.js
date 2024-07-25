@@ -12,7 +12,7 @@ import Input from "../../../components/UI/Input/Input";
 import Button from "../../../components/UI/Button/Button";
 import ProductListContainer from "../../../components/ProductListContainer/ProductListContainer";
 import classes from "./ShortDatedProducts.module.css";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 
 const ShortDatedProducts = (props) => {
   const dispatch = useDispatch();
@@ -69,7 +69,8 @@ const ShortDatedProducts = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   useEffect(() => {
@@ -83,14 +84,14 @@ const ShortDatedProducts = (props) => {
     );
   }, []);
   return (
-    <Fragment>
+    <div className={classes.container}>
       <Message
         message={message}
         error={errorMessage}
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/login'
         />
       )}
@@ -140,7 +141,7 @@ const ShortDatedProducts = (props) => {
         setState={setState}
         unit={unitName}
       />
-    </Fragment>
+    </div>
   );
 };
 

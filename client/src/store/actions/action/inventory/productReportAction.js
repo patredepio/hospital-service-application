@@ -1,4 +1,4 @@
-import { getDate } from "../../../../Utility/general";
+import { getDate } from "../../../../Utility/general/general";
 
 import {
   initProductDatabase,

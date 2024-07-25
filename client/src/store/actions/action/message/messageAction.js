@@ -11,7 +11,8 @@ import {
   editGroupChatUsersRequest,
   renameGroupChatRequest,
   getUsersInstitution,
-} from "../../../../Utility/usersChat";
+  notificationRequest,
+} from "../../../../Utility/users/usersChat";
 import {
   resetProductMessenger,
   sendProductMessenger,
@@ -485,6 +486,26 @@ export const createGroupChat = (token, state, setState) => {
   };
 };
 // for notification
+export const addNotificationAction = (token, body) => {
+  return async (dispatch) => {
+    try {
+      const response = await notificationRequest(token, JSON.stringify(body));
+      if (response?.ok) {
+        // console.log("notification added");
+      } else {
+        throw {
+          message: response?.statusText,
+          status: response?.status,
+        };
+      }
+    } catch (error) {
+      if (error.status === 401) {
+        dispatch(clearAuthentication(error.status));
+      }
+      // console.log(error);
+    }
+  };
+};
 
 // export const postNotification = (token, message, setState) => {
 //   return async (dispatch) => {

@@ -18,7 +18,7 @@ import {
 } from "../../../Utility/PatientServices/productSales";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
 import SalesReport from "../../../components/SalesReport/SalesReport";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const ProductSalesReport = React.memo((props) => {
   const [state, setState] = useState({
     salesReport: true,
@@ -90,7 +90,7 @@ const ProductSalesReport = React.memo((props) => {
   return productSalesDatabaseLoader ? (
     <Spinner />
   ) : (
-    <div>
+    <div style={{ minHeight: "600px" }}>
       <Backdrop
         show={state.salesForm}
         closed={() =>
@@ -109,7 +109,7 @@ const ProductSalesReport = React.memo((props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

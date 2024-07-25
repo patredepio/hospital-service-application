@@ -48,6 +48,7 @@ const login = (state = intialState, action) => {
     case CLEAR_AUTHENTICATION:
       if (action.status === 401) {
         sessionStorage.clear();
+        localStorage.clear();
         sessionStorage.setItem("activeLink", JSON.stringify(0));
         return {
           ...state,
@@ -61,6 +62,7 @@ const login = (state = intialState, action) => {
       break;
     case LOG_OUT:
       sessionStorage.clear();
+      localStorage.clear();
       sessionStorage.setItem("activeLink", JSON.stringify(0));
       return {
         ...state,

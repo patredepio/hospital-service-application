@@ -6,10 +6,14 @@ import {
   CLEAR_REQUISTION_LOADER,
   CLEAR_REQUISTION_MODAL,
   REQUISTION_MODAL,
+  addNotificationAction,
 } from "../../../index";
-import { getLastRequistion, postRequistion } from "../../../../Utility/product";
-import { calculateReorderLevelRequest } from "../../../../Utility/sales";
-import { getDate } from "../../../../Utility/general";
+import {
+  getLastRequistion,
+  postRequistion,
+} from "../../../../Utility/product/product";
+import { calculateReorderLevelRequest } from "../../../../Utility/sales/sales";
+import { getDate } from "../../../../Utility/general/general";
 const setRequistionLoader = () => {
   return {
     type: SET_REQUISTION_LOADER,
@@ -194,6 +198,19 @@ export const sendRequistion = (
           type: "sending",
           message: `Requistion was sent from ${$location?.name}, ${unit?.name}, ${clinic?.name}`,
         });
+        // add notification to database
+        socket.emit("notification", {
+          type: "requistion",
+          message: ` A new Requistion from ${$location?.name}, ${unit?.name}, ${clinic?.name}`,
+          read: false,
+        });
+        dispatch(
+          addNotificationAction(token, {
+            type: "requistion",
+            message: ` A new Requistion from ${$location?.name}, ${unit?.name}, ${clinic?.name}`,
+            read: false,
+          })
+        );
         dispatch(sendProductMessenger("Requistion sent successfully"));
         setTimeout(() => {
           dispatch(resetProductMessenger());

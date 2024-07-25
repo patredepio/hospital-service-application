@@ -1,12 +1,12 @@
 import {
   getExpiryQuantityAnalysis,
   getExpiryTotalPriceAnalysis,
-} from "../../../../Utility/general";
+} from "../../../../Utility/general/general";
 import {
   getAllRequistion,
   getExpiriedProduct,
   getOutOfStockRequest,
-} from "../../../../Utility/product";
+} from "../../../../Utility/product/product";
 import { getSupplyRequest } from "../../../../Utility/storeServices/storeServices";
 import { clearAuthentication } from "../auth/loginAction";
 import { getExpiriedProductMethod } from "../inventory/addExpiriesAction";

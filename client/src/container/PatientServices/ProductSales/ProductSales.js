@@ -22,7 +22,7 @@ import Button from "../../../components/UI/Button/Button";
 import classes from "./ProductSales.module.css";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const ProductSales = (props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -124,7 +124,7 @@ const ProductSales = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

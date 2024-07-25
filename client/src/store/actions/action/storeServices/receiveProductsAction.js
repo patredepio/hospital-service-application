@@ -3,14 +3,14 @@ import {
   addProductQuantity,
   editProductById,
   updateProductQuantity,
-} from "../../../../Utility/product";
+} from "../../../../Utility/product/product";
 import {
   addSupplierRequest,
   addSupplyRequest,
   getSuppliersRequest,
 } from "../../../../Utility/storeServices/storeServices";
 import { clearAuthentication } from "../auth/loginAction";
-import { initProductDatabase } from "../generalAction";
+import { initProductDatabase } from "../general/generalAction";
 import {
   sendProductMessenger,
   resetProductMessenger,

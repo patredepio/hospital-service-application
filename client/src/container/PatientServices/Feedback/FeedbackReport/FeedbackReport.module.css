@@ -6,6 +6,7 @@
   border: 1px solid #ccc;
   margin: 0.1rem;
   background-color: #ffffffb1;
+  min-height: 600px;
 }
 .filter {
   position: absolute;

@@ -4,6 +4,7 @@
   margin: 0.5rem;
   border-radius: 5px;
   position: relative;
+  min-height: 600px;
 }
 .osReport h4 {
   font-size: x-small;

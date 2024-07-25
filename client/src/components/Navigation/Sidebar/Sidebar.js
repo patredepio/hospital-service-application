@@ -15,7 +15,7 @@ const sidebar = React.memo((props) => {
           props.showBackdrop ? classes.Open : classes.Close,
         ].join(" ")}
       >
-        <nav>
+        <nav className={classes.navigationContainer}>
           <NavigationItems closeSideDrawer={props.closedNav} />
         </nav>
       </div>

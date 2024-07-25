@@ -4,6 +4,8 @@
   text-align: center;
   position: relative;
   padding: 0.5rem;
+  min-height: 600px;
+  scroll-behavior: smooth;
 }
 .Link_Container {
   width: 100%;
@@ -39,7 +41,7 @@
 
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  height: 400px;
+  height: 600px;
 }
 .Carousel_Container::-webkit-scrollbar {
   width: 10px;

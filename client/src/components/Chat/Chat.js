@@ -22,7 +22,7 @@ const chat = React.memo((props) => {
         <div className={classes.user}>
           {props.chat.isGroupChat
             ? `${props.chat.name}`
-            : `${user.firstName} ${user.lastName}`}
+            : `${user?.firstName} ${user?.lastName}`}
         </div>
         <div className={classes.latestMessage}>
           {props.chat?.latestMessage?.content}

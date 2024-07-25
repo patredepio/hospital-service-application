@@ -17,7 +17,7 @@ import FilterIcon from "../../../components/UI/FilterButton/FilterIcon/FilterIco
 import Button from "../../../components/UI/Button/Button";
 import Input from "../../../components/UI/Input/Input";
 import classes from "./DrugTherapyProblem.module.css";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const DrugTherapyProblem = (props) => {
   const dispatch = useDispatch();
   const token = JSON.parse(sessionStorage.getItem("token"));
@@ -120,7 +120,7 @@ const DrugTherapyProblem = (props) => {
   });
 
   return (
-    <Fragment>
+    <div className={classes.container}>
       <Backdrop
         show={state.filter}
         closed={() =>
@@ -135,7 +135,7 @@ const DrugTherapyProblem = (props) => {
       <ChatMessenger message={mainMessage} />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}
@@ -255,7 +255,7 @@ const DrugTherapyProblem = (props) => {
           </div>
         </div>
       )}
-    </Fragment>
+    </div>
   );
 };
 

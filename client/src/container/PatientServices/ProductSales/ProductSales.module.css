@@ -1,5 +1,6 @@
 .salesCtn {
   position: relative;
+  min-height: 600px;
 }
 .salesForm {
   max-width: 400px;
@@ -70,7 +71,7 @@
 }
 @media (min-width: 40rem) {
   .filter {
-    top: 16.5%;
+    top: 13.5%;
   }
   .salesForm input,
   .salesForm select {

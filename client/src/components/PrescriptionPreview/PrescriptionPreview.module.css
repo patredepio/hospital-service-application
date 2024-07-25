@@ -7,9 +7,11 @@
 }
 
 .prescriptionPreview {
-  background-color: #eef7fc;
+  /* background-color: #eef7fc; */
+  backdrop-filter: blur(20px);
   padding: 1rem;
   border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px #aaaaaaaa;
 }
 .prescriptionSearchRender {
   background-color: #eef7fc;

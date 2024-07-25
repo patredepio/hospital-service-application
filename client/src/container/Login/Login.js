@@ -86,10 +86,16 @@ const Login = () => {
   return (
     <Fragment>
       {isAuthenticated && unit?.name !== "STORE" && (
-        <Navigate to='/pharma-app/dashboard' />
+        <Navigate
+          to='/pharma-app/dashboard'
+          replace={true}
+        />
       )}
       {isAuthenticated && unit?.name === "STORE" && (
-        <Navigate to='/pharma-app/store-dashboard' />
+        <Navigate
+          to='/pharma-app/store-dashboard'
+          replace={true}
+        />
       )}
       <Message
         message={message}

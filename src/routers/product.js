@@ -139,8 +139,14 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
         }
       });
     } else {
-      updates.forEach((update) => (product[update] = req.body[update]));
-      await product.save();
+      updates.forEach(async (update) => {
+        if (update === "name" || update === "productCategory") {
+          return res.status(403).send({ error: "Not Allowed" });
+        } else {
+          product[update] = req.body[update];
+          await product.save();
+        }
+      });
     }
     res.status(200).send(product);
   } catch (e) {

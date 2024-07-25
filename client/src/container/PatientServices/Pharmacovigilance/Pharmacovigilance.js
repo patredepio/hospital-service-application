@@ -10,7 +10,7 @@ import { Navigate } from "react-router-dom";
 import { validatePharmacovigilanceForm } from "../../../store/actions/action/patientServices/pharmacovigilanceAction";
 import PharmacovigilancePreview from "../../../components/PharmacovigilanceForm/PharmacovigilancePreview/PharmacovigilancePreview";
 import Spinner from "../../../components/UI/Spinner/Spinner";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const Pharmacovigilance = (props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -62,7 +62,7 @@ const Pharmacovigilance = (props) => {
       <ChatMessenger message={mainMessage} />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

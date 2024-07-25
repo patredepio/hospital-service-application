@@ -2,14 +2,14 @@ import {
   addExpiriesRequest,
   getExpiriedProduct,
   updateProductQuantity,
-} from "../../../../Utility/product";
+} from "../../../../Utility/product/product";
 import { clearAuthentication } from "../auth/loginAction";
 import {
   resetProductMessenger,
   sendProductMessenger,
 } from "./addProductAction";
 import { addProductLogs } from "../../../../Utility/inventory/addProduct";
-import { initProductDatabase } from "../generalAction";
+import { initProductDatabase } from "../../action/general/generalAction";
 export const validateAddExpiries = (state, setState) => {
   return (dispatch) => {
     const products = [...state.productList];

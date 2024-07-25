@@ -132,6 +132,10 @@ userSchema.pre("save", async function (next) {
 // Remove user from chats
 userSchema.pre("remove", async function (next) {
   const user = this;
+  await Chat.deleteMany({
+    users: { $elemMatch: { $eq: user._id } },
+    isGroupChat: false,
+  });
   const groupChats = await Chat.find({
     users: { $elemMatch: { $eq: user._id } },
   });

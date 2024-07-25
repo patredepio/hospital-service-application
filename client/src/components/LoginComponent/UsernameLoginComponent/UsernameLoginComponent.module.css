@@ -20,14 +20,12 @@
   border-radius: 10px;
   box-shadow: 2px 2px 2px 2px #aaaaaaaa;
   padding: 1rem;
-  background-color: white;
   min-height: 400px;
   display: grid;
   grid-template-rows: auto;
   row-gap: 7px;
   margin-bottom: 10rem;
-  background-image: linear-gradient(#e8f1fbbf, #eaf3fa84),
-    url("../../../assets/images/pharmacy.avif");
+  backdrop-filter: blur(15px);
 }
 .loginForm > div {
   display: grid;

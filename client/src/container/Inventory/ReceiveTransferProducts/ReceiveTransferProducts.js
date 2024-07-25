@@ -23,7 +23,7 @@ import {
 } from "../../../Utility/inventory/receiveTransferProducts";
 import classes from "./ReceiveTransferProducts.module.css";
 import ChatMessenger from "../../../components/UI/ChatMessenger/ChatMessenger";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 import TransferProductsComponent from "../TransferProducts/TransferProductsComponent";
 const ReceiveTransferProducts = (props) => {
   const dispatch = useDispatch();
@@ -110,7 +110,7 @@ const ReceiveTransferProducts = (props) => {
     );
   }, [props.socket]);
   return (
-    <Fragment>
+    <div className={classes.container}>
       <Message
         message={message}
         error={errorMessage}
@@ -118,7 +118,7 @@ const ReceiveTransferProducts = (props) => {
       <ChatMessenger message={mainMessage} />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}
@@ -168,7 +168,7 @@ const ReceiveTransferProducts = (props) => {
           database={productDatabase}
         />
       )}
-    </Fragment>
+    </div>
   );
 };
 // update for store and add notification with props.socket

@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ChatMessenger from "../../../../components/UI/ChatMessenger/ChatMessenger";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
 import FilterButton from "../../../../components/UI/FilterButton/FilterButton";
-import { storeNotificationMessenger } from "../../../../Utility/general";
+import { storeNotificationMessenger } from "../../../../Utility/general/general";
 const StoreVisualizationReport = (props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -63,7 +63,8 @@ const StoreVisualizationReport = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
 
@@ -89,7 +90,7 @@ const StoreVisualizationReport = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}

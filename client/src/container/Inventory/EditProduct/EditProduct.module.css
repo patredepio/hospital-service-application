@@ -1,3 +1,7 @@
+.container {
+  min-height: 600px;
+}
+
 h4,
 button {
   font-size: x-small;

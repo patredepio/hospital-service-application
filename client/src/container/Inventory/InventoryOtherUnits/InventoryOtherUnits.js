@@ -15,7 +15,7 @@ import { Navigate } from "react-router-dom";
 import RenderContainer from "../../../components/RenderContainer/RenderContainer";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import classes from "./InventoryOtherUnits.module.css";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const InventoryOtherUnits = memo((props) => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
@@ -79,7 +79,8 @@ const InventoryOtherUnits = memo((props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   const renderedProducts = products.map((product) => {
@@ -114,7 +115,7 @@ const InventoryOtherUnits = memo((props) => {
     );
   });
   return (
-    <Fragment>
+    <div className={classes.container}>
       <ChatMessenger message={mainMessage} />
       <Message
         message={message}
@@ -122,7 +123,7 @@ const InventoryOtherUnits = memo((props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/log-out'
         />
       )}
@@ -195,7 +196,7 @@ const InventoryOtherUnits = memo((props) => {
           {renderedProducts || null}
         </RenderContainer>
       )}
-    </Fragment>
+    </div>
   );
 });
 

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import classes from "./Report.module.css";
-import { getDate } from "../../Utility/general";
+import { getDate } from "../../Utility/general/general";
 const report = React.memo((props) => {
   const stockValue = props.products.reduce(
     (acc, cur) => (acc += cur.quantity * cur.unitCostPrice),

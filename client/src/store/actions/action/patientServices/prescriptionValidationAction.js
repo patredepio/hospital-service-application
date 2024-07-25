@@ -11,20 +11,20 @@ import {
 import {
   updateDepositBalance,
   updatePatientBalance,
-} from "../../../../Utility/patient";
+} from "../../../../Utility/patient/patient";
 import {
   validatePrescription,
   validateQuantity,
 } from "../../../../Utility/PatientServices/prescriptionValidation";
-import { addReceipt } from "../../../../Utility/general";
-import { addSale } from "../../../../Utility/sales";
-import { addWardRequest } from "../../../../Utility/ward";
+import { addReceipt } from "../../../../Utility/general/general";
+import { addSale } from "../../../../Utility/sales/sales";
+import { addWardRequest } from "../../../../Utility/ward/ward";
 import {
   addDrugTherapyRequest,
   addOutOfStockRequest,
   getAllOsRequest,
   updateProductQuantity,
-} from "../../../../Utility/product";
+} from "../../../../Utility/product/product";
 import { addProductLogs } from "../../../../Utility/inventory/addProduct";
 import { updateRequistionTabHandler } from "../../../../Utility/inventory/requistion";
 
@@ -41,17 +41,9 @@ const removeLoader = () => {
 
 export const prescriptionValidation = (
   prescription,
-  setPrescriptionPreview,
-  setPrescription,
-  token,
-  location,
-  unit
+  setPrescriptionPreview
 ) => {
-  return (dispatch, getState) => {
-    const clinic = JSON.parse(sessionStorage.getItem("clinic"))?.id;
-    dispatch(initProductDatabase(token, location, unit, clinic));
-    const database = [...getState().general.products.database];
-    validateQuantity(database, setPrescription);
+  return (dispatch) => {
     const { valid, quantity } = validatePrescription(prescription);
     if (!valid && !quantity) {
       dispatch(sendProductMessenger("No Product in prescription", true));
@@ -162,7 +154,7 @@ export const fuccProductSale = (
       prescription.patientType = format.serviceType;
       prescription.products = prescriptionProducts;
       prescription.collector = data.get("collector");
-      prescription.totalPrice = Math.ceil(totalPrice / 100) * 100;
+      prescription.totalPrice = Math.ceil(totalPrice / 50) * 50;
 
       dispatch(setLoader());
       try {
@@ -295,7 +287,7 @@ export const requistionProductSale = (
       prescription.patientType = format.serviceType;
       prescription.products = prescriptionProducts;
       prescription.collector = collectorForm.get("collector");
-      prescription.totalPrice = Math.ceil(totalPrice / 100) * 100;
+      prescription.totalPrice = Math.ceil(totalPrice / 50) * 50;
 
       dispatch(setLoader());
       try {
@@ -404,7 +396,7 @@ export const inpatientProductSale = (
   clinic
 ) => {
   const patientData = {
-    totalPrice: Math.ceil(totalPrice / 100) * 100,
+    totalPrice: Math.ceil(totalPrice / 50) * 50,
   };
   const prescriptionProducts = products.map((product) => {
     product.set("quantity", +product.get("quantity"));
@@ -420,7 +412,7 @@ export const inpatientProductSale = (
   prescription.serviceClinic = format.clinicType;
   prescription.patientType = format.serviceType;
   prescription.products = prescriptionProducts;
-  prescription.totalPrice = Math.ceil(totalPrice / 100) * 100;
+  prescription.totalPrice = Math.ceil(totalPrice / 50) * 50;
   prescription.collector = preview.collector;
   return async (dispatch) => {
     if (!preview.collector) {
@@ -580,7 +572,7 @@ export const productSale = (
   // send Receipt
   return async (dispatch) => {
     if (
-      Math.ceil((totalPrice + charge) / 100) * 100 !==
+      Math.ceil((totalPrice + charge) / 50) * 50 !==
       +new FormData(e.target).get("amount")
     ) {
       dispatch(
@@ -770,14 +762,14 @@ export const holdPrescription = (
 ) => {
   return (dispatch) => {
     if (e.target.innerText === "HELD") {
-      if (!sessionStorage.getItem("heldPrescriptions")) {
+      if (!localStorage.getItem("heldPrescriptions")) {
         dispatch(sendProductMessenger("no prescription was held", true));
         setTimeout(() => {
           dispatch(resetProductMessenger());
         }, 3000);
       } else {
         const heldPrescriptions = JSON.parse(
-          sessionStorage.getItem("heldPrescriptions")
+          localStorage.getItem("heldPrescriptions")
         );
 
         setPreview((prevState) => {
@@ -798,24 +790,24 @@ export const holdPrescription = (
         products: updatedProducts,
         receipent: preview.receipent,
         selectedReceipent: preview.selectedReceipent,
-        totalPrice: Math.ceil((totalPrice + +extraCharge) / 100) * 100,
+        totalPrice: Math.ceil((totalPrice + +extraCharge) / 50) * 50,
         extraCharge,
         length,
         format,
       };
-      if (sessionStorage.getItem("heldPrescriptions")) {
+      if (localStorage.getItem("heldPrescriptions")) {
         const heldPrescriptions = JSON.parse(
-          sessionStorage.getItem("heldPrescriptions")
+          localStorage.getItem("heldPrescriptions")
         );
         heldPrescriptions.push(prescription);
-        sessionStorage.setItem(
+        localStorage.setItem(
           "heldPrescriptions",
           JSON.stringify(heldPrescriptions)
         );
       } else {
         const heldPrescriptions = [];
         heldPrescriptions.push(prescription);
-        sessionStorage.setItem(
+        localStorage.setItem(
           "heldPrescriptions",
           JSON.stringify(heldPrescriptions)
         );
@@ -860,13 +852,11 @@ export const uploadPrescription = (
       JSON.stringify([...getState().general.products.database])
     );
     // use get State to validation products quantities
-    const prescriptions = JSON.parse(
-      sessionStorage.getItem("heldPrescriptions")
-    );
+    const prescriptions = JSON.parse(localStorage.getItem("heldPrescriptions"));
 
     const [selectedPrescription] = prescriptions.splice(index, 1);
     // remove selected Prescription
-    sessionStorage.setItem("heldPrescriptions", JSON.stringify(prescriptions));
+    localStorage.setItem("heldPrescriptions", JSON.stringify(prescriptions));
     // CONVERTING THE OBJECT TO MAP BASED
     const products = selectedPrescription.products.map((product) => {
       const newProduct = new Map();
@@ -915,6 +905,26 @@ export const addOsMethod = (e, token, setState) => {
     });
     try {
       const form = Object.fromEntries(new FormData(e.target).entries());
+      const isLowerCase = (text) => {
+        const pattern = /[a-z]/;
+        return text.split("").some((char) => pattern.test(char));
+      };
+      if (form.name.length < 7 && !isLowerCase(form.name)) {
+        dispatch(
+          sendProductMessenger("drug name is too short or invalid", true)
+        );
+        setTimeout(() => {
+          dispatch(resetProductMessenger());
+        }, 3000);
+        setState((prevState) => {
+          return {
+            ...prevState,
+            osModal: true,
+            loading: false,
+          };
+        });
+        return;
+      }
       const addOsResponse = await addOutOfStockRequest(
         token,
         JSON.stringify(form)

@@ -3,6 +3,7 @@
   grid-template-columns: auto 100px 100px;
   align-items: center;
   justify-items: start;
+  place-items: center;
 }
 .title {
   font-size: x-small;

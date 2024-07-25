@@ -30,10 +30,10 @@ const salesReport = React.memo((props) => {
       </div>
       <div>
         {data.patient ? (
-          <Fragment>
-            <div>{data.patient?.firstName}</div>
-            <div>{data.patient?.lastName}</div>
-          </Fragment>
+          <div>
+            <div className={classes.patient}>{data.patient?.firstName}</div>
+            <div className={classes.patient}>{data.patient?.lastName}</div>
+          </div>
         ) : (
           "UNREGISTERED"
         )}

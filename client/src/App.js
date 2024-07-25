@@ -9,6 +9,19 @@ import Layout from "./hoc/Layout/Layout";
 import "./fonts/Montserrat-VariableFont_wght.ttf";
 import { reAuthenticate } from "./store/actions/action/auth/loginAction";
 import io from "socket.io-client";
+
+// About
+const About = lazy(() => {
+  return import("./container/About/About");
+});
+
+const Contact = lazy(() => {
+  return import("./container/Contact/Contact");
+});
+// Error Component
+const ErrorComponent = lazy(() => {
+  return import("./container/InitInstitution/ErrorComponent/ErrorComponent");
+});
 // institution
 const InstitutionComponents = lazy(() => {
   return import(
@@ -55,7 +68,7 @@ const StoreDashboard = lazy(() => {
 });
 // Message / Notification
 const MessageApp = lazy(() => {
-  return import("./container/Notification/MessageApp/MessageApp");
+  return import("./container/MessageApp/MessageApp");
 });
 // Inventory Imports
 const AddProduct = lazy(() => {
@@ -180,9 +193,19 @@ const OsExpiryVisualizationReport = lazy(() => {
     "./container/StoreServices/StoreReport/OsExpiryVisualizationReport/OsExpiryVisualizationReport"
   );
 });
+const Suppliers = lazy(() => {
+  return import("./container/StoreServices/Suppliers/Suppliers");
+});
 
-const ENDPOINT = "http://localhost:3001";
-const socket = io(ENDPOINT);
+const ENDPOINT = "http://192.168.88.3:3001";
+const socket = io(ENDPOINT, {
+  transports: ["websocket", "polling"],
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000, // initial delay in milliseconds
+  reconnectionDelayMax: 5000, // maximum delay in milliseconds
+  randomizationFactor: 0.5, // randomization factor to prevent reconnection storms
+});
 
 function App() {
   const [state, setState] = useState({
@@ -202,7 +225,6 @@ function App() {
       reAuthenticateHandler();
     }
   }, [reAuthenticateHandler, isAuthenticated]);
-
   useEffect(() => {
     if (isAuthenticated) {
       socket.on("connected", () => {
@@ -212,6 +234,9 @@ function App() {
             socket: true,
           };
         });
+      });
+      socket.on("connect_error", (err) => {
+        console.log(`connect_error due to ${err.message}`);
       });
       return () => {
         socket.off("connected", () => {
@@ -300,6 +325,10 @@ function App() {
             <Route
               path='/pharma-app/supplies'
               element={<Supplies socket={socket} />}
+            />
+            <Route
+              path='/pharma-app/suppliers'
+              element={<Suppliers socket={socket} />}
             />
             <Route
               path='/pharma-app/store-report'
@@ -422,28 +451,33 @@ function App() {
               path='/institution/user-role'
               Component={UserRole}
             />
+
+            <Route
+              path='/institution/about'
+              Component={About}
+            />
+            <Route
+              path='/institution/contact'
+              Component={Contact}
+            />
             <Route
               path='/pharma-app/login'
               Component={Login}
             />
+
             <Route
               path='/'
               element={
                 <Navigate
                   replace
-                  to='/institution/login'
+                  to='/institution/about'
                 />
               }
             />
-            {/* <Route
+            <Route
               path='*'
-              element={
-                <Navigate
-                  to={"/error"}
-                  replace
-                />
-              }
-            /> */}
+              Component={ErrorComponent}
+            />
             <Route />
           </Routes>
         </Suspense>

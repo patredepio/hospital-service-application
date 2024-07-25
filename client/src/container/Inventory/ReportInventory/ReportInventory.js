@@ -28,7 +28,7 @@ import FilterButton from "../../../components/UI/FilterButton/FilterButton";
 import Button from "../../../components/UI/Button/Button";
 import Input from "../../../components/UI/Input/Input";
 import classes from "./ReportInventory.module.css";
-import { storeNotificationMessenger } from "../../../Utility/general";
+import { storeNotificationMessenger } from "../../../Utility/general/general";
 const ReportInventory = (props) => {
   const dispatch = useDispatch();
   const reportRef = useRef();
@@ -166,7 +166,8 @@ const ReportInventory = (props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   useEffect(() => {
@@ -191,7 +192,7 @@ const ReportInventory = (props) => {
       />
       {!isAuthenticated && !token && (
         <Navigate
-          replace
+          replace={true}
           to='/pharma-app/login'
         />
       )}

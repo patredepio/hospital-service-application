@@ -105,6 +105,7 @@ const issuePreviewComponent = React.memo((props) => {
           </div>
         ))}
       </div>
+
       <div className={classes.interactionBar}>
         <div>NUMBER OF PRODUCTS</div>
         <div>{props.products.length}</div>
