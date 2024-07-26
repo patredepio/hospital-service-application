@@ -138,6 +138,7 @@ const storeIntialState = {
       openFeature: false,
       active: false,
       authenticated: true,
+      adminUser: true,
       links: [
         {
           linkName: "STORE  REPORT",

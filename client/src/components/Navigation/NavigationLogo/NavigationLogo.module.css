@@ -10,9 +10,7 @@
   margin: 1rem;
   margin-bottom: 2rem;
 }
-.Logo:hover {
-  background-color: #b1ccef;
-}
+
 .Logo:active {
   border: 1px solid #25447d;
 }
@@ -23,17 +21,7 @@
 .Logo_Description {
   display: none;
 }
-.Logo:hover .Logo_Description {
-  display: block;
-  position: absolute;
-  padding: 2px;
-  left: 170%;
-  top: -25%;
-  font-size: x-small;
-  font-weight: bold;
-  z-index: 2;
-  background-color: #b1ccef;
-}
+
 .notification {
   position: absolute;
   background-color: #f9a260;
@@ -54,8 +42,18 @@
 }
 @media not all and (hover: none) {
   .Logo:hover .Logo_Description {
-    top: 120%;
-    left: 0;
+    display: block;
+    position: absolute;
+    padding: 2px;
+    left: 170%;
+    top: -25%;
+    font-size: x-small;
+    font-weight: bold;
+    z-index: 2;
+    background-color: #b1ccef;
+  }
+  .Logo:hover {
+    background-color: #b1ccef;
   }
 }
 @media (min-width: 40rem) {
@@ -63,6 +61,12 @@
     height: 2.1rem;
     width: 2.1rem;
     padding: 0.4rem;
+  }
+  @media not all and (hover: none) {
+    .Logo:hover .Logo_Description {
+      top: 120%;
+      left: 0;
+    }
   }
 }
 

@@ -90,7 +90,7 @@ userSchema.methods.toJSON = function () {
 };
 userSchema.statics.findUser = async (body) => {
   const { username, password, department } = body;
-  const user = await User.findOne({ username, department });
+  const user = await User.findOne({ username, department }).populate("role");
   if (!user) {
     throw new Error("Incorrect Username or Password");
   }

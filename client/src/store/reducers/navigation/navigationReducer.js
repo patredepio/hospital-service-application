@@ -144,6 +144,7 @@ const intialState = {
       openFeature: false,
       active: false,
       authenticated: true,
+      adminUser: true,
       links: [
         {
           linkName: "PRODUCT SALES REPORT",

@@ -48,6 +48,8 @@ const NavigationItems = (props) => {
           activeLink={imageLink.active}
           openFeatures={imageLink.openFeature}
           closeSideDrawer={props.closeSideDrawer}
+          admin={imageLink?.adminUser}
+          adminStatus={JSON.parse(sessionStorage.getItem("id"))?.admin}
         >
           <NavigationLogo
             notification={imageLink.notification}
