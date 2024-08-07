@@ -134,23 +134,23 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
             const newProduct = await Product.findById(product._id);
             if (newProduct) {
               newProduct[update] = req.body[update];
-              await newProduct.save();
             }
+            await newProduct.save();
           });
         } else {
           product[update] = req.body[update];
-          await product.save();
         }
       });
+      await product.save();
     } else {
       updates.forEach(async (update) => {
         if (update === "name" || update === "productCategory") {
           return res.status(403).send({ error: "Not Allowed" });
         } else {
           product[update] = req.body[update];
-          await product.save();
         }
       });
+      await product.save();
     }
     res.status(200).send(product);
   } catch (e) {
