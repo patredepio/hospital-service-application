@@ -153,6 +153,9 @@ import {
   filterNotificationMethod,
   getUsersInstitutionRequest,
   addNotificationAction,
+  getNotificationMethod,
+  getNotificationMessageMethod,
+  setNotificationMethod,
 } from "./actions/action/message/messageAction";
 import {
   initRequistion,
@@ -436,6 +439,9 @@ export {
   filterNotificationMethod,
   getUsersInstitutionRequest,
   addNotificationAction,
+  getNotificationMethod,
+  getNotificationMessageMethod,
+  setNotificationMethod,
   // store
   addSupplier,
   getSuppliersMethod,

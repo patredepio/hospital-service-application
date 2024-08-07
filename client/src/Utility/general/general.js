@@ -1,8 +1,8 @@
 import {
-  addNotificationMethod,
   getTransfersMethod,
   initReceiveRequistion,
   initRequistion,
+  addNotificationAction,
 } from "../../store";
 
 export async function sendReq(token, data, reqFunction, ResponseError) {
@@ -117,11 +117,10 @@ export const storeNotificationMessenger = (
   dispatch,
   setState
 ) => {
+  const unitName = JSON.parse(sessionStorage.getItem("unit"))?.name;
+  const locationName = JSON.parse(sessionStorage.getItem("location"))?.name;
+  const clinicName = JSON.parse(sessionStorage.getItem("clinic"))?.name;
   socket.on("requistion_message", (message) => {
-    const unitName = JSON.parse(sessionStorage.getItem("unit"))?.name;
-    const locationName = JSON.parse(sessionStorage.getItem("location"))?.name;
-    const clinicName = JSON.parse(sessionStorage.getItem("clinic"))?.name;
-
     const token = JSON.parse(sessionStorage.getItem("token"));
     const $location = JSON.parse(sessionStorage.getItem("location"))?.id;
     const unit = JSON.parse(sessionStorage.getItem("unit"))?.id;
@@ -193,6 +192,29 @@ export const storeNotificationMessenger = (
     const unitName = JSON.parse(sessionStorage.getItem("unit"))?.name;
     if (message.type === "requistion" && unitName === "STORE") {
       // check message
+      // add it to the notification array
+      dispatch(addNotificationAction(message));
+    } else if (message.type === "message") {
+      // check if notification
+      const notSender = message.chat.users.filter(
+        (user) => user !== message.sender
+      );
+
+      const isReceiver = notSender.find(
+        (user) => user === JSON.parse(sessionStorage.getItem("id"))?._id
+      );
+
+      if (isReceiver) {
+        dispatch(addNotificationAction(message));
+      }
+    } else {
+      if (
+        message.clinic?.name === clinicName &&
+        message.unit?.name === unitName &&
+        message.location?.name === locationName
+      ) {
+        dispatch(addNotificationAction(message));
+      }
     }
   });
   socket.on("message received", (newMessageReceived) => {
@@ -218,13 +240,13 @@ export const storeNotificationMessenger = (
 export const messageAppNotification = (
   socket,
   mainMessageHandler,
-  clearMessageHandler
+  clearMessageHandler,
+  dispatch
 ) => {
+  const unitName = JSON.parse(sessionStorage.getItem("unit"))?.name;
+  const locationName = JSON.parse(sessionStorage.getItem("location"))?.name;
+  const clinicName = JSON.parse(sessionStorage.getItem("clinic"))?.name;
   socket.on("requistion_message", (message) => {
-    const unitName = JSON.parse(sessionStorage.getItem("unit"))?.name;
-    const locationName = JSON.parse(sessionStorage.getItem("location"))?.name;
-    const clinicName = JSON.parse(sessionStorage.getItem("clinic"))?.name;
-
     if (message.type === "transfer") {
       if (
         message.locationName === locationName &&
@@ -255,6 +277,34 @@ export const messageAppNotification = (
             mainMessageHandler(`${message.message}`);
           }
         }
+      }
+    }
+  });
+  socket.on("notification_message", (message) => {
+    const unitName = JSON.parse(sessionStorage.getItem("unit"))?.name;
+    if (message.type === "requistion" && unitName === "STORE") {
+      // check message      // add it to the notification array message chat.id.users === present user.Id
+      dispatch(addNotificationAction(message));
+    } else if (message.type === "message") {
+      // check if notification
+      const notSender = message.chat.users.filter(
+        (user) => user !== message.sender
+      );
+
+      const isReceiver = notSender.find(
+        (user) => user === JSON.parse(sessionStorage.getItem("id"))?._id
+      );
+
+      if (isReceiver) {
+        dispatch(addNotificationAction(message));
+      }
+    } else {
+      if (
+        message.clinic?.name === clinicName &&
+        message.unit?.name === unitName &&
+        message.location?.name === locationName
+      ) {
+        dispatch(addNotificationAction(message));
       }
     }
   });

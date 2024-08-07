@@ -34,7 +34,7 @@ const Dashboard = (props) => {
     [dispatch]
   );
   const initDashboardHandler = useCallback(
-    () => dispatch(initDashboard()),
+    (socket) => dispatch(initDashboard(socket)),
     [dispatch]
   );
   const mainMessageHandler = useCallback(
@@ -46,9 +46,7 @@ const Dashboard = (props) => {
     [dispatch]
   );
   // USE EFFECT
-  useEffect(() => {
-    initDashboardHandler();
-  }, []);
+
   useEffect(() => {
     props.socket.emit("setup", userData);
     storeNotificationMessenger(
@@ -58,6 +56,9 @@ const Dashboard = (props) => {
       dispatch
     );
   }, [props.socket]);
+  useEffect(() => {
+    initDashboardHandler(props.socket);
+  }, []);
 
   // MAIN FUNCTIONALITY
   const links = slideList.map((_, i) => (

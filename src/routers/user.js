@@ -103,6 +103,7 @@ router.post("/api/users/login", async (req, res) => {
     res.status(400).send({ error: e.message });
   }
 });
+// Unused Product
 router.patch("/api/users/update-user", authentication, async (req, res) => {
   const allowedUpdates = ["firstName", "lastName", "username"];
   const updates = Object.keys(req.body);
@@ -113,8 +114,12 @@ router.patch("/api/users/update-user", authentication, async (req, res) => {
     return res.status(400).send({ error: "Update an invalid element" });
   }
   try {
-    updates.forEach((update) => (req.user[update] = req.body[update]));
-    await req.user.save();
+    const user = await User.findById(req.user._id);
+    updates.forEach(async (update) => {
+      user[update] = req.body[update];
+      await user.save();
+    });
+
     res.status(200).send();
   } catch (e) {
     res.status(400).send();
@@ -177,7 +182,7 @@ router.post(
 // });
 router.patch("/api/users/:id", institutionAuthentication, async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.id });
+    const user = await User.findById(req.params.id);
     if (!user) {
       res.status(404).send();
     }
@@ -196,8 +201,11 @@ router.patch("/api/users/:id", institutionAuthentication, async (req, res) => {
     if (!isValidOperation) {
       return res.status(400).send();
     }
-    updates.forEach((update) => (user[update] = req.body[update]));
-    await user.save();
+
+    updates.forEach(async (update) => {
+      user[update] = req.body[update];
+      await user.save();
+    });
     res.status(200).send();
   } catch (error) {
     res.status(400).send();

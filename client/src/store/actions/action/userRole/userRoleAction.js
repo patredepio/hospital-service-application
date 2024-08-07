@@ -5,22 +5,10 @@ import {
   sendProductMessenger,
 } from "../inventory/addProductAction";
 
-export const addUserRoleMethod = (e, state, setState, token) => {
+export const addUserRoleMethod = (e, setState, token) => {
   e.preventDefault();
   return async (dispatch) => {
     try {
-      if (!state.departments.length) {
-        dispatch(
-          sendProductMessenger(
-            "there needs to be at a department to add a role",
-            true
-          )
-        );
-        setTimeout(() => {
-          dispatch(resetProductMessenger());
-        }, 3000);
-        return;
-      }
       setState((prevState) => {
         return {
           ...prevState,
@@ -29,16 +17,10 @@ export const addUserRoleMethod = (e, state, setState, token) => {
       });
 
       const form = Object.fromEntries(new FormData(e.target).entries());
-      const department = state.departments.find(
-        (dep) => dep.name === form.department
-      );
-      const newForm = {
-        ...form,
-        department: department._id,
-      };
+
       const addUserRoleResponse = await addUserRole(
         token,
-        JSON.stringify(newForm)
+        JSON.stringify(form)
       );
       if (addUserRoleResponse?.ok) {
         dispatch(sendProductMessenger("user role added successfully"));
@@ -73,7 +55,7 @@ export const addUserRoleMethod = (e, state, setState, token) => {
     }, 3000);
   };
 };
-export const getUserRoleMethod = (token, department, setState) => {
+export const getUserRoleMethod = (token, setState) => {
   return async (dispatch) => {
     setState((prevState) => {
       return {
@@ -82,7 +64,7 @@ export const getUserRoleMethod = (token, department, setState) => {
       };
     });
     try {
-      const userRoleResponse = await getUserRole(token, department);
+      const userRoleResponse = await getUserRole(token);
       if (userRoleResponse?.ok) {
         const userRoles = await userRoleResponse.json();
         setState((prevState) => {

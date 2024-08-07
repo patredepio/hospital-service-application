@@ -7,6 +7,7 @@ import {
 } from "./addProductAction";
 import { initProductDatabase } from "../general/generalAction";
 import { clearAuthentication } from "../auth/loginAction";
+import { addNotificationRequest } from "../../../../Utility/users/usersChat";
 
 export const validateTransfer = (state, setState) => {
   return (dispatch) => {
@@ -184,36 +185,51 @@ export const submitTransfer = (
               }
             }
           });
-          setTransferComponent((prevState) => {
-            return {
-              ...prevState,
-              transferComponent: false,
-            };
-          });
-          setState((prevState) => {
-            return {
-              ...prevState,
-              loading: false,
-              preview: false,
-              productList: [],
-            };
-          });
           const unitName = JSON.parse(sessionStorage.getItem("unit"))?.name;
           const clinicName = JSON.parse(sessionStorage.getItem("clinic"))?.name;
           const locationName = JSON.parse(
             sessionStorage.getItem("location")
           )?.name;
-          socket.emit("requistion", {
-            type: "transfer",
-            locationName: form.location,
-            unit: form.unit,
-            clinic: form.clinic,
-            message: `Transfer was sent from ${locationName}, ${clinicName}, ${unitName}`,
-          });
-          dispatch(sendProductMessenger("products transferred successfully"));
-          setTimeout(() => {
-            dispatch(resetProductMessenger());
-          }, 3000);
+          const notificationResponse = await addNotificationRequest(
+            token,
+            JSON.stringify({
+              type: "transfer",
+              message: `Transfer was sent from ${locationName}, ${clinicName}, ${unitName}`,
+              clinic: finalClinic,
+              unit: finalUnit,
+              location: finalLocation,
+            })
+          );
+          if (notificationResponse?.ok) {
+            setTransferComponent((prevState) => {
+              return {
+                ...prevState,
+                transferComponent: false,
+              };
+            });
+            setState((prevState) => {
+              return {
+                ...prevState,
+                loading: false,
+                preview: false,
+                productList: [],
+              };
+            });
+            const notification = await notificationResponse.json();
+
+            socket.emit("requistion", {
+              type: "transfer",
+              locationName: form.location,
+              unit: form.unit,
+              clinic: form.clinic,
+              message: `Transfer was sent from ${locationName}, ${clinicName}, ${unitName}`,
+            });
+            socket.emit("notification", notification);
+            dispatch(sendProductMessenger("products transferred successfully"));
+            setTimeout(() => {
+              dispatch(resetProductMessenger());
+            }, 3000);
+          }
         } else {
           throw {
             message: addTransferResponse.statusText,

@@ -15,6 +15,8 @@ import {
   TOGGLE_FEATURES,
   RESET_FEATURES,
   ADD_NOTIFICATION,
+  CLEAR_NOTIFICATION,
+  CLEAR_NOTIFICATION_MESSAGE,
 } from "../../actions/actionTypes/actionTypes";
 const storeIntialState = {
   authenticatedLinks: [
@@ -324,21 +326,88 @@ const storeNavigation = (state = storeIntialState, action) => {
       };
     case ADD_NOTIFICATION:
       const authLinks = JSON.parse(JSON.stringify(state.authenticatedLinks));
-      const notificationLink = authLinks.find(
+      if (action.notification.type === "message") {
+        const notificationLink = authLinks.find(
+          (link) => link.description === "Message"
+        );
+        const notificationIndex = authLinks.findIndex(
+          (link) => link.description === "Message"
+        );
+        const duplicate = [...notificationLink.notification].find(
+          (not) => not._id === action.notification._id
+        );
+        if (duplicate) {
+          return {
+            ...state,
+            authenticatedLinks: authLinks,
+          };
+        } else {
+          notificationLink.notification = [
+            ...notificationLink.notification,
+            action.notification,
+          ];
+          authLinks[notificationIndex] = notificationLink;
+          return {
+            ...state,
+            authenticatedLinks: authLinks,
+          };
+        }
+      } else {
+        const notificationLink = authLinks.find(
+          (link) => link.description === "Notification"
+        );
+        const notificationIndex = authLinks.findIndex(
+          (link) => link.description === "Notification"
+        );
+        const duplicate = [...notificationLink.notification].find(
+          (not) => not._id === action.notification._id
+        );
+        if (duplicate) {
+          return {
+            ...state,
+            authenticatedLinks: authLinks,
+          };
+        } else {
+          notificationLink.notification = [
+            ...notificationLink.notification,
+            action.notification,
+          ];
+          authLinks[notificationIndex] = notificationLink;
+          return {
+            ...state,
+            authenticatedLinks: authLinks,
+          };
+        }
+      }
+    case CLEAR_NOTIFICATION:
+      const authTLinks = JSON.parse(JSON.stringify(state.authenticatedLinks));
+      const notificationLink = authTLinks.find(
         (link) => link.description === "Notification"
       );
-      const notificationIndex = authLinks.findIndex(
+      const notificationIndex = authTLinks.findIndex(
         (link) => link.description === "Notification"
       );
-      notificationLink.notification = [
-        ...notificationLink.notification,
-        action.notification,
-      ];
-      authLinks[notificationIndex] = notificationLink;
+      notificationLink.notification = [];
+      authTLinks[notificationIndex] = notificationLink;
       return {
         ...state,
-        authenticatedLinks: authLinks,
+        authenticatedLinks: authTLinks,
       };
+    case CLEAR_NOTIFICATION_MESSAGE:
+      const authMLinks = JSON.parse(JSON.stringify(state.authenticatedLinks));
+      const messageLink = authMLinks.find(
+        (link) => link.description === "Message"
+      );
+      const messageIndex = authMLinks.findIndex(
+        (link) => link.description === "Message"
+      );
+      messageLink.notification = [];
+      authMLinks[messageIndex] = messageLink;
+      return {
+        ...state,
+        authenticatedLinks: authMLinks,
+      };
+
     case RESET_FEATURES:
       // const authNavLinks = structuredClone(state.authenticatedLinks);
       const authNavLinks = JSON.parse(JSON.stringify(state.authenticatedLinks));

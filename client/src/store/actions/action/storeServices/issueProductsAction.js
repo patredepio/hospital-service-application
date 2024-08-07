@@ -4,6 +4,7 @@ import {
   setRequistion,
   updateProductQuantity,
 } from "../../../../Utility/product/product";
+import { addNotificationRequest } from "../../../../Utility/users/usersChat";
 import { clearAuthentication } from "../auth/loginAction";
 import { initProductDatabase } from "../general/generalAction";
 import {
@@ -188,25 +189,40 @@ export const issueRequistionMethod = (
       );
       if (requistionResponse?.ok) {
         const newRequistion = await requistionResponse.json();
-        dispatch(sendProductMessenger("Requistion has been issued"));
-        socket.emit("requistion", {
-          type: "issuedRequistion",
-          message: `Your requistion has been issued`,
-          clinicName: newRequistion.clinic?.name,
-          unitName: newRequistion.unit?.name,
-          locationName: newRequistion.location?.name,
-        });
-        Object.keys(requistion).forEach((key) => delete requistion[key]);
+        const notificationResponse = await addNotificationRequest(
+          token,
+          JSON.stringify({
+            type: "issueRequistion",
+            message: ` SIV ${selectedRequistion.siv} Requistion has been issued`,
+            clinic: newRequistion.clinic?._id,
+            unit: newRequistion.unit?._id,
+            location: newRequistion.location?._id,
+          })
+        );
+        if (notificationResponse?.ok) {
+          const notification = await notificationResponse.json();
+          dispatch(sendProductMessenger("Requistion has been issued"));
+          socket.emit("requistion", {
+            type: "issuedRequistion",
+            message: ` SIV ${selectedRequistion.siv} Requistion has been issued`,
+            clinicName: newRequistion.clinic?.name,
+            unitName: newRequistion.unit?.name,
+            locationName: newRequistion.location?.name,
+          });
+          socket.emit("notification", notification);
 
-        dispatch(initRequistion(token, setState, location, unit));
-        setState((prevState) => {
-          return {
-            ...prevState,
-            issueLoading: false,
-            previewComponent: false,
-            requistions: [],
-          };
-        });
+          Object.keys(requistion).forEach((key) => delete requistion[key]);
+
+          dispatch(initRequistion(token, setState, location, unit));
+          setState((prevState) => {
+            return {
+              ...prevState,
+              issueLoading: false,
+              previewComponent: false,
+              requistions: [],
+            };
+          });
+        }
       } else {
         throw {
           message: requistionResponse.statusText,

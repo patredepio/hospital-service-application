@@ -29,7 +29,8 @@ const StoreDashboard = (props) => {
 
   // DISPATCH FUNCTIONS
   const initStoreDashboardHandler = useCallback(
-    () => dispatch(initStoreVisualization(token, setState)),
+    (token, setState, socket) =>
+      dispatch(initStoreVisualization(token, setState, socket)),
     [dispatch]
   );
 
@@ -42,9 +43,7 @@ const StoreDashboard = (props) => {
     [dispatch]
   );
   // USE EFFECT
-  useEffect(() => {
-    initStoreDashboardHandler(token, setState);
-  }, []);
+
   useEffect(() => {
     if (isAuthenticated) {
       props.socket.emit("setup", userData);
@@ -57,6 +56,9 @@ const StoreDashboard = (props) => {
       );
     }
   }, [props.socket]);
+  useEffect(() => {
+    initStoreDashboardHandler(token, setState, props.socket);
+  }, []);
 
   const graphData = getDataAnalysis(state);
   // MAIN FUNCTIONALITY

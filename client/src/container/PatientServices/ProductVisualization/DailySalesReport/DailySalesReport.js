@@ -66,7 +66,8 @@ const DailySalesReport = React.memo((props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   const sales = Object.entries(

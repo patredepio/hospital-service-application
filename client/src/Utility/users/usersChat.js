@@ -11,8 +11,8 @@ export const addUserRole = async (token, body) => {
   return response;
 };
 
-export const getUserRole = async (token, department) => {
-  const response = await fetch(`/api/user-role?department=${department}`, {
+export const getUserRole = async (token) => {
+  const response = await fetch(`/api/user-role`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -204,7 +204,7 @@ export const setLatestMessage = async (token, body, id) => {
   return response;
 };
 // notification
-export const notificationRequest = async (token, body) => {
+export const addNotificationRequest = async (token, body) => {
   const response = await fetch("/api/notification", {
     method: "POST",
     headers: {
@@ -215,8 +215,21 @@ export const notificationRequest = async (token, body) => {
   });
   return response;
 };
-export const getNotificationRequest = async (token) => {
-  const response = await fetch("/api/notification", {
+export const getNotificationRequest = async (token, object) => {
+  const queryString = Object.keys(object)
+    .map((key) => `${[key]}=${object[key]}`)
+    .join("&");
+  const response = await fetch(`/api/notification?${queryString}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+  });
+  return response;
+};
+export const getNotificationMessageRequest = async (token) => {
+  const response = await fetch("/api/notification/message", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

@@ -213,7 +213,9 @@ const ProductInventory = (props) => {
             <div>
               <div>Signature</div>
               <div>
-                {selectedInventory?.signature?.lastName || "Pharmacist"}
+                {selectedInventory?.signature?.lastName
+                  ? `${selectedInventory?.signature?.lastName} ${selectedInventory?.signature?.firstName}`
+                  : "Pharmacist"}
               </div>
             </div>
           </div>

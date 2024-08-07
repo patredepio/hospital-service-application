@@ -131,8 +131,11 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
         ) {
           const products = await Product.find({ name: product.name });
           products.forEach(async (product) => {
-            product[update] = req.body[update];
-            await product.save();
+            const newProduct = await Product.findById(product._id);
+            if (newProduct) {
+              newProduct[update] = req.body[update];
+              await newProduct.save();
+            }
           });
         } else {
           product[update] = req.body[update];

@@ -163,7 +163,8 @@ const MessageApp = (props) => {
     messageAppNotification(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   useEffect(() => {

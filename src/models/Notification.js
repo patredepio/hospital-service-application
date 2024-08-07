@@ -14,6 +14,15 @@ const notificationSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    sender: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    chat: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Chat",
+    },
+
     location: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Location",

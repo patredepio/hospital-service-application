@@ -17,4 +17,5 @@ main {
   background-size: cover;
   /* this one */
   background-position: center;
+  padding: 10px;
 }

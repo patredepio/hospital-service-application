@@ -52,7 +52,7 @@ const NavigationItems = (props) => {
           adminStatus={JSON.parse(sessionStorage.getItem("id"))?.admin}
         >
           <NavigationLogo
-            notification={imageLink.notification}
+            notification={imageLink?.notification}
             navbar={imageLink.navbar}
             image={imageLink.src}
             description={imageLink.description}

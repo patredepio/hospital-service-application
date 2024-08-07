@@ -43,6 +43,7 @@
   .Features_Link a:hover,
   .Features_Link a:active {
     color: #f9a260;
+    text-decoration: underline;
   }
 }
 /* .Toggle_Features */

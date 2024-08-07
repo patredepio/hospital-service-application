@@ -56,7 +56,7 @@ const userComponent = React.memo((props) => {
                           selectedUser: user,
                           firstName: user.firstName,
                           lastName: user.lastName,
-                          userRole: user.role.name,
+                          userRole: user.role?.name,
                           department: user.department.name,
                           username: user.username,
                         };

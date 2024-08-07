@@ -14,6 +14,7 @@ import {
 } from "../../../../Utility/product/product";
 import { calculateReorderLevelRequest } from "../../../../Utility/sales/sales";
 import { getDate } from "../../../../Utility/general/general";
+import { addNotificationRequest } from "../../../../Utility/users/usersChat";
 const setRequistionLoader = () => {
   return {
     type: SET_REQUISTION_LOADER,
@@ -198,23 +199,24 @@ export const sendRequistion = (
           type: "sending",
           message: `Requistion was sent from ${$location?.name}, ${unit?.name}, ${clinic?.name}`,
         });
-        // add notification to database
-        socket.emit("notification", {
-          type: "requistion",
-          message: ` A new Requistion from ${$location?.name}, ${unit?.name}, ${clinic?.name}`,
-          read: false,
-        });
-        dispatch(
-          addNotificationAction(token, {
+
+        const response = await addNotificationRequest(
+          token,
+          JSON.stringify({
             type: "requistion",
-            message: ` A new Requistion from ${$location?.name}, ${unit?.name}, ${clinic?.name}`,
+            message: `Requistion was sent from ${$location?.name}, ${unit?.name}, ${clinic?.name}`,
             read: false,
           })
         );
-        dispatch(sendProductMessenger("Requistion sent successfully"));
-        setTimeout(() => {
-          dispatch(resetProductMessenger());
-        }, 3000);
+        if (response?.ok) {
+          const notification = await response.json();
+          // add notification to database
+          socket.emit("notification", notification);
+          dispatch(sendProductMessenger("Requistion sent successfully"));
+          setTimeout(() => {
+            dispatch(resetProductMessenger());
+          }, 3000);
+        }
       } else {
         throw new Object({
           message: response.statusText,

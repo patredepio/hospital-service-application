@@ -370,7 +370,7 @@ export const editUserMethod = (e, setState, token, state) => {
         body[key] = state[key];
       }
     });
-    if (state.userRole !== state.selectedUser.role.name) {
+    if (state.userRole !== state.selectedUser.role?.name) {
       const newRole = state.userRoles.find(
         (role) => role.name === state.userRole
       );
@@ -391,6 +391,7 @@ export const editUserMethod = (e, setState, token, state) => {
           sendProductMessenger,
           resetProductMessenger
         );
+        body.password = state.password;
       } else {
         dispatch(sendProductMessenger(`Passwords don't match`, true));
         setTimeout(() => {

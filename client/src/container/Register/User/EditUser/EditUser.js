@@ -76,6 +76,7 @@ const EditUser = memo((props) => {
       dispatch(editUserMethod(e, setState, token, state)),
     [dispatch]
   );
+
   const { departments, department, userRoles, search } = state;
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -91,6 +92,7 @@ const EditUser = memo((props) => {
   useEffect(() => {
     if (!length) {
       getDepartmentsHandler(token, setState);
+      getUserRoleMethodHandler(token, setState);
     } else {
       if (department) {
         const selectedDepartment = state.departments.find(
@@ -103,7 +105,6 @@ const EditUser = memo((props) => {
             department: selectedDepartment?.name,
           };
         });
-        getUserRoleMethodHandler(token, selectedDepartment?._id, setState);
       }
     }
   }, [length, department]);
@@ -115,8 +116,8 @@ const EditUser = memo((props) => {
         );
         return {
           ...prevState,
-          userRoleId: userRole._id,
-          userRole: userRole.name,
+          userRoleId: userRole?._id,
+          userRole: userRole?.name,
         };
       });
     }

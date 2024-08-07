@@ -13,6 +13,7 @@ import {
   sendMessage,
   clearMessage,
   holdIssue,
+  sendProductMessenger,
 } from "../../../store";
 import {
   storeProductHandler,
@@ -52,7 +53,6 @@ const IssuedProducts = (props) => {
   const productDatabaseError = useSelector(
     (state) => state.general.products.error
   );
-
   const productDatabaseLoader = useSelector(
     (state) => state.general.products.loading
   );

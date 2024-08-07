@@ -45,7 +45,7 @@ const Register = () => {
     [dispatch]
   );
   const getUserRoleMethodHandler = useCallback(
-    (token, dep, setState) => dispatch(getUserRoleMethod(token, dep, setState)),
+    (token, setState) => dispatch(getUserRoleMethod(token, setState)),
     [dispatch]
   );
   useEffect(() => {
@@ -63,7 +63,7 @@ const Register = () => {
         };
       });
 
-      getUserRoleMethodHandler(token, department._id, setState);
+      getUserRoleMethodHandler(token, setState);
     }
   }, [departments.length]);
   useEffect(() => {

@@ -15,6 +15,7 @@ import Input from "../../../../components/UI/Input/Input";
 import FilterButton from "../../../../components/UI/FilterButton/FilterButton";
 import Button from "../../../../components/UI/Button/Button";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
+import { storeNotificationMessenger } from "../../../../Utility/general/general";
 const Feedback = memo((props) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -54,33 +55,12 @@ const Feedback = memo((props) => {
     getFeedbackHandler({ location: $location, unit, clinic }, token, setState);
   }, []);
   useEffect(() => {
-    props.socket.on("requistion_message", (message) => {
-      const unitName = JSON.parse(sessionStorage.getItem("unit"))?.name;
-      if (unitName === "STORE") {
-        setTimeout(() => {
-          clearMessageHandler();
-        }, 4000);
-        mainMessageHandler(`${message.message}`);
-      }
-    });
-    props.socket.on("message received", (newMessageReceived) => {
-      setTimeout(() => {
-        clearMessageHandler();
-      }, 4000);
-      if (!newMessageReceived.chat.isGroupChat) {
-        mainMessageHandler(
-          `New Message from ${newMessageReceived.sender.firstName} ${newMessageReceived.sender.lastName}`
-        );
-      } else {
-        mainMessageHandler(
-          `Message from ${newMessageReceived.sender.firstName} ${newMessageReceived.sender.lastName} in ${newMessageReceived.chat.name}`
-        );
-      }
-    });
-    return () => {
-      props.socket.off("message received");
-      props.socket.off("requistion");
-    };
+    storeNotificationMessenger(
+      props.socket,
+      mainMessageHandler,
+      clearMessageHandler,
+      dispatch
+    );
   }, [props.socket]);
   return (
     <div className={classes.report}>

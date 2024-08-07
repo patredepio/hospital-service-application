@@ -16,6 +16,7 @@ import {
 } from "../inventory/addProductAction";
 import { getProductExpiryAction } from "../inventory/productInventoryAction";
 import { setReorderHandler } from "../inventory/requistionAction";
+import { getNotificationMethod } from "../message/messageAction";
 // DONT TOUCH THIS O
 // IT IS FOR ANOTHER MODULE
 export const initStoreReportRequistion = (token, setState) => {
@@ -191,15 +192,18 @@ export const storeVisualizationSupplies = (token, setState, object = {}) => {
   };
 };
 // / INIT STORE VISUALIZATION
-export const initStoreVisualization = (token, setState, object) => {
+export const initStoreVisualization = (token, setState, socket, object) => {
   const $location = JSON.parse(sessionStorage.getItem("location"))?.id;
   const unit = JSON.parse(sessionStorage.getItem("unit"))?.id;
   const clinic = JSON.parse(sessionStorage.getItem("clinic"))?.id;
   return (dispatch) => {
     dispatch(storeVisualizationRequistions(token, setState, object));
     dispatch(storeVisualizationSupplies(token, setState, object));
-    dispatch(getProductExpiryAction(token, $location, unit, clinic));
+    dispatch(getProductExpiryAction(token, $location, unit, clinic, socket));
     dispatch(setReorderHandler(token, $location, unit, clinic));
+    dispatch(
+      getNotificationMethod(token, { clinic, unit, location: $location })
+    );
     // dispatch(setMinimumQuantityHandler(token, $location, unit, clinic));
   };
 };

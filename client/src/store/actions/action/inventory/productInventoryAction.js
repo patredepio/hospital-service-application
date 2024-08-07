@@ -13,6 +13,7 @@ import {
   getProductLogsByProduct,
   otherUnitsInventory,
 } from "../../../../Utility/product/product";
+import { addNotificationRequest } from "../../../../Utility/users/usersChat";
 
 const setProductLogLoader = () => {
   return {
@@ -165,7 +166,8 @@ export const getPotentialExpiriesNotification = (
   location,
   unit,
   clinic,
-  duration
+  duration,
+  socket
 ) => {
   return async (dispatch) => {
     let date = new Date();
@@ -216,6 +218,27 @@ export const getPotentialExpiriesNotification = (
         setTimeout(() => {
           dispatch(resetProductMessenger());
         }, 3000);
+        if (!JSON.parse(sessionStorage.getItem("notice"))) {
+          const notificationResponse = await addNotificationRequest(token, {
+            type: "potentialExpiries",
+            message: `${
+              products.length === 1
+                ? `A product is to expire with ${duration}`
+                : `${products.length} products are to expire within ${duration}`
+            }`,
+            location,
+            clinic,
+            unit,
+          });
+          if (notificationResponse?.ok) {
+            const notification = await notificationResponse.json();
+            if (socket) {
+              socket.emit("notification", notification);
+            }
+
+            sessionStorage.setItem("notice", JSON.stringify(true));
+          }
+        }
       } else {
         throw {
           message: productResponse.statusText,
@@ -230,7 +253,13 @@ export const getPotentialExpiriesNotification = (
   };
 };
 
-export const getProductExpiryAction = (token, location, unit, clinic) => {
+export const getProductExpiryAction = (
+  token,
+  location,
+  unit,
+  clinic,
+  socket
+) => {
   return async (dispatch) => {
     try {
       const productResponse = await getProductExpires(token, {
@@ -255,6 +284,29 @@ export const getProductExpiryAction = (token, location, unit, clinic) => {
         setTimeout(() => {
           dispatch(resetProductMessenger());
         }, 4000);
+        const notice = sessionStorage.getItem("expiryNotification");
+        if (socket && !notice) {
+          const notificationResponse = await addNotificationRequest(
+            token,
+            JSON.stringify({
+              type: "expiries",
+              message: `${products.length} product${
+                products.length > 1 ? "s" : ""
+              } ${products.length > 1 ? "are" : "is"} now expired, kindly add ${
+                products.length > 1 ? "them" : "it"
+              } to expiries`,
+              location,
+              unit,
+              clinic,
+            })
+          );
+          if (notificationResponse?.ok) {
+            const notification = await notificationResponse.json();
+
+            socket.emit("notification", notification);
+            sessionStorage.setItem("expiryNotification", JSON.stringify(true));
+          }
+        }
       } else {
         dispatch(
           getPotentialExpiriesNotification(

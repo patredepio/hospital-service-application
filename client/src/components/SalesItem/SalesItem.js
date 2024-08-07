@@ -64,7 +64,11 @@ const salesItem = React.memo((props) => {
                     }).format(Date.parse(sale.createdAt))}
                   </div>
                 </div>
-                <div>{sale.supplier?.name}</div>
+                <div>
+                  {sale.supplier?.name
+                    ? sale.supplier.name
+                    : `DELETED SUPPLIER`}
+                </div>
                 <div className={classes.desktopOnly}>
                   {Intl.NumberFormat("en-GB").format(
                     sale.products.reduce((acc, cur) => (acc += cur.qtyPrice), 0)
@@ -78,9 +82,17 @@ const salesItem = React.memo((props) => {
                   )}
                 </div>
               </div>
-              <div style={{ fontWeight: "bold", marginTop: "10px" }}>
+              <div
+                style={{
+                  fontWeight: "bold",
+                  marginTop: "10px",
+                  textTransform: "uppercase",
+                }}
+              >
                 APPROVED BY :
-                {` ${sale.pharmacist?.lastName || sale.assessment?.lastName}`}
+                {sale.pharmacist?.lastName
+                  ? ` ${sale.pharmacist?.lastName} ${sale.pharmacist.firstName}`
+                  : sale.assessment?.lastName}
               </div>
             </div>
           ))

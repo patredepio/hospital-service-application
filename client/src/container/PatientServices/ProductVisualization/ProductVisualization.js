@@ -129,7 +129,8 @@ const ProductVisualization = React.memo((props) => {
     storeNotificationMessenger(
       props.socket,
       mainMessageHandler,
-      clearMessageHandler
+      clearMessageHandler,
+      dispatch
     );
   }, [props.socket]);
   return productSalesDatabaseLoader ? (

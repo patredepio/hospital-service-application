@@ -70,6 +70,9 @@ const StoreDashboard = lazy(() => {
 const MessageApp = lazy(() => {
   return import("./container/MessageApp/MessageApp");
 });
+const NotificationApp = lazy(() => {
+  return import("./container/Notification/Notification");
+});
 // Inventory Imports
 const AddProduct = lazy(() => {
   return import("./container/Inventory/AddProduct/AddProduct");
@@ -197,7 +200,7 @@ const Suppliers = lazy(() => {
   return import("./container/StoreServices/Suppliers/Suppliers");
 });
 
-const ENDPOINT = "http://192.168.88.3:3001";
+const ENDPOINT = "http://localhost:3001";
 const socket = io(ENDPOINT, {
   transports: ["websocket", "polling"],
   reconnection: true,
@@ -404,6 +407,10 @@ function App() {
                   stateSocket={state.socket}
                 />
               }
+            />
+            <Route
+              path='/pharma-app/notification'
+              element={<NotificationApp socket={socket} />}
             />
             <Route
               path='/pharma-app/store-dashboard'

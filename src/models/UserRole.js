@@ -8,11 +8,6 @@ const userRoleSchema = new mongoose.Schema({
     uppercase: true,
     trim: true,
   },
-  department: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "Department",
-  },
 });
 
 const UserRole = mongoose.model("UserRole", userRoleSchema);

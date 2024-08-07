@@ -122,7 +122,7 @@ export const editUserValid = (state, user) => {
   return (
     state.firstName === user.firstName &&
     state.lastName === user.lastName &&
-    state.userRole === user.role.name &&
+    state.userRole === user.role?.name &&
     state.department === user.department.name &&
     state.username === user.username &&
     state.password === ""
