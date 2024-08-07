@@ -200,7 +200,7 @@ const Suppliers = lazy(() => {
   return import("./container/StoreServices/Suppliers/Suppliers");
 });
 
-const ENDPOINT = "http://localhost:3001";
+const ENDPOINT = "http://192.168.88.3:3001";
 const socket = io(ENDPOINT, {
   transports: ["websocket", "polling"],
   reconnection: true,
