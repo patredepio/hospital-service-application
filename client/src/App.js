@@ -205,7 +205,6 @@ const ENDPOINT =
     ? "http://localhost:3001"
     : "http://192.168.88.3:3001";
 
-console.log(ENDPOINT);
 const socket = io(ENDPOINT, {
   transports: ["websocket", "polling"],
   reconnection: true,
