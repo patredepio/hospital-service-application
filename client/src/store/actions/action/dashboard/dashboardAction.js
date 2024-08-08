@@ -127,10 +127,10 @@ export const initDashboard = (
   const clinic = JSON.parse(sessionStorage.getItem("clinic"))?.id;
   return async (dispatch) => {
     dispatch(setDashboardLoader());
-    dispatch(getNotificationMethod(token, { location, unit, clinic }));
     dispatch(getDashbardProducts(token, location, unit, clinic, data));
     dispatch(getDashbardSales(token, location, unit, clinic, data));
     dispatch(getProductExpiryAction(token, location, unit, clinic, socket));
     dispatch(setMinimumQuantityHandler(token, location, unit, clinic));
+    dispatch(getNotificationMethod(token, { location, unit, clinic }));
   };
 };

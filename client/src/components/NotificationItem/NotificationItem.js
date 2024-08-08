@@ -18,7 +18,7 @@ const notificationItem = React.memo((props) => {
               ? transferPic
               : props.type === "issueRequistion"
               ? issuancePic
-              : props.type === "expiries"
+              : props.type === "expiries" || props.type === "potentialExpiries"
               ? expiriesPic
               : requistionPic
           }
@@ -43,17 +43,20 @@ const notificationItem = React.memo((props) => {
                 ? "/pharma-app/requistion"
                 : props.type === "expiries"
                 ? "/pharma-app/add-expiries"
+                : props.type === "potentialExpiries"
+                ? null
                 : "/pharma-app/issue-products"
             }
           >
-            Redirect to {"  "}
             {props.type === "transfer"
-              ? "Transfers"
+              ? " Redirect to Transfers"
               : props.type === "issueRequistion"
-              ? "Requistion"
+              ? " Redirect to Requistion"
               : props.type === "expiries"
-              ? "Expiries"
-              : " Issue Requistion"}
+              ? "Redirect to Expiries"
+              : props.type === "potentialExpiries"
+              ? "Please take note"
+              : "Redirect to Issue Requistion"}
           </Link>
         </div>
       </div>
