@@ -76,4 +76,8 @@
     width: 2.5rem;
     padding: 0.3rem;
   }
+  .notification {
+    right: -10px;
+    top: -50px;
+  }
 }

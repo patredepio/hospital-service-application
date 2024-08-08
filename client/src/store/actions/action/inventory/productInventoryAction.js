@@ -218,18 +218,22 @@ export const getPotentialExpiriesNotification = (
         setTimeout(() => {
           dispatch(resetProductMessenger());
         }, 3000);
-        if (!JSON.parse(sessionStorage.getItem("notice"))) {
-          const notificationResponse = await addNotificationRequest(token, {
-            type: "potentialExpiries",
-            message: `${
-              products.length === 1
-                ? `A product is to expire with ${duration}`
-                : `${products.length} products are to expire within ${duration}`
-            }`,
-            location,
-            clinic,
-            unit,
-          });
+        const notice = JSON.parse(sessionStorage.getItem("notice"));
+        if (!notice) {
+          const notificationResponse = await addNotificationRequest(
+            token,
+            JSON.stringify({
+              type: "potentialExpiries",
+              message: `${
+                products.length === 1
+                  ? `A product is to expire with ${duration}`
+                  : `${products.length} products are to expire within ${duration}`
+              }`,
+              location,
+              clinic,
+              unit,
+            })
+          );
           if (notificationResponse?.ok) {
             const notification = await notificationResponse.json();
             if (socket) {
@@ -284,7 +288,7 @@ export const getProductExpiryAction = (
         setTimeout(() => {
           dispatch(resetProductMessenger());
         }, 4000);
-        const notice = sessionStorage.getItem("expiryNotification");
+        const notice = JSON.parse(sessionStorage.getItem("expiryNotification"));
         if (socket && !notice) {
           const notificationResponse = await addNotificationRequest(
             token,
@@ -302,7 +306,6 @@ export const getProductExpiryAction = (
           );
           if (notificationResponse?.ok) {
             const notification = await notificationResponse.json();
-
             socket.emit("notification", notification);
             sessionStorage.setItem("expiryNotification", JSON.stringify(true));
           }
