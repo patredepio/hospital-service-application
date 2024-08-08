@@ -43,9 +43,9 @@ const MessageApp = (props) => {
   const errorMessage = useSelector((state) => state.addProduct.errorMessage);
   const mainMessage = useSelector((state) => state.messenger.message);
   const token = JSON.parse(sessionStorage.getItem("token"));
-  const notificationArray = useSelector(
-    (state) => state.navigation.authenticatedLinks[1].notification
-  );
+  // const notificationArray = useSelector(
+  //   (state) => state.navigation.authenticatedLinks[1].notification
+  // );
   const [state, setState] = useState({
     addChat: false,
     loading: false,
@@ -72,7 +72,6 @@ const MessageApp = (props) => {
     profile: false,
     editGroupChat: false,
     deleteModal: false,
-    notification: false,
   });
   const messageEndRef = useRef(null);
 
@@ -237,37 +236,7 @@ const MessageApp = (props) => {
           to='/pharma-app/log-out'
         />
       )}
-      <div className={classes.notification}>
-        <div></div>
-        <div className={classes.notificationCtn}>
-          <div
-            className={classes.notificationELement}
-            onClick={() =>
-              setState((prevState) => {
-                return {
-                  ...prevState,
-                  notification: !prevState.notification,
-                };
-              })
-            }
-          >
-            <img
-              src={notification}
-              className={classes.notificationImage}
-            />
-          </div>
-          {state.notification && (
-            <div className={classes.notificationList}>
-              <div>Notification</div>
-              {notificationArray.map((notification) => (
-                <div className={classes.notificationItem}>
-                  {notification.message}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
+
       <div className={classes.messageApp}>
         {state.addChat ? (
           <div className={classes.users}>
