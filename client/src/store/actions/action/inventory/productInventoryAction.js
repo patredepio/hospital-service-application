@@ -317,7 +317,8 @@ export const getProductExpiryAction = (
             location,
             unit,
             clinic,
-            "6 MONTHS"
+            "6 MONTHS",
+            socket
           )
         );
         throw {
