@@ -302,12 +302,13 @@ router.delete(
       if (!product) {
         return res.status(404).send();
       }
-      if(product.unit === 'STORE' && product.location === "USELU"){
+      if(product.unit.name === 'STORE' && product.location.name === "USELU"){
         await Product.deleteMany({name:product.name})
+        res.status(200).send();
       }else{
         await product.remove();
+        res.status(200).send();
       }
-      res.status(200).send();
     } catch (e) {
       res.status(500).send();
     }

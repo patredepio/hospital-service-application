@@ -53,7 +53,13 @@ export function salesAnalysis(database, plotConfig) {
   if (!database || !database.length) {
     return {};
   }
-  const dataAnalysed = database.reduce((acc, cur) => {
+  const newDatabase = database.map((data)=>{
+    return {
+      ...data,
+      createdAt:new Date(data.createdAt).setHours(0,0,0,0)
+    }
+  })
+  const dataAnalysed = newDatabase.reduce((acc, cur) => {
     acc[cur.createdAt]
       ? (acc[cur.createdAt] += cur.totalPrice)
       : (acc[cur.createdAt] = cur.totalPrice);

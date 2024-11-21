@@ -73,7 +73,7 @@ const DailySalesReport = React.memo((props) => {
   const sales = Object.entries(
     productSalesDatabase
       .map((sale) => {
-        return { price: sale.totalPrice, date: sale.createdAt };
+        return { price: sale.totalPrice, date: new Date(sale.createdAt).setHours(0,0,0,0) };
       })
       .reduce((acc, cur) => {
         acc[cur.date]
