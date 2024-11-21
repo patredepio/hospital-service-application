@@ -56,7 +56,7 @@ export function salesAnalysis(database, plotConfig) {
   const newDatabase = database.map((data)=>{
     return {
       ...data,
-      createdAt:new Date(data.createdAt).setHours(0,0,0,0)
+      createdAt:new Date(new Date(data.createdAt).setHours(0,0,0,0))
     }
   })
   const dataAnalysed = newDatabase.reduce((acc, cur) => {
