@@ -298,11 +298,15 @@ router.delete(
   async (req, res) => {
     try {
       const _id = req.params.id;
-      const product = await Product.findById(_id);
+      const product = await Product.findById(_id).populate("unit location");
       if (!product) {
         return res.status(404).send();
       }
-      await product.remove();
+      if(product.unit === 'STORE' && product.location === "USELU"){
+        await Product.deleteMany({name:product.name})
+      }else{
+        await product.remove();
+      }
       res.status(200).send();
     } catch (e) {
       res.status(500).send();
