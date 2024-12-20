@@ -41,7 +41,9 @@ export const updateStockRequiredHandler = (e, id, setState) => {
     const productIndex = requistion.products.findIndex(
       (item) => item.id === id
     );
-    productItem.approvedQty = +e.target.value;
+    productItem.approvedQty = /[\d.]+/.test(+e.target.value)
+      ? +e.target.value
+      : 0;
     productItem.quantityPrice = +(
       +productItem.approvedQty * +productItem.costPrice
     ).toFixed(2);
@@ -62,7 +64,9 @@ export const updateCostPriceHandler = (e, id, setState) => {
     const productIndex = requistion.products.findIndex(
       (item) => item.id === id
     );
-    productItem.costPrice = +e.target.value;
+    productItem.costPrice = /[\d.]+/.test(+e.target.value)
+      ? +e.target.value
+      : 0;
     productItem.quantityPrice = +(
       +productItem.approvedQty * +productItem.costPrice
     ).toFixed(2);
