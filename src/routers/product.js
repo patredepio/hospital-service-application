@@ -7,6 +7,7 @@ const {
 const Product = require("../models/Product");
 const Unit = require("../models/Unit");
 const Location = require("../models/Location");
+const { updateProductPrice } = require("../utils");
 router.post(
   "/api/products/add-product",
   authentication,
@@ -107,6 +108,7 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
     "packSize",
     "minimumQuantity",
     "expiryDate",
+    "markUp",
   ];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
@@ -123,20 +125,37 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
     }
     if (product.unit?.name === "STORE") {
       updates.forEach(async (update) => {
-        if (
-          update === "name" ||
+        if (update === "name" || update === "productCategory") {
+          // Update Many
+          const res = await Product.updateMany(
+            { name: product.name },
+            { [update]: req.body[update] }
+          );
+          if (!res.acknowledged) {
+            throw new Error("Unable to update Product");
+          }
+        } else if (
           update === "costPrice" ||
           update === "packSize" ||
-          update === "productCategory"
+          update === "markUp"
         ) {
-          const products = await Product.find({ name: product.name });
-          products.forEach(async (product) => {
-            const newProduct = await Product.findById(product._id);
-            if (newProduct) {
-              newProduct[update] = req.body[update];
-            }
-            await newProduct.save();
-          });
+          const { nhiaPrice, sellingPrice, nnpcPrice, unitCostPrice } =
+            updateProductPrice(product, update, req.body[update]);
+
+          const res = await Product.updateMany({ name: product.name }, [
+            {
+              $set: {
+                [update]: req.body[update],
+                nhiaPrice,
+                sellingPrice,
+                nnpcPrice,
+                unitCostPrice,
+              },
+            },
+          ]);
+          if (!res.acknowledged) {
+            throw new Error("Unable to update Product");
+          }
         } else {
           product[update] = req.body[update];
         }
@@ -144,7 +163,11 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
       await product.save();
     } else {
       updates.forEach(async (update) => {
-        if (update === "name" || update === "productCategory") {
+        if (
+          update === "name" ||
+          update === "productCategory" ||
+          update === "markUp"
+        ) {
           return res.status(403).send({ error: "Not Allowed" });
         } else {
           product[update] = req.body[update];

@@ -129,6 +129,7 @@ productSchema.pre("save", async function (next) {
 
   next();
 });
+
 productSchema.pre("remove", async function (next) {
   const product = this;
   await ProductLog.deleteMany({ product: product._id });
