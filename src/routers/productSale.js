@@ -22,7 +22,7 @@ router.post("/api/productsales", authentication, async (req, res) => {
 });
 
 router.get("/api/productsales/search", authentication, async (req, res) => {
-  const search = req.query;
+  const { end_date, start_date, ...search } = req.query;
   const parameters = Object.keys(search);
 
   parameters.forEach((parameter) => {
@@ -31,14 +31,15 @@ router.get("/api/productsales/search", authentication, async (req, res) => {
     }
   });
 
-  const startDate = new Date(search.start_date);
-  const endDate = new Date(search.end_date);
+  const startDate = new Date(start_date);
+  const endDate = new Date(end_date);
 
   try {
     const sales = await ProductSale.find({
       createdAt: { $gte: startDate, $lt: endDate },
       ...search,
     })
+
       .populate("assessment")
       .populate("patient")
       .populate("location")
@@ -46,6 +47,7 @@ router.get("/api/productsales/search", authentication, async (req, res) => {
       .populate("ward")
       .sort({ createdAt: -1 });
 
+    console.log(sales);
     if (!sales.length) {
       return res.status(404).send();
     }
