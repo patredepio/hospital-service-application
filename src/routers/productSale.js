@@ -61,9 +61,10 @@ router.post("/api/sales-reorderlevel", authentication, async (req, res) => {
     return res.status(400).send();
   } else {
     if (req.body.type === "store") {
+      const { date } = req.body;
       try {
         const sales = await ProductSale.find({
-          createdAt: { $gte: new Date(req.body.date) },
+          createdAt: { $gte: new Date(date) },
         }).sort({ createdAt: -1 });
         if (!sales.length) {
           return res.status(404).send();
@@ -105,10 +106,13 @@ router.post("/api/sales-reorderlevel", authentication, async (req, res) => {
         res.status(400).send();
       }
     } else if (req.body.type === "otherUnits") {
+      const { date, location, unit, clinic } = req.body;
       try {
         const sales = await ProductSale.find({
-          createdAt: { $gte: new Date(req.body.date) },
-          ...req.body,
+          createdAt: { $gte: new Date(date) },
+          location,
+          unit,
+          clinic,
         }).sort({ createdAt: -1 });
         if (!sales.length) {
           return res.status(404).send();

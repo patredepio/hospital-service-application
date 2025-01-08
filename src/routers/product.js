@@ -280,11 +280,13 @@ router.get("/api/fetch-products", authentication, async (req, res) => {
 router.get("/api/product/get-expiries", authentication, async (req, res) => {
   if (req.query.type === "potentialExpiries") {
     try {
-      const search = req.query;
+      const { date: mainDate, location, unit, clinic } = req.query;
 
-      const date = new Date(search.date);
+      const date = new Date(mainDate);
       const expiries = await Product.find({
-        ...req.query,
+        location,
+        unit,
+        clinic,
         expiryDate: { $lte: date },
         quantity: { $gt: 0 },
       }).populate("productCategory");
@@ -297,14 +299,19 @@ router.get("/api/product/get-expiries", authentication, async (req, res) => {
     }
   } else if (req.query.type === "expired") {
     try {
-      const search = req.query;
-      const date = new Date(search.date);
+      const { date: mainDate, location, unit, clinic } = req.query;
+
+      const date = new Date(mainDate);
 
       const expiries = await Product.find({
-        ...req.query,
+        location,
+        unit,
+        clinic,
         expiryDate: { $lt: date },
         quantity: { $gt: 0 },
       }).populate("productCategory");
+
+      console.log(expiries);
       if (!expiries.length) {
         return res.status(404).send();
       }
@@ -325,10 +332,10 @@ router.delete(
       if (!product) {
         return res.status(404).send();
       }
-      if(product.unit.name === 'STORE' && product.location.name === "USELU"){
-        await Product.deleteMany({name:product.name})
+      if (product.unit.name === "STORE" && product.location.name === "USELU") {
+        await Product.deleteMany({ name: product.name });
         res.status(200).send();
-      }else{
+      } else {
         await product.remove();
         res.status(200).send();
       }
