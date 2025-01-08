@@ -15,8 +15,6 @@ const updateProductPrice = (product, updateType, value) => {
     nhiaPrice = tenPercent;
   }
 
-  console.log(sellingPrice);
-
   return {
     nhiaPrice,
     unitCostPrice,

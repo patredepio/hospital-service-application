@@ -47,7 +47,6 @@ router.get("/api/productsales/search", authentication, async (req, res) => {
       .populate("ward")
       .sort({ createdAt: -1 });
 
-    console.log(sales);
     if (!sales.length) {
       return res.status(404).send();
     }

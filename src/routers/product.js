@@ -311,7 +311,6 @@ router.get("/api/product/get-expiries", authentication, async (req, res) => {
         quantity: { $gt: 0 },
       }).populate("productCategory");
 
-      console.log(expiries);
       if (!expiries.length) {
         return res.status(404).send();
       }

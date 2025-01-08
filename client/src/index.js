@@ -43,7 +43,7 @@ const store = configureStore({
     clinicNavigation,
   },
 });
-console.log("userlogs,check nhiaPrice for productsales");
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
