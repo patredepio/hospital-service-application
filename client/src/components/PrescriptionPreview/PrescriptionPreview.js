@@ -48,8 +48,6 @@ const prescriptionPreview = React.memo((props) => {
                 placeholder: "WARD NAME",
                 required: true,
                 name: "name",
-                autoFocus: true,
-                autoComplete: "on",
               }}
               label='WARD NAME'
             />
@@ -175,7 +173,6 @@ const prescriptionPreview = React.memo((props) => {
                   config={{
                     type: "search",
                     placeholder: "SEARCH NAME OF WARD",
-                    autoFocus: true,
                   }}
                   changed={(e) =>
                     // check if it is requistion or patient

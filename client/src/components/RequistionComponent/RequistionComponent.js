@@ -44,6 +44,7 @@ const requistionComponent = React.memo((props) => {
       <div>{requiste.get("onHandQuantity")}</div>
       <div>
         <input
+          autoFocus={true}
           type='number'
           style={{
             width: "70px",
