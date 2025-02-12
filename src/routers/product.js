@@ -335,7 +335,7 @@ router.delete(
         await Product.deleteMany({ name: product.name });
         res.status(200).send();
       } else {
-        await product.remove();
+        await Product.deleteOne({ _id });
         res.status(200).send();
       }
     } catch (e) {

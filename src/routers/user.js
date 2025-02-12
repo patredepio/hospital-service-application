@@ -204,8 +204,8 @@ router.patch("/api/users/:id", institutionAuthentication, async (req, res) => {
 
     updates.forEach(async (update) => {
       user[update] = req.body[update];
-      await user.save();
     });
+    await user.save();
     res.status(200).send();
   } catch (error) {
     res.status(400).send();
@@ -267,11 +267,10 @@ router.delete(
     const _id = req.params.id;
 
     try {
-      const user = await User.findOne({ _id });
+      const user = await User.deleteOne({ _id });
       if (!user) {
         return res.status(404).send();
       }
-      user.remove();
       res.status(200).send();
     } catch (e) {
       res.status(500).send();

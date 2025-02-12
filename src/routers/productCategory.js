@@ -62,7 +62,7 @@ router.delete(
       if (product) {
         return res.status(403).send();
       }
-      await category.remove();
+      await ProductCategory.deleteOne({ _id });
       res.status(200).send();
     } catch (error) {
       res.status(500).send();

@@ -365,7 +365,7 @@ export const editUserMethod = (e, setState, token, state) => {
   e.preventDefault();
   return async (dispatch) => {
     const body = {};
-    [("firstName", "lastName", "username")].forEach((key) => {
+    ["firstName", "lastName", "username"].forEach((key) => {
       if (state[key] !== state.selectedUser[key]) {
         body[key] = state[key];
       }

@@ -147,7 +147,7 @@ router.delete("/api/deleteGroupChat/:id", authentication, async (req, res) => {
     if (!groupChat) {
       return res.status(404).send();
     }
-    await groupChat.remove();
+    await Chat.deleteOne({ _id: id });
     res.status(200).send();
   } catch (error) {
     res.status(400).send();

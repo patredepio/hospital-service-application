@@ -83,7 +83,7 @@ router.delete(
       if (!supply) {
         return res.status(404).send();
       }
-      await supply.remove();
+      await Supply.deleteOne({ _id: id });
       res.status(200).send();
     } catch (error) {
       res.status(500).send();

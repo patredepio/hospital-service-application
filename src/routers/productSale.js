@@ -182,7 +182,7 @@ router.delete(
       if (!sale) {
         return res.status(404).send();
       }
-      sale.remove();
+      await ProductSale.deleteOne({ _id });
       res.status(200).send(sale);
     } catch (e) {
       res.status(500).send();

@@ -63,7 +63,7 @@ router.delete(
       if (!supplier) {
         return res.status(404).send();
       }
-      await supplier.remove();
+      await Supplier.deleteOne({ _id: id });
       res.status(200).send();
     } catch (error) {
       res.status(500).send();
