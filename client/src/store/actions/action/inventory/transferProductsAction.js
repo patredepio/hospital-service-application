@@ -3,6 +3,7 @@ import {
   editProductById,
   getProductById,
   updateProductQuantity,
+  addExpiriesRequest,
 } from "../../../../Utility/product/product";
 import { addProductLogs } from "../../../../Utility/inventory/addProduct";
 import {
@@ -544,104 +545,101 @@ function getLastMonth() {
 }
 
 // Updates product properties and logs the change.
-const editProductProperty = async (
-  product,
-  token,
-  body,
-  unit,
-  location,
-  clinic
-) => {
-  try {
-    const response = await editProductById(
-      token,
-      product.id,
-      JSON.stringify(body)
-    );
-    if (response.ok) {
-      const updatedProduct = await response.json();
-      const movement = new Map();
-      movement.set("movement", "Stock Taking");
-      movement.set("issued", 0);
-      movement.set("balance", updatedProduct.quantity);
-      movement.set("product", updatedProduct._id);
-      movement.set("unit", unit);
-      movement.set("location", location);
-      movement.set("clinic", clinic);
-
-      const movementResponse = await addProductLogs(
+const editProductProperty = (product, token, body, unit, location, clinic) => {
+  return async (dispatch) => {
+    try {
+      const response = await editProductById(
         token,
-        JSON.stringify(Object.fromEntries(movement))
+        product.id,
+        JSON.stringify(body)
       );
-      if (!movementResponse.ok) {
-        throw {
-          message: movementResponse.statusText,
-          status: movementResponse.status,
-        };
+      if (response.ok) {
+        const updatedProduct = await response.json();
+        const movement = new Map();
+        movement.set("movement", "Stock Taking");
+        movement.set("issued", 0);
+        movement.set("balance", updatedProduct.quantity);
+        movement.set("product", updatedProduct._id);
+        movement.set("unit", unit);
+        movement.set("location", location);
+        movement.set("clinic", clinic);
+
+        const movementResponse = await addProductLogs(
+          token,
+          JSON.stringify(Object.fromEntries(movement))
+        );
+        if (!movementResponse.ok) {
+          throw {
+            message: movementResponse.statusText,
+            status: movementResponse.status,
+          };
+        }
+      } else {
+        throw { message: response.statusText, status: response.status };
       }
-    } else {
-      throw { message: response.statusText, status: response.status };
+    } catch (error) {
+      if (error.status === 401) {
+        dispatch(clearAuthentication(error.status));
+      } else {
+        dispatch(sendProductMessenger("Logs failed to save", true, error));
+      }
     }
-  } catch (error) {
-    if (error.status === 401) {
-      dispatch(clearAuthentication(error.status));
-    } else {
-      dispatch(sendProductMessenger("Logs failed to save", true, error));
-    }
-  }
+  };
 };
 
 // Adds an expiry entry for the product.
-const addExpiryFunction = async (product, token, expQty) => {
-  try {
-    const newProductResponse = await getProductById(token, product.id);
-    if (newProductResponse.ok) {
-      const newProduct = await newProductResponse.json();
-      let expiryObject = null;
-      const expiryDate = getLastMonth();
-      if (newProduct.unit.name.includes("STORE")) {
-        expiryObject = {
-          name: product.name,
-          quantity: +expQty,
-          expiryDate,
-          totalPrice: newProduct.costPrice * newProduct.quantity,
-          packSize: newProduct.packSize,
-          date: new Date(),
-        };
+const addExpiryFunction = (product, token, expQty) => {
+  return async (dispatch) => {
+    try {
+      const newProductResponse = await getProductById(token, product.id);
+      if (newProductResponse.ok) {
+        const newProduct = await newProductResponse.json();
+        let expiryObject = null;
+        const expiryDate = getLastMonth();
+        if (newProduct.unit.name.includes("STORE")) {
+          expiryObject = {
+            name: product.name,
+            quantity: +expQty,
+            expiryDate,
+            totalPrice: newProduct.costPrice * newProduct.quantity,
+            packSize: newProduct.packSize,
+            date: new Date(),
+          };
+        } else {
+          expiryObject = {
+            name: product.name,
+            quantity: +expQty,
+            expiryDate,
+            totalPrice: newProduct.unitCostPrice * newProduct.quantity,
+            packSize: newProduct.packSize,
+            date: new Date(),
+          };
+        }
+        const addExpiryResponse = await addExpiriesRequest(
+          token,
+          product.id,
+          JSON.stringify(expiryObject)
+        );
+        if (!addExpiryResponse?.ok) {
+          throw {
+            message: addExpiryResponse.statusText,
+            status: addExpiryResponse.status,
+          };
+        }
       } else {
-        expiryObject = {
-          name: product.name,
-          quantity: +expQty,
-          expiryDate,
-          totalPrice: newProduct.unitCostPrice * newProduct.quantity,
-          packSize: newProduct.packSize,
-          date: new Date(),
-        };
-      }
-      const addExpiryResponse = await addExpiriesRequest(
-        token,
-        product.id,
-        JSON.stringify(expiryObject)
-      );
-      if (!addExpiryResponse?.ok) {
         throw {
-          message: addExpiryResponse.statusText,
-          status: addExpiryResponse.status,
+          message: newProductResponse.statusText,
+          status: newProductResponse.status,
         };
       }
-    } else {
-      throw {
-        message: newProductResponse.statusText,
-        status: newProductResponse.status,
-      };
+    } catch (error) {
+      if (error.status === 401) {
+        dispatch(clearAuthentication(error.status));
+      } else {
+        dispatch(sendProductMessenger("Unable to add expiries", true, error));
+      }
     }
-  } catch (error) {
-    if (error.status === 401) {
-      dispatch(clearAuthentication(error.status));
-    } else {
-      dispatch(sendProductMessenger("Unable to add expiries", true, error));
-    }
-  }
+  };
 };
 
 // Updates products based on the differences and adds expiry information if needed.

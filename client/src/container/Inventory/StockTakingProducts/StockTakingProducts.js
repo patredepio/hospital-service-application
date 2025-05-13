@@ -130,7 +130,7 @@ const StockingTakingProducts = memo((props) => {
               token,
               unit?.id,
               clinic?.id,
-              location?.id
+              $location?.id
             )
           }
           cancel={() => setIsOpenModal(false)}

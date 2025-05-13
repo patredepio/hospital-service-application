@@ -199,7 +199,7 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
     "nhiaCoverage",
   ];
   const restrictedUpdates = ["name", "productCategory"];
-  4;
+
   const priceRelatedUpdates = [
     "costPrice",
     "packSize",
@@ -265,7 +265,6 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
         priceRelatedUpdates.includes(update)
       );
       if (priceRelatedBodyUpdates.length > 0) {
-        console.log(priceRelatedBodyUpdates);
         const newProduct = JSON.parse(JSON.stringify(product));
         // update the product with the new price related body
         const priceRelatedBody = {};
