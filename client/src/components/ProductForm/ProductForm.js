@@ -258,6 +258,18 @@ const productForm = (props) => {
               changed={(e) => props.changed(e, props.setFormState)}
             />
             <Input
+              inputType='select'
+              options={["10%", "50%"]}
+              title='Product Nhia  Coverage'
+              config={{
+                placeholder: " Nhia  Coverage",
+                value: props.state.nhiaCoverage,
+                name: "nhiaCoverage",
+                readOnly: !props.readOnly && props.formType === "Add",
+              }}
+              changed={(e) => props.changed(e, props.setFormState)}
+            />
+            <Input
               label='Product Expiry Date'
               config={{
                 placeholder: "Expiry Date",

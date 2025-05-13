@@ -107,6 +107,7 @@ const AddProduct = (props) => {
     productCategory: "",
     expiryDate: "",
     category: "",
+    nhiaCoverage: "10%",
     markUp: 1.25,
   });
 
@@ -177,6 +178,7 @@ const AddProduct = (props) => {
         // added
         setFormState={setFormState}
         state={formState}
+        nhiaCoverage={formState.nhiaCoverage}
         category={formState.category}
         markUp={formState.markUp}
         modal={modal}

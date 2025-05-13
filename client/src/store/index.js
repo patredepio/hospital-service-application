@@ -222,6 +222,7 @@ import {
 import {
   validateTransfer,
   submitTransfer,
+  validateStockSubmission,
 } from "./actions/action/inventory/transferProductsAction";
 import {
   getTransfersMethod,
@@ -395,6 +396,8 @@ export {
   // Transfer
   validateTransfer,
   submitTransfer,
+  // Stock Taking
+  validateStockSubmission,
   // Receive Transfer
   getTransfersMethod,
   validateReceiveTransfer,

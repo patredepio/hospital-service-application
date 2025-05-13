@@ -1,0 +1,154 @@
+.container {
+  padding: 10px;
+}
+.title {
+  display: flex;
+  font-weight: bold;
+}
+.header {
+  background-color: #ccc;
+  color: black;
+  font-weight: bold;
+}
+.structure {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) 70px 70px 150px 70px;
+  column-gap: 1px;
+  align-items: center;
+  justify-content: end;
+  padding: 0 10px;
+}
+.productContainer {
+  height: 500px;
+  margin-bottom: 10px;
+  background-color: white;
+  overflow: hidden;
+}
+
+/* WebKit Browsers (Chrome, Safari, Edge) */
+.productContainer::-webkit-scrollbar {
+  width: 12px; /* Adjust the width of the scrollbar */
+}
+
+.productContainer::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background color of the scrollbar track */
+}
+
+.productContainer::-webkit-scrollbar-thumb {
+  background-color: #53634b; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Optional: rounds the corners of the scrollbar thumb */
+  border: 3px solid #f1f1f1; /* Optional: adds a border around the scrollbar thumb */
+}
+
+/* Firefox */
+.productContainer {
+  scrollbar-width: thin; /* Adjust the thickness of the scrollbar */
+  scrollbar-color: #53634b #f1f1f1; /* thumb and track color */
+}
+
+.input {
+  width: 100%;
+  outline: none;
+  padding: 10px;
+  border: none;
+  text-align: center;
+  font-size: clamp(0.79rem, 1vw + 0.3rem, 1.1rem);
+}
+.input:focus {
+  border: 1px solid #25447d;
+}
+
+.monthInput {
+  text-transform: uppercase;
+}
+
+.amount {
+  font-weight: bolder;
+}
+
+.item {
+  font-size: clamp(0.79rem, 1vw + 0.3rem, 1.1rem);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.actionContainer {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px auto;
+}
+.interaction {
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+}
+.interactionItem {
+  display: grid;
+  grid-template-columns: auto 100px;
+  justify-content: end;
+}
+.clearStock {
+  background-color: #25447d;
+  border-radius: 5px;
+  color: white;
+}
+
+.submitStock {
+  background-color: #02a523;
+  border-radius: 5px;
+  color: white;
+}
+.shortDated {
+  background-color: #d2b639;
+  border-radius: 5px;
+  color: white;
+}
+
+.desktopOnly {
+  display: none;
+}
+@media (min-width: 40rem) {
+  .desktopOnly {
+    display: block;
+  }
+  .structure {
+    grid-template-columns:
+      minmax(100px, 1fr) 100px 100px 110px 100px minmax(120px, 170px)
+      150px;
+  }
+}
+@media (hover: hover) {
+  .clearStock:active,
+  .clearStock:hover {
+    background-color: white;
+    border-radius: 5px;
+    color: #25447d;
+  }
+  .submitStock:active,
+  .submitStock:hover {
+    background-color: white;
+    border-radius: 5px;
+    color: #02a523;
+  }
+  .shortDated:active,
+  .shortDated:hover {
+    background-color: white;
+    border-radius: 5px;
+    color: #d2b639;
+  }
+}
+
+@media (max-width: 768px) {
+  .item,
+  .input {
+    font-size: clamp(0.75rem, 1vw + 0.25rem, 1rem);
+  }
+}
+@media (max-width: 480px) {
+  .item,
+  .input {
+    font-size: clamp(0.625rem, 1vw + 0.25rem, 0.875rem);
+  }
+}

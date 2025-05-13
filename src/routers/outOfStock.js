@@ -19,7 +19,6 @@ router.get("/api/out-of-stock", authentication, async (req, res) => {
         $gte: new Date(req.query.startDate),
         $lt: new Date(req.query.endDate),
       },
-      ...req.query,
     }).sort({ createdAt: -1 });
     if (!outOfStocks.length) {
       return res.status(404).send();

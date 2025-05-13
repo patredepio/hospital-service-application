@@ -113,6 +113,11 @@ const InventoryOtherUnits = lazy(() => {
     "./container/Inventory/InventoryOtherUnits/InventoryOtherUnits"
   );
 });
+const StockingTakingProducts = lazy(() => {
+  return import(
+    "./container/Inventory/StockTakingProducts/StockTakingProducts"
+  );
+});
 // Patient Services Import
 const Feedback = lazy(() => {
   return import("./container/PatientServices/Feedback/Feedback");
@@ -360,6 +365,10 @@ function App() {
               }
             />
             {/* INVENTORY */}
+            <Route
+              path='/pharma-app/stocktaking'
+              element={<StockingTakingProducts socket={socket} />}
+            />
             <Route
               path='/pharma-app/shortdated'
               element={<ShortDatedProducts socket={socket} />}

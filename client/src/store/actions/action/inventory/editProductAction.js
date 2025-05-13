@@ -125,6 +125,7 @@ export const submitEditForm = (
             }
           }
         });
+
         if (!Object.keys(form).length) {
           dispatch(clearLoader());
           dispatch(sendProductMessenger("no changes have been made", true));

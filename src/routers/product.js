@@ -43,7 +43,9 @@ router.get("/api/products/search", authentication, async (req, res) => {
     });
   }
   try {
-    const products = await Product.find(search).populate("productCategory");
+    const products = await Product.find(search).populate(
+      "productCategory unit"
+    );
 
     if (!products.length) {
       return res.status(404).send();
@@ -97,6 +99,91 @@ router.get("/api/other-products/:id", authentication, async (req, res) => {
     res.status(500).send();
   }
 });
+//  My Version
+// router.patch("/api/products/:id", authentication, async (req, res) => {
+//   const updates = Object.keys(req.body);
+//   const allowedUpdates = [
+//     "name",
+//     "productCategory",
+//     "costPrice",
+//     "quantity",
+//     "fgPrice",
+//     "packSize",
+//     "minimumQuantity",
+//     "expiryDate",
+//     "markUp",
+//   ];
+//   const isValidOperation = updates.every((update) =>
+//     allowedUpdates.includes(update)
+//   );
+//   if (!isValidOperation) {
+//     return res.status(400).send();
+//   }
+
+//   try {
+//     const _id = req.params.id;
+//     const product = await Product.findById(_id).populate("unit");
+//     if (!product) {
+//       return res.status(404).send();
+//     }
+//     if (product.unit?.name === "STORE") {
+//       updates.forEach(async (update) => {
+//         if (update === "name" || update === "productCategory") {
+//           // Update Many
+//           const res = await Product.updateMany(
+//             { name: product.name },
+//             { [update]: req.body[update] }
+//           );
+//           if (!res.acknowledged) {
+//             throw new Error("Unable to update Product");
+//           }
+//         } else if (
+//           update === "costPrice" ||
+//           update === "packSize" ||
+//           update === "markUp"
+//         ) {
+//           const { nhiaPrice, sellingPrice, nnpcPrice, unitCostPrice } =
+//             updateProductPrice(product, update, req.body[update]);
+
+//           const res = await Product.updateMany({ name: product.name }, [
+//             {
+//               $set: {
+//                 [update]: req.body[update],
+//                 nhiaPrice,
+//                 sellingPrice,
+//                 nnpcPrice,
+//                 unitCostPrice,
+//               },
+//             },
+//           ]);
+//           if (!res.acknowledged) {
+//             throw new Error("Unable to update Product");
+//           }
+//         } else {
+//           product[update] = req.body[update];
+//         }
+//       });
+//       await product.save();
+//     } else {
+//       updates.forEach(async (update) => {
+//         if (
+//           update === "name" ||
+//           update === "productCategory" ||
+//           update === "markUp"
+//         ) {
+//           return res.status(403).send({ error: "Not Allowed" });
+//         } else {
+//           product[update] = req.body[update];
+//         }
+//       });
+//       await product.save();
+//     }
+//     res.status(200).send(product);
+//   } catch (e) {
+//     res.status(400).send();
+//   }
+// });
+// AI Version
 router.patch("/api/products/:id", authentication, async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = [
@@ -109,7 +196,18 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
     "minimumQuantity",
     "expiryDate",
     "markUp",
+    "nhiaCoverage",
   ];
+  const restrictedUpdates = ["name", "productCategory"];
+  4;
+  const priceRelatedUpdates = [
+    "costPrice",
+    "packSize",
+    "markUp",
+    "fgPrice",
+    "nhiaCoverage",
+  ];
+  const otherUpdates = ["quantity", "expiryDate", "minimumQuantity"];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -123,63 +221,93 @@ router.patch("/api/products/:id", authentication, async (req, res) => {
     if (!product) {
       return res.status(404).send();
     }
-    if (product.unit?.name === "STORE") {
-      updates.forEach(async (update) => {
-        if (update === "name" || update === "productCategory") {
-          // Update Many
-          const res = await Product.updateMany(
-            { name: product.name },
-            { [update]: req.body[update] }
-          );
-          if (!res.acknowledged) {
-            throw new Error("Unable to update Product");
-          }
-        } else if (
-          update === "costPrice" ||
-          update === "packSize" ||
-          update === "markUp"
-        ) {
-          const { nhiaPrice, sellingPrice, nnpcPrice, unitCostPrice } =
-            updateProductPrice(product, update, req.body[update]);
 
-          const res = await Product.updateMany({ name: product.name }, [
-            {
-              $set: {
-                [update]: req.body[update],
-                nhiaPrice,
-                sellingPrice,
-                nnpcPrice,
-                unitCostPrice,
-              },
+    // For non-STORE units, disallow updates to specific fields.
+    if (product.unit?.name !== "STORE") {
+      // check if the updates contains  other updates apart from otherUpdates, if it does return 403
+      const hasRestrictedUpdates = updates.some(
+        (update) => !otherUpdates.includes(update)
+      );
+      if (hasRestrictedUpdates) {
+        return res.status(403).send({ error: "Not Allowed" });
+      }
+      // Apply only allowed updates
+      updates.forEach((update) => {
+        product[update] = req.body[update];
+      });
+      await product.save();
+      res.status(200).send(product);
+    }
+
+    if (product.unit?.name === "STORE") {
+      const productIds = await Product.distinct("_id", {
+        name: product.name,
+      });
+      // check the updates for restricted updates present in it
+      const restrictedBodyUpdates = updates.filter((update) =>
+        restrictedUpdates.includes(update)
+      );
+      if (restrictedBodyUpdates.length > 0) {
+        const restrictedBody = restrictedBodyUpdates.reduce((acc, update) => {
+          acc[update] = req.body[update];
+          return acc;
+        }, {});
+
+        const result = await Product.updateMany(
+          { _id: { $in: productIds } }, // filter: any _id in your array
+          { $set: restrictedBody } // update: set status field
+        );
+        if (!result.acknowledged) {
+          throw new Error("Unable to update Product");
+        }
+      }
+      const priceRelatedBodyUpdates = updates.filter((update) =>
+        priceRelatedUpdates.includes(update)
+      );
+      if (priceRelatedBodyUpdates.length > 0) {
+        console.log(priceRelatedBodyUpdates);
+        const newProduct = JSON.parse(JSON.stringify(product));
+        // update the product with the new price related body
+        const priceRelatedBody = {};
+        priceRelatedBodyUpdates.forEach((update) => {
+          newProduct[update] = req.body[update];
+          priceRelatedBody[update] = req.body[update];
+        });
+        const { nhiaPrice, sellingPrice, nnpcPrice, unitCostPrice } =
+          updateProductPrice(newProduct);
+        const result = await Product.updateMany(
+          { _id: { $in: productIds } }, // filter: any _id in your array
+          {
+            $set: {
+              ...priceRelatedBody,
+              unitCostPrice,
+              nhiaPrice,
+              sellingPrice,
+              nnpcPrice,
             },
-          ]);
-          if (!res.acknowledged) {
-            throw new Error("Unable to update Product");
           }
-        } else {
-          product[update] = req.body[update];
+        );
+        if (!result.acknowledged) {
+          throw new Error("Unable to update Product");
         }
-      });
-      await product.save();
-    } else {
-      updates.forEach(async (update) => {
-        if (
-          update === "name" ||
-          update === "productCategory" ||
-          update === "markUp"
-        ) {
-          return res.status(403).send({ error: "Not Allowed" });
-        } else {
-          product[update] = req.body[update];
-        }
-      });
-      await product.save();
+      }
+      const otherBodyUpdates = updates.filter((update) =>
+        otherUpdates.includes(update)
+      );
+      if (otherBodyUpdates.length > 0) {
+        otherBodyUpdates.forEach(
+          (update) => (product[update] = req.body[update])
+        );
+        await product.save();
+      }
     }
     res.status(200).send(product);
   } catch (e) {
+    // Optionally, log the error: console.error(e);
     res.status(400).send();
   }
 });
+
 router.patch("/api/product/quantity/:id", authentication, async (req, res) => {
   const update = req.body;
   if (!update.quantity) {

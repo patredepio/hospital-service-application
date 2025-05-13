@@ -104,6 +104,10 @@ const intialState = {
           linkName: "SHORTDATED",
           linkHref: "/pharma-app/shortdated",
         },
+        // {
+        //   linkName: "STOCKTAKING",
+        //   linkHref: "/pharma-app/stocktaking",
+        // },
       ],
     },
     {
