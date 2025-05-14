@@ -48,6 +48,7 @@ const prescriptionItems = React.memo((props) => {
               <span>ON HAND QTY: </span>
               <span>{product.get("onHandQuantity")}</span>
             </div>
+            <span className={classes.pricing}>{props.pricing}</span>
             <div>
               <span>EXPIRY DATE: </span>
               <span>{product.get("expiryDate")}</span>

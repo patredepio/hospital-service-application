@@ -90,7 +90,7 @@
 }
 .productInformation {
   display: grid;
-  grid-template-columns: auto 100px 100px;
+  grid-template-columns: auto 70px 100px 100px;
   align-items: center;
   column-gap: 10px;
 }
@@ -139,7 +139,7 @@
     column-gap: 15px;
   }
   .productInformation {
-    grid-template-columns: auto 150px 200px;
+    grid-template-columns: auto 100px 150px 200px;
     column-gap: 15px;
   }
   .prescriptionItem {

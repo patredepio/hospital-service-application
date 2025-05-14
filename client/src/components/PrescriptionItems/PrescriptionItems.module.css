@@ -1,6 +1,9 @@
 .prescriptionInput {
   font-size: x-small;
 }
+.pricing {
+  color: #25447d;
+}
 
 @media (min-width: 40rem) {
   .prescriptionInput {

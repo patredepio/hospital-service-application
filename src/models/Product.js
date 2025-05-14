@@ -110,40 +110,38 @@ productSchema.pre("save", async function (next) {
     product.sellingPrice = sellingPrice;
     product.nnpcPrice = (sellingPrice * 1.2).toFixed(2);
     const tenPercent = (0.1 * product.fgPrice).toFixed(2);
+    const fiftyPercent = (0.5 * product.fgPrice).toFixed(2);
     if (!product?.nhiaCoverage) {
       product.nhiaCoverage = "10%";
     }
-    if (product.nhiaCoverage === "10%") {
-      if (product.fgPrice === 0) {
-        product.nhiaPrice = sellingPrice;
-      } else if (sellingPrice > +product.fgPrice) {
-        const deficit = sellingPrice - product.fgPrice;
-        product.nhiaPrice = (deficit + +tenPercent).toFixed(2);
-      } else {
-        product.nhiaPrice = tenPercent;
-      }
+    const percent = product.nhiaCoverage === "50%" ? fiftyPercent : tenPercent;
+    if (product.fgPrice === 0) {
+      product.nhiaPrice = sellingPrice;
+    } else if (sellingPrice > +product.fgPrice) {
+      const deficit = sellingPrice - product.fgPrice;
+      product.nhiaPrice = (deficit + +percent).toFixed(2);
     } else {
-      product.nhiaPrice = (0.5 * product.fgPrice).toFixed(2);
+      product.nhiaPrice = +percent;
     }
   }
   if (product.isModified("fgPrice") || product.isModified("nhiaCoverage")) {
     product.unitCostPrice = (product.costPrice / product.packSize).toFixed(2);
     const sellingPrice = (+product.unitCostPrice * product.markUp).toFixed(2);
     const tenPercent = (0.1 * product.fgPrice).toFixed(2);
+    const fiftyPercent = (0.5 * product.fgPrice).toFixed(2);
+
     if (!product?.nhiaCoverage) {
       product.nhiaCoverage = "10%";
     }
-    if (product.nhiaCoverage === "10%") {
-      if (product.fgPrice === 0) {
-        product.nhiaPrice = sellingPrice;
-      } else if (sellingPrice > +product.fgPrice) {
-        const deficit = sellingPrice - product.fgPrice;
-        product.nhiaPrice = (deficit + +tenPercent).toFixed(2);
-      } else {
-        product.nhiaPrice = tenPercent;
-      }
+    const percent = product.nhiaCoverage === "50%" ? fiftyPercent : tenPercent;
+
+    if (product.fgPrice === 0) {
+      product.nhiaPrice = sellingPrice;
+    } else if (sellingPrice > +product.fgPrice) {
+      const deficit = sellingPrice - product.fgPrice;
+      product.nhiaPrice = (deficit + +percent).toFixed(2);
     } else {
-      product.nhiaPrice = (0.5 * sellingPrice).toFixed(2);
+      product.nhiaPrice = +percent;
     }
   }
 
